@@ -1156,14 +1156,21 @@ vid.addEventListener('loadedmetadata', () => {
   const canvas = document.getElementById('particleCanvas');
   const ctx    = canvas.getContext('2d');
 
-  const SYMBOLS = [
-    { char: '᪤', color: '#f5c518' }, // air-like glyph
-    { char: '◈', color: '#4db8ff' }, // water
-    { char: '⬡', color: '#6abf69' }, // earth
-    { char: '✦', color: '#f97316' }, // fire
-    { char: '⊕', color: '#f5c518' },
-    { char: '∞', color: '#4db8ff' },
+  const BASE = 'https://raw.githubusercontent.com/JeffreyHamilton6399/Legend-of-Aang-The-Last-Airbender/main/';
+  const SRCS = [
+    { src: BASE + 'air.png',   color: '#f5c518' },
+    { src: BASE + 'water.png', color: '#4db8ff' },
+    { src: BASE + 'earth.png', color: '#6abf69' },
+    { src: BASE + 'fire.png',  color: '#f97316' },
   ];
+
+  // Preload images
+  const imgs = SRCS.map(s => {
+    const img = new Image();
+    img.src = s.src;
+    img.crossOrigin = 'anonymous';
+    return { img, color: s.color };
+  });
 
   let W, H, particles = [];
 
@@ -1176,45 +1183,48 @@ vid.addEventListener('loadedmetadata', () => {
 
   function rand(a, b) { return a + Math.random() * (b - a); }
 
-  function spawn() {
-    const sym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+  function spawn(randomY) {
+    const sym = imgs[Math.floor(Math.random() * imgs.length)];
+    const angle = rand(0, Math.PI * 2); // any direction
+    const speed = rand(0.08, 0.22);
     return {
-      x: rand(0, W),
-      y: rand(0, H),
-      vy: rand(-0.12, -0.32),
-      vx: rand(-0.08, 0.08),
-      alpha: rand(0.04, 0.13),
-      size: rand(10, 22),
-      char: sym.char,
-      color: sym.color,
-      rot: rand(0, Math.PI * 2),
-      vrot: rand(-0.003, 0.003),
+      img:   sym.img,
+      x:     rand(0, W),
+      y:     randomY ? rand(0, H) : rand(H * 0.5, H + 60),
+      vx:    Math.cos(angle) * speed,
+      vy:    Math.sin(angle) * speed,
+      alpha: rand(0.045, 0.11),
+      size:  rand(14, 28),
+      rot:   rand(0, Math.PI * 2),
+      vrot:  rand(-0.002, 0.002),
     };
   }
 
-  const COUNT = 38;
-  for (let i = 0; i < COUNT; i++) particles.push(spawn());
+  const COUNT = 45;
+  // Scatter initial particles all over screen
+  for (let i = 0; i < COUNT; i++) particles.push(spawn(true));
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
     for (const p of particles) {
-      ctx.save();
-      ctx.globalAlpha = p.alpha;
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot);
-      ctx.font = `${p.size}px serif`;
-      ctx.fillStyle = p.color;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(p.char, 0, 0);
-      ctx.restore();
+      if (!p.img.complete || !p.img.naturalWidth) {
+        // Image not loaded yet, skip
+      } else {
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.drawImage(p.img, -p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+      }
 
       p.x   += p.vx;
       p.y   += p.vy;
       p.rot += p.vrot;
 
-      if (p.y < -40 || p.x < -40 || p.x > W + 40) {
-        Object.assign(p, spawn(), { x: rand(0, W), y: H + 20 });
+      const pad = 60;
+      if (p.x < -pad || p.x > W + pad || p.y < -pad || p.y > H + pad) {
+        Object.assign(p, spawn(false), { x: rand(0, W), y: H + 20 });
       }
     }
     requestAnimationFrame(draw);
