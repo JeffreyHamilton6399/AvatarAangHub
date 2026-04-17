@@ -252,6 +252,31 @@
 
     .click-area { position: absolute; inset: 0; z-index: 11; cursor: pointer; }
 
+    /* ─── Caption overlay ─── */
+    #captionBox {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 19;
+      text-align: center;
+      pointer-events: none;
+      max-width: 80%;
+      display: none;
+    }
+    #captionBox span {
+      display: inline;
+      background: rgba(0,0,0,0.72);
+      color: #fff;
+      font-family: 'Philosopher', serif;
+      font-size: clamp(0.85rem, 2vw, 1.15rem);
+      line-height: 1.6;
+      padding: 0.2em 0.5em;
+      border-radius: 4px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
     /* ─── Controls bar ─── */
     .controls {
       position: absolute; bottom: 24px; left: 24px; right: 24px; z-index: 20;
@@ -404,6 +429,7 @@
         </div>
 
         <div class="click-area" id="clickArea"></div>
+        <div id="captionBox"></div>
 
         <div class="controls" id="controls">
           <div class="progress" id="prog">
@@ -730,27 +756,58 @@ updateVolUI();
 /* ── Fullscreen button ── */
 document.getElementById('fsBtn').addEventListener('click', toggleFullscreen);
 
-/* ── Captions button ── */
-const ccBtn = document.getElementById('ccBtn');
-let captionsOn = false;
+/* ── Captions ── */
+const ccBtn      = document.getElementById('ccBtn');
+const captionBox = document.getElementById('captionBox');
+let captionsOn   = false;
+let srtCues      = [];
+
+function parseSRT(text) {
+  const cues = [];
+  const blocks = text.replace(/\r/g, '').trim().split(/\n\n+/);
+  for (const block of blocks) {
+    const lines = block.split('\n');
+    if (lines.length < 3) continue;
+    const times = lines[1].match(/(\d{2}):(\d{2}):(\d{2})[,\.](\d{3})\s-->\s(\d{2}):(\d{2}):(\d{2})[,\.](\d{3})/);
+    if (!times) continue;
+    const toSec = (h,m,s,ms) => +h*3600 + +m*60 + +s + +ms/1000;
+    cues.push({
+      start: toSec(times[1],times[2],times[3],times[4]),
+      end:   toSec(times[5],times[6],times[7],times[8]),
+      text:  lines.slice(2).join('\n')
+    });
+  }
+  return cues;
+}
+
+fetch('captions.srt')
+  .then(r => r.text())
+  .then(text => { srtCues = parseSRT(text); })
+  .catch(() => {});
+
+function updateCaptions() {
+  if (!captionsOn || !srtCues.length) { captionBox.style.display = 'none'; return; }
+  const t = vid.currentTime;
+  const cue = srtCues.find(c => t >= c.start && t <= c.end);
+  if (cue) {
+    captionBox.innerHTML = '<span>' + cue.text.replace(/\n/g, '<br>') + '</span>';
+    captionBox.style.display = 'block';
+  } else {
+    captionBox.style.display = 'none';
+  }
+}
+
+vid.addEventListener('timeupdate', updateCaptions);
 
 function updateCCUI() {
-  ccBtn.style.color = captionsOn ? 'var(--blue)' : 'rgba(255,255,255,0.6)';
+  ccBtn.style.color  = captionsOn ? 'var(--blue)' : 'rgba(255,255,255,0.6)';
   ccBtn.style.border = captionsOn ? '1px solid var(--blue)' : '1px solid transparent';
-  for (const track of vid.textTracks) {
-    track.mode = captionsOn ? 'showing' : 'hidden';
-  }
+  if (!captionsOn) captionBox.style.display = 'none';
 }
 
 ccBtn.addEventListener('click', () => {
   captionsOn = !captionsOn;
   updateCCUI();
-});
-
-vid.addEventListener('loadedmetadata', () => {
-  for (const track of vid.textTracks) {
-    track.mode = 'hidden';
-  }
 });
 
 updateCCUI();
