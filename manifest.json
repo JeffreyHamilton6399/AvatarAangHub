@@ -1,0 +1,14 @@
+{
+  "name": "Avatar Hub",
+  "short_name": "Avatar Hub",
+  "description": "Watch Avatar: The Last Airbender, The Legend of Korra, and the 2026 animated film.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#04070d",
+  "theme_color": "#04070d",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "images/favicon.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "images/favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
