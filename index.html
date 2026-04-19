@@ -36,11 +36,6 @@
     @keyframes pulseGlowWater { 0%,100%{filter:drop-shadow(0 0 5px #4db8ff)} 50%{filter:drop-shadow(0 0 18px #4db8ff)} }
     @keyframes pulseGlowEarth { 0%,100%{filter:drop-shadow(0 0 5px #6abf69)} 50%{filter:drop-shadow(0 0 18px #6abf69)} }
     @keyframes pulseGlowFire  { 0%,100%{filter:drop-shadow(0 0 5px #f97316)} 50%{filter:drop-shadow(0 0 18px #f97316)} }
-      5%  { opacity:1; }
-      40% { background-position:200% center; opacity:1; }
-      45% { opacity:0; }
-      100%{ background-position:200% center; opacity:0; }
-    }
 
     body {
       background: var(--deep);
@@ -113,8 +108,8 @@
     /* ── Hero ── */
     .hero {
       text-align: center;
-      padding: clamp(4rem,8vh,7rem) 2rem clamp(2.5rem,4vh,4rem);
-      opacity: 0;
+      padding: clamp(4rem,8vh,7rem) 2rem clamp(2.5rem,4vh,3rem);
+      opacity: 0; width: 100%; max-width: 680px;
     }
     body.page-ready .hero { animation: slideUp .9s cubic-bezier(.22,1,.36,1) .1s both; }
 
@@ -145,6 +140,7 @@
       display: grid;
       grid-template-columns: repeat(3,1fr);
       gap: clamp(1.2rem,2.5vw,2rem);
+      padding-top: clamp(1.5rem,3vh,2.5rem);
       padding-bottom: clamp(4rem,8vh,7rem);
       opacity: 0;
     }
@@ -269,7 +265,8 @@
     #mapSplash.map-in .map-title { opacity: 1; transform: translateY(0); }
     #mapSplash.map-in .map-sub   { opacity: 1; }
     #mapSvg {
-      width: clamp(280px,72vw,660px); height: auto;
+      width: clamp(300px,80vw,720px); height: auto; border-radius: 8px;
+      box-shadow: 0 0 60px rgba(77,184,255,.08);
       opacity: 0; transform: scale(.94);
       transition: opacity .9s ease .15s, transform .9s cubic-bezier(.22,1,.36,1) .15s;
     }
@@ -284,10 +281,10 @@
     /* ── Search ── */
     .search-bar-wrap {
       width: 100%; max-width: 600px;
-      position: relative; margin: 0 auto -.5rem;
+      position: relative; margin: 1.8rem auto 0;
       opacity: 0;
     }
-    body.page-ready .search-bar-wrap { animation: slideUp .8s cubic-bezier(.22,1,.36,1) .36s both; }
+    body.page-ready .search-bar-wrap { animation: slideUp .8s cubic-bezier(.22,1,.36,1) .20s both; }
     .search-input {
       width: 100%; padding: .75em 3.2em .75em 1.4em;
       background: rgba(10,17,28,.8); border: 1px solid rgba(255,255,255,.1);
@@ -380,6 +377,60 @@
     }
     .merch-card:hover .merch-cta { background: rgba(201,168,76,.12); border-color: rgba(201,168,76,.65); }
 
+
+    /* ── Continue-watching progress strip on hub cards ── */
+    .card-progress-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: rgba(255,255,255,.08); z-index: 5; overflow: hidden;
+    }
+    .card-progress-fill {
+      height: 100%; background: var(--accent);
+      box-shadow: 0 0 6px rgba(var(--accent-rgb),.7);
+      transition: width .3s ease;
+    }
+    .hub-card .card-cta.resume-cta { color: var(--gold); }
+
+    /* ── Install / Download App button ── */
+    #installBtn {
+      position: fixed; bottom: 14px; left: 110px; z-index: 50;
+      display: none; align-items: center; gap: 6px;
+      font-family: 'Cinzel', serif; font-size: .42rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(201,168,76,.6); background: none; border: 1px solid rgba(201,168,76,.25);
+      border-radius: 20px; padding: .35em 1em; cursor: pointer;
+      transition: color .25s, border-color .25s, background .25s; opacity: .75;
+    }
+    #installBtn:hover { color: var(--gold); border-color: rgba(201,168,76,.65); background: rgba(201,168,76,.08); opacity: 1; }
+    #installBtn.visible { display: inline-flex; }
+    #installModal {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(4,7,13,.88); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+    }
+    #installModal.open { display: flex; }
+    .install-box {
+      background: rgba(10,17,28,.98); border: 1px solid rgba(201,168,76,.25);
+      border-radius: 18px; padding: 2.2rem 2.5rem; max-width: 420px; width: 90%;
+      box-shadow: 0 24px 72px rgba(0,0,0,.7);
+    }
+    .install-box h3 {
+      font-family: 'Cinzel Decorative', serif; font-size: 1rem; letter-spacing: .08em;
+      color: var(--gold); margin-bottom: .6rem;
+    }
+    .install-box p { font-family: 'Philosopher', serif; font-size: .88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+    .install-steps { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.4rem; }
+    .install-steps li { font-family: 'Philosopher', serif; font-size: .85rem; color: rgba(240,244,255,.8); display: flex; gap: .7rem; align-items: flex-start; }
+    .install-steps li span.step-num {
+      font-family: 'Cinzel', serif; font-size: .44rem; letter-spacing: .15em; color: var(--gold);
+      border: 1px solid rgba(201,168,76,.35); border-radius: 50%;
+      width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+    .install-close {
+      width: 100%; font-family: 'Cinzel', serif; font-size: .5rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--muted); background: none; border: 1px solid var(--dim); border-radius: 30px;
+      padding: .6em 1em; cursor: pointer; transition: color .2s, border-color .2s;
+    }
+    .install-close:hover { color: var(--white); border-color: rgba(255,255,255,.3); }
+
     /* ── Ambient sound toggle ── */
     #ambientBtn {
       position: fixed; bottom: 14px; left: 18px; z-index: 50;
@@ -407,112 +458,7 @@
 <!-- ── World-map splash (shown first) ── -->
 <div id="mapSplash">
   <p class="map-title">The Avatar World</p>
-  <svg id="mapSvg" viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar World Map">
-    <defs>
-      <radialGradient id="oceanGrad" cx="50%" cy="50%" r="60%">
-        <stop offset="0%"   stop-color="#0a1828"/>
-        <stop offset="100%" stop-color="#04070d"/>
-      </radialGradient>
-      <filter id="glow4"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <filter id="glow2"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <filter id="softBlur"><feGaussianBlur stdDeviation="1.5"/></filter>
-    </defs>
-    <!-- Ocean -->
-    <rect width="700" height="420" fill="url(#oceanGrad)"/>
-    <!-- Subtle grid lines -->
-    <g stroke="rgba(77,184,255,.04)" stroke-width=".5">
-      <line x1="0" y1="140" x2="700" y2="140"/>
-      <line x1="0" y1="280" x2="700" y2="280"/>
-      <line x1="175" y1="0" x2="175" y2="420"/>
-      <line x1="350" y1="0" x2="350" y2="420"/>
-      <line x1="525" y1="0" x2="525" y2="420"/>
-    </g>
-    <!-- Ice caps glow -->
-    <ellipse cx="350" cy="0" rx="340" ry="38" fill="rgba(77,184,255,.08)" filter="url(#softBlur)"/>
-    <ellipse cx="350" cy="420" rx="310" ry="34" fill="rgba(77,184,255,.08)" filter="url(#softBlur)"/>
-
-    <!-- EARTH KINGDOM — large central landmass -->
-    <g fill="#2d4a2a" stroke="#3a6035" stroke-width=".8">
-      <path d="M110,80 Q140,65 200,68 Q260,70 310,75 Q360,78 390,90 Q420,102 430,130
-               Q440,160 435,200 Q428,240 415,270 Q400,300 380,315
-               Q350,330 310,332 Q270,334 240,325 Q200,312 175,290
-               Q148,265 130,235 Q112,202 108,165 Q104,128 110,80 Z"/>
-      <!-- Ba Sing Se plateau -->
-      <ellipse cx="280" cy="190" rx="38" ry="28" fill="#3a5a36" stroke="#4a7044"/>
-    </g>
-    <!-- Earth Kingdom label -->
-    <text x="258" y="198" font-family="serif" font-size="9" fill="rgba(106,191,105,.75)" text-anchor="middle" letter-spacing="2">EARTH KINGDOM</text>
-    <text x="258" y="210" font-family="serif" font-size="6.5" fill="rgba(106,191,105,.5)" text-anchor="middle" letter-spacing="1.5" font-style="italic">Ba Sing Se</text>
-    <!-- Earth glow -->
-    <path d="M110,80 Q140,65 200,68 Q260,70 310,75 Q360,78 390,90 Q420,102 430,130 Q440,160 435,200 Q428,240 415,270 Q400,300 380,315 Q350,330 310,332 Q270,334 240,325 Q200,312 175,290 Q148,265 130,235 Q112,202 108,165 Q104,128 110,80 Z" fill="none" stroke="rgba(106,191,105,.25)" stroke-width="1.5" filter="url(#glow4)"/>
-
-    <!-- Si Wong Desert patch -->
-    <path d="M340,180 Q370,165 400,172 Q420,178 415,205 Q410,220 385,225 Q355,228 340,210 Z" fill="#5a4520" opacity=".65"/>
-    <text x="375" y="200" font-family="serif" font-size="6" fill="rgba(201,168,76,.5)" text-anchor="middle" letter-spacing="1" font-style="italic">Si Wong Desert</text>
-
-    <!-- FIRE NATION — island chain top-right -->
-    <g fill="#4a1a08" stroke="#7a2e0e" stroke-width=".8">
-      <ellipse cx="555" cy="105" rx="48" ry="28"/>
-      <ellipse cx="610" cy="145" rx="30" ry="18"/>
-      <ellipse cx="575" cy="175" rx="22" ry="14"/>
-      <ellipse cx="540" cy="158" rx="18" ry="12"/>
-    </g>
-    <text x="563" y="108" font-family="serif" font-size="8.5" fill="rgba(249,115,22,.75)" text-anchor="middle" letter-spacing="1.8">FIRE NATION</text>
-    <!-- Fire glow -->
-    <ellipse cx="558" cy="118" rx="62" ry="52" fill="none" stroke="rgba(249,115,22,.2)" stroke-width="1.5" filter="url(#glow4)"/>
-
-    <!-- WATER TRIBE NORTH — top polar band -->
-    <g fill="#0d2a45" stroke="#1a4a7a" stroke-width=".8">
-      <path d="M50,22 Q120,8 200,14 Q270,20 330,18 Q390,16 440,22 Q480,28 500,34 Q470,42 420,42 Q350,44 280,40 Q210,38 145,42 Q90,46 50,40 Z"/>
-    </g>
-    <!-- NWT city dot -->
-    <circle cx="240" cy="28" r="5" fill="#1a6aa0" stroke="#4db8ff" stroke-width="1.2" filter="url(#glow2)"/>
-    <text x="240" y="18" font-family="serif" font-size="6.5" fill="rgba(77,184,255,.8)" text-anchor="middle" letter-spacing="1.2">NORTHERN WATER TRIBE</text>
-
-    <!-- WATER TRIBE SOUTH — bottom polar band -->
-    <g fill="#0d2a45" stroke="#1a4a7a" stroke-width=".8">
-      <path d="M130,395 Q200,385 280,388 Q350,391 420,387 Q470,384 510,390 Q480,402 420,408 Q350,414 280,412 Q200,410 145,406 Z"/>
-    </g>
-    <circle cx="295" cy="395" r="5" fill="#1a6aa0" stroke="#4db8ff" stroke-width="1.2" filter="url(#glow2)"/>
-    <text x="295" y="385" font-family="serif" font-size="6.5" fill="rgba(77,184,255,.65)" text-anchor="middle" letter-spacing="1.2">SOUTHERN WATER TRIBE</text>
-
-    <!-- AIR TEMPLES — four small mountain icons -->
-    <!-- Northern Air Temple -->
-    <g transform="translate(82,120)" filter="url(#glow2)">
-      <polygon points="0,18 10,0 20,18" fill="#d4a010" stroke="#f5c518" stroke-width=".8" opacity=".85"/>
-      <text x="10" y="28" font-family="serif" font-size="5.5" fill="rgba(245,197,24,.65)" text-anchor="middle" letter-spacing=".8">N. Air Temple</text>
-    </g>
-    <!-- Eastern Air Temple -->
-    <g transform="translate(470,250)" filter="url(#glow2)">
-      <polygon points="0,18 10,0 20,18" fill="#d4a010" stroke="#f5c518" stroke-width=".8" opacity=".85"/>
-      <text x="10" y="28" font-family="serif" font-size="5.5" fill="rgba(245,197,24,.65)" text-anchor="middle" letter-spacing=".8">E. Air Temple</text>
-    </g>
-    <!-- Western Air Temple -->
-    <g transform="translate(88,290)" filter="url(#glow2)">
-      <polygon points="0,18 10,0 20,18" fill="#d4a010" stroke="#f5c518" stroke-width=".8" opacity=".85"/>
-      <text x="10" y="28" font-family="serif" font-size="5.5" fill="rgba(245,197,24,.65)" text-anchor="middle" letter-spacing=".8">W. Air Temple</text>
-    </g>
-    <!-- Southern Air Temple -->
-    <g transform="translate(295,330)" filter="url(#glow2)">
-      <polygon points="0,16 9,0 18,16" fill="#d4a010" stroke="#f5c518" stroke-width=".8" opacity=".85"/>
-      <text x="9" y="26" font-family="serif" font-size="5.5" fill="rgba(245,197,24,.65)" text-anchor="middle" letter-spacing=".8">S. Air Temple</text>
-    </g>
-
-    <!-- Serpent's Pass label -->
-    <path d="M385,270 Q400,276 420,272" fill="none" stroke="rgba(200,180,120,.25)" stroke-width=".8" stroke-dasharray="3,2"/>
-    <text x="400" y="268" font-family="serif" font-size="5.5" fill="rgba(200,180,120,.4)" text-anchor="middle" font-style="italic">Serpent's Pass</text>
-
-    <!-- Decorative compass rose -->
-    <g transform="translate(640,370)" fill="rgba(201,168,76,.35)" stroke="rgba(201,168,76,.5)" stroke-width=".6">
-      <polygon points="0,-16 4,0 0,16 -4,0"/>
-      <polygon points="-16,0 0,-4 16,0 0,4" fill="rgba(201,168,76,.2)"/>
-      <circle cx="0" cy="0" r="4" fill="none"/>
-    </g>
-    <text x="640" y="356" font-family="serif" font-size="5" fill="rgba(201,168,76,.4)" text-anchor="middle" letter-spacing="1">N</text>
-
-    <!-- Title label -->
-    <text x="350" y="402" font-family="serif" font-size="7" fill="rgba(200,180,120,.28)" text-anchor="middle" letter-spacing="3" font-style="italic">The Four Nations</text>
-  </svg>
+  <img id="mapSvg" src="images/worldmap.png" alt="Avatar World Map">
   <p class="map-sub">The Four Nations</p>
   <p class="map-hint">Tap anywhere to enter</p>
 </div>
@@ -552,13 +498,12 @@
     <h1 class="hero-main">Avatar Hub</h1>
     <p class="hero-sub">Choose your adventure</p>
     <div class="hero-divider"></div>
-  </div>
-
-  <!-- Search -->
-  <div class="search-bar-wrap">
-    <input type="text" class="search-input" id="searchInput" placeholder="Search episodes across all series…" autocomplete="off" spellcheck="false">
-    <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-    <div class="search-results" id="searchResults"></div>
+    <!-- Search -->
+    <div class="search-bar-wrap">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search episodes across all series…" autocomplete="off" spellcheck="false">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <div class="search-results" id="searchResults"></div>
+    </div>
   </div>
 
   <!-- Navigation Cards -->
@@ -569,6 +514,7 @@
       <div class="card-poster">
         <div class="card-poster-bg" style="background-image:url('images/atlabg.png')"></div>
         <div class="card-poster-overlay"></div>
+        <div class="card-progress-strip" id="atlaProg"><div class="card-progress-fill" id="atlaProgFill" style="width:0%"></div></div>
       </div>
       <div class="card-body">
         <span class="card-label">Original Series</span>
@@ -614,6 +560,7 @@
       <div class="card-poster">
         <div class="card-poster-bg" style="background-image:url('images/korabg.png')"></div>
         <div class="card-poster-overlay"></div>
+        <div class="card-progress-strip" id="korraProg"><div class="card-progress-fill" id="korraProgFill" style="width:0%"></div></div>
       </div>
       <div class="card-body">
         <span class="card-label">Sequel Series</span>
@@ -648,27 +595,36 @@
       <div class="merch-header-line"></div>
     </div>
     <div class="merch-grid">
-      <a href="https://avatarthelastairbendermerch.com/" target="_blank" rel="noopener" class="merch-card">
-        <div class="merch-img-wrap">
-          <img src="https://avatarthelastairbendermerch.com/cdn/shop/files/ATLA_BucketHat_BlackWhiteAang.jpg"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-               alt="Avatar Bucket Hat" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
-          <span style="display:none;font-size:3.5rem;align-items:center;justify-content:center;width:100%;height:100%;">🪖</span>
+      <a href="https://avatarthelastairbenderstore.com/" target="_blank" rel="noopener" class="merch-card">
+        <div class="merch-img-wrap" style="background:linear-gradient(135deg,rgba(10,17,28,.9),rgba(4,7,13,.95));">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;opacity:.75"><path d="M8 12h48l-5 30H13L8 12z" fill="none" stroke="rgba(201,168,76,.7)" stroke-width="2.5" stroke-linejoin="round"/><path d="M22 12c0-5.5 4.5-10 10-10s10 4.5 10 10" fill="none" stroke="rgba(201,168,76,.7)" stroke-width="2.5"/><circle cx="22" cy="48" r="4" fill="rgba(201,168,76,.7)"/><circle cx="42" cy="48" r="4" fill="rgba(201,168,76,.7)"/></svg>
           <span class="merch-badge">Official</span>
         </div>
         <div class="merch-body">
-          <div class="merch-name">Avatar Bucket Hat</div>
-          <div class="merch-series">Avatar: The Last Airbender</div>
-          <div class="merch-footer">
-            <span class="merch-price">$34.99</span>
-            <span class="merch-cta">Shop →</span>
-          </div>
+          <div class="merch-name">Avatar Store</div>
+          <div class="merch-series">avatarthelastairbenderstore.com</div>
+          <div class="merch-footer"><span class="merch-cta">Visit Store →</span></div>
+        </div>
+      </a>
+      <a href="https://avatarthelastairbendermerch.com/" target="_blank" rel="noopener" class="merch-card">
+        <div class="merch-img-wrap" style="background:linear-gradient(135deg,rgba(10,17,28,.9),rgba(4,7,13,.95));">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;opacity:.75"><rect x="10" y="20" width="44" height="36" rx="3" fill="none" stroke="rgba(201,168,76,.7)" stroke-width="2.5"/><path d="M10 28h44" stroke="rgba(201,168,76,.7)" stroke-width="2"/><path d="M22 20c0-5.5 4.5-10 10-10s10 4.5 10 10" fill="none" stroke="rgba(201,168,76,.7)" stroke-width="2.5"/><path d="M22 34h20M22 42h12" stroke="rgba(201,168,76,.5)" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="merch-badge">Official</span>
+        </div>
+        <div class="merch-body">
+          <div class="merch-name">Avatar Merch</div>
+          <div class="merch-series">avatarthelastairbendermerch.com</div>
+          <div class="merch-footer"><span class="merch-cta">Visit Store →</span></div>
         </div>
       </a>
     </div>
   </div>
 
 </div>
+
+<!-- Audio -->
+<audio id="introAudio" src="audio/intro.mp3" preload="auto"></audio>
+<audio id="ambientAudio" src="audio/ambient.mp3" loop preload="auto"></audio>
 
 <!-- Ambient sound button -->
 <button id="ambientBtn" title="Toggle ambient sound">
@@ -680,6 +636,26 @@
   </div>
   Ambient
 </button>
+
+<!-- Download App button -->
+<button id="installBtn" class="visible" title="Download Avatar Hub App">
+  <svg viewBox="0 0 24 24" fill="currentColor" style="width:10px;height:10px;flex-shrink:0"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 7h14v2H5v-2z"/></svg>
+  Download App
+</button>
+
+<!-- Install instructions modal -->
+<div id="installModal">
+  <div class="install-box">
+    <h3>Download Avatar Hub</h3>
+    <p>Install this app to your device for a native, offline-ready experience — no browser chrome.</p>
+    <ul class="install-steps">
+      <li><span class="step-num">1</span><span><strong>iPhone / iPad:</strong> tap the Share icon in Safari, then "Add to Home Screen".</span></li>
+      <li><span class="step-num">2</span><span><strong>Android / Chrome:</strong> tap ⋮ menu, then "Add to Home Screen" or "Install App".</span></li>
+      <li><span class="step-num">3</span><span><strong>Desktop Chrome / Edge:</strong> click the ⊕ icon in the address bar.</span></li>
+    </ul>
+    <button class="install-close" id="installClose">Got it</button>
+  </div>
+</div>
 
 <!-- ── Jeffrey Creates watermark ── -->
 <a class="jeffrey-watermark" href="https://www.youtube.com/@Jeffrey_Creates" target="_blank" rel="noopener">
@@ -708,18 +684,28 @@ function dismissMap() {
   }, 800);
 }
 mapSplash.addEventListener('click', dismissMap, { once: true });
+mapSplash.addEventListener('keydown', e => { if(e.code==='Space'||e.code==='Enter') dismissMap(); });
+mapSplash.setAttribute('tabindex','0');
 setTimeout(dismissMap, 3800); // auto-advance after 3.8s
 
 /* ── Four Elements overlay ── */
 function dismissOverlay() {
   if (overlayDone) return; overlayDone = true;
+  // Play intro audio (user-triggered only)
+  const introAudio = document.getElementById('introAudio');
+  if (introAudio) introAudio.play().catch(()=>{});
   overlay.classList.add('fade-out');
   setTimeout(() => {
     overlay.style.display = 'none';
     document.body.classList.add('page-ready');
+    // Auto-start ambient music after intro
+    setTimeout(()=>{ if(window._startAmbient) window._startAmbient(); }, 800);
   }, 650);
 }
 overlay.addEventListener('click', dismissOverlay, { once: true });
+// Keyboard: Space or Enter also dismisses
+overlay.addEventListener('keydown', e => { if(e.code==='Space'||e.code==='Enter') dismissOverlay(); });
+overlay.setAttribute('tabindex','0');
 // Auto-dismiss 2.8s after map is gone
 mapSplash.addEventListener('click', () => setTimeout(dismissOverlay, 2800), { once: true });
 setTimeout(dismissOverlay, 3800 + 2800); // fallback absolute timer
@@ -781,81 +767,35 @@ document.addEventListener('click', e => { if (!e.target.closest('.search-bar-wra
 searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) runSearch(searchInput.value); });
 
 /* ══════════════════════════════════════════
-   AMBIENT SOUND  (Web Audio pentatonic loop)
+   AMBIENT SOUND  (audio file + fade)
 ══════════════════════════════════════════ */
 (function(){
-  const btn = document.getElementById('ambientBtn');
-  let actx = null, masterGain = null, playing = false;
-  // Avatar-flavored pentatonic notes (Hz): C4, Eb4, F4, G4, Bb4, C5
-  const NOTES = [261.63, 311.13, 349.23, 392.00, 466.16, 523.25, 392.00, 349.23];
-  let noteIdx = 0, scheduledNodes = [];
+  const btn   = document.getElementById('ambientBtn');
+  const audio = document.getElementById('ambientAudio');
+  let playing = false, fadeTimer = null;
 
-  function buildContext() {
-    if (actx) return;
-    actx = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain = actx.createGain();
-    masterGain.gain.setValueAtTime(0, actx.currentTime);
-    masterGain.connect(actx.destination);
+  // Restore saved mute preference (default: play after intro)
+  const savedMuted = localStorage.getItem('avatarhub_ambient_off') === '1';
+
+  function fadeIn(){ 
+    clearInterval(fadeTimer);
+    audio.volume = 0;
+    audio.play().catch(()=>{});
+    fadeTimer = setInterval(()=>{ audio.volume=Math.min(1,audio.volume+0.02); if(audio.volume>=1)clearInterval(fadeTimer); },60);
+    playing=true; btn.classList.add('active');
+    localStorage.setItem('avatarhub_ambient_off','0');
+  }
+  function fadeOut(){
+    clearInterval(fadeTimer);
+    fadeTimer = setInterval(()=>{ audio.volume=Math.max(0,audio.volume-0.04); if(audio.volume<=0){clearInterval(fadeTimer);audio.pause();} },60);
+    playing=false; btn.classList.remove('active');
+    localStorage.setItem('avatarhub_ambient_off','1');
   }
 
-  function playNote(freq, startTime, duration) {
-    const osc  = actx.createOscillator();
-    const gain = actx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, startTime);
-    gain.gain.setValueAtTime(0, startTime);
-    gain.gain.linearRampToValueAtTime(0.18, startTime + 0.12);
-    gain.gain.setValueAtTime(0.18, startTime + duration - 0.25);
-    gain.gain.linearRampToValueAtTime(0, startTime + duration);
-    // Add subtle reverb via second oscillator an octave down
-    const osc2 = actx.createOscillator();
-    const g2   = actx.createGain();
-    osc2.type  = 'sine'; osc2.frequency.setValueAtTime(freq / 2, startTime);
-    g2.gain.setValueAtTime(0, startTime);
-    g2.gain.linearRampToValueAtTime(0.06, startTime + 0.2);
-    g2.gain.linearRampToValueAtTime(0, startTime + duration);
-    osc2.connect(g2); g2.connect(masterGain);
-    osc2.start(startTime); osc2.stop(startTime + duration + 0.1);
-    osc.connect(gain); gain.connect(masterGain);
-    osc.start(startTime); osc.stop(startTime + duration + 0.1);
-    scheduledNodes.push(osc, osc2);
-  }
+  // Called by dismissOverlay to auto-start
+  window._startAmbient = function(){ if(!savedMuted && !playing) fadeIn(); };
 
-  function scheduleLoop() {
-    if (!playing) return;
-    const now = actx.currentTime;
-    let t = now + 0.05;
-    for (let i = 0; i < 8; i++) {
-      const freq = NOTES[(noteIdx + i) % NOTES.length];
-      const dur  = 1.6 + Math.random() * 0.8;
-      playNote(freq, t, dur);
-      t += dur * 0.72;
-    }
-    noteIdx = (noteIdx + 3) % NOTES.length;
-    setTimeout(scheduleLoop, (t - now - 1) * 1000);
-  }
-
-  function startAmbient() {
-    buildContext();
-    if (actx.state === 'suspended') actx.resume();
-    playing = true;
-    masterGain.gain.cancelScheduledValues(actx.currentTime);
-    masterGain.gain.setValueAtTime(masterGain.gain.value, actx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.7, actx.currentTime + 1.2);
-    scheduleLoop();
-    btn.classList.add('active');
-  }
-
-  function stopAmbient() {
-    playing = false;
-    masterGain.gain.cancelScheduledValues(actx.currentTime);
-    masterGain.gain.setValueAtTime(masterGain.gain.value, actx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0, actx.currentTime + 1.5);
-    setTimeout(() => { scheduledNodes.forEach(n => { try { n.stop(); } catch(e){} }); scheduledNodes = []; }, 1600);
-    btn.classList.remove('active');
-  }
-
-  btn.addEventListener('click', () => { playing ? stopAmbient() : startAmbient(); });
+  btn.addEventListener('click', ()=>{ playing ? fadeOut() : fadeIn(); });
 })();
 
 /* ══════════════════════════════════════════
@@ -954,6 +894,84 @@ self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>
     navigator.serviceWorker.register(swUrl).catch(()=>{});
   }
 })();
+
+/* ══════════════════════════════════════════
+   CONTINUE WATCHING — hub card progress strips
+══════════════════════════════════════════ */
+(function(){
+  // ATLA: 61 eps across 3 books, Korra: 52 eps across 4 books
+  const atlaTotal=61, korraTotal=52;
+  function countProgress(prefix, books){
+    let found=0, total=0;
+    books.forEach(([b,n])=>{
+      total++;
+      const v=parseFloat(localStorage.getItem(`${prefix}_b${b}_e${n}`)||0);
+      if(v>5) found++;
+    });
+    return total>0 ? found/total : 0;
+  }
+  function buildEpList(books){ return books.map(([b,n])=>[b,n]); }
+
+  // Build ATLA ep list
+  const atlaEps=[];
+  [[1,20],[2,20],[3,21]].forEach(([b,n])=>{ for(let i=1;i<=n;i++) atlaEps.push([b,i]); });
+  // Build Korra ep list
+  const korraEps=[];
+  [[1,12],[2,14],[3,13],[4,13]].forEach(([b,n])=>{ for(let i=1;i<=n;i++) korraEps.push([b,i]); });
+
+  function getSeriesProgress(prefix, epList){
+    let withProgress=0;
+    epList.forEach(([b,n])=>{ if(parseFloat(localStorage.getItem(`${prefix}_b${b}_e${n}`)||0)>5) withProgress++; });
+    return epList.length>0 ? withProgress/epList.length : 0;
+  }
+
+  const atlaFill  = document.getElementById('atlaProgFill');
+  const korraFill = document.getElementById('korraProgFill');
+  const atlaCta   = document.getElementById('atlaCta');
+  const korraCta  = document.getElementById('korraCta');
+
+  const atlaP  = getSeriesProgress('atlaepisodes', atlaEps);
+  const korraP = getSeriesProgress('koraepisodes', korraEps);
+
+  if(atlaFill&&atlaP>0){
+    atlaFill.style.width=(atlaP*100)+'%';
+    if(atlaCta){ atlaCta.innerHTML='Resume <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;flex-shrink:0"><path d="M8 5v14l11-7z"/></svg>'; atlaCta.classList.add('resume-cta'); }
+  }
+  if(korraFill&&korraP>0){
+    korraFill.style.width=(korraP*100)+'%';
+    if(korraCta){ korraCta.innerHTML='Resume <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;flex-shrink:0"><path d="M8 5v14l11-7z"/></svg>'; korraCta.classList.add('resume-cta'); }
+  }
+})();
+
+/* ══════════════════════════════════════════
+   INSTALL / DOWNLOAD APP BUTTON
+══════════════════════════════════════════ */
+(function(){
+  const btn   = document.getElementById('installBtn');
+  const modal = document.getElementById('installModal');
+  const close = document.getElementById('installClose');
+  let deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  btn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    } else {
+      modal.classList.add('open');
+    }
+  });
+
+  close.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if(e.target===modal) modal.classList.remove('open'); });
+  window.addEventListener('appinstalled', () => btn.classList.remove('visible'));
+})();
+
 </script>
 </body>
 </html>
