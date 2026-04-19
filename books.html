@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Avatar Books — Graphic Novels</title>
+  <meta name="theme-color" content="#04070d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Avatar Books">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+  <link rel="icon" type="image/jpeg" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700;900&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --deep:#04070d; --panel:#0a111c; --blue:#4db8ff; --white:#f0f4ff;
+      --muted:#6b8aab; --dim:#2d3f56; --border:rgba(255,255,255,0.06);
+      --gold:#c9a84c; --air:#f5c518; --water:#4db8ff; --earth:#6abf69; --fire:#f97316;
+      --books:#a87ccc; --books-rgb:168,124,204;
+    }
+    @keyframes slideUp    { from{opacity:0;transform:translateY(36px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes overlayOut { from{opacity:1} to{opacity:0} }
+    @keyframes pulseGlowAir   { 0%,100%{filter:drop-shadow(0 0 4px #f5c518)} 50%{filter:drop-shadow(0 0 14px #f5c518)} }
+    @keyframes pulseGlowWater { 0%,100%{filter:drop-shadow(0 0 4px #4db8ff)} 50%{filter:drop-shadow(0 0 14px #4db8ff)} }
+    @keyframes pulseGlowEarth { 0%,100%{filter:drop-shadow(0 0 4px #6abf69)} 50%{filter:drop-shadow(0 0 14px #6abf69)} }
+    @keyframes pulseGlowFire  { 0%,100%{filter:drop-shadow(0 0 4px #f97316)} 50%{filter:drop-shadow(0 0 14px #f97316)} }
+    @keyframes pulseGlowBooks { 0%,100%{filter:drop-shadow(0 0 4px #a87ccc)} 50%{filter:drop-shadow(0 0 14px #a87ccc)} }
+    @keyframes cardIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+    body { background:var(--deep); color:var(--white); font-family:'Philosopher',Georgia,serif; min-height:100vh; overflow-x:hidden; }
+    .bg-layer { position:fixed; inset:0; background-image:url('images/booksbg.png'); background-size:cover; background-position:center top; filter:blur(8px) brightness(.22) saturate(1.4); transform:scale(1.04); z-index:0; }
+    .bg-layer::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,rgba(4,7,13,.55) 0%,transparent 35%,transparent 65%,rgba(4,7,13,.7) 100%); }
+
+    /* Intro overlay */
+    #introOverlay { position:fixed; inset:0; z-index:100; background:rgba(4,7,13,.72); backdrop-filter:blur(2px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3rem; cursor:pointer; }
+    #introOverlay.fade-out { animation:overlayOut .65s ease forwards; pointer-events:none; }
+    .intro-tagline { font-family:'Philosopher',serif; font-size:clamp(.6rem,1.6vw,.8rem); font-style:italic; letter-spacing:.5em; text-transform:uppercase; color:rgba(200,180,120,.55); opacity:0; transition:opacity .6s ease .15s; }
+    #introOverlay.symbols-in .intro-tagline { opacity:1; }
+    .symbols-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(2rem,5vw,5rem); align-items:center; justify-items:center; }
+    @media(max-width:600px){ .symbols-grid{ grid-template-columns:repeat(2,1fr); gap:2rem; } }
+    .sym-item { display:flex; flex-direction:column; align-items:center; gap:.9rem; opacity:0; transform:scale(.78); transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1); }
+    #introOverlay.symbols-in .sym-item { opacity:1; transform:scale(1); }
+    .sym-img  { width:clamp(64px,8vw,100px); height:clamp(64px,8vw,100px); object-fit:contain; }
+    .sym-item.air   .sym-img { animation:pulseGlowAir   2.6s ease-in-out infinite 0s; }
+    .sym-item.water .sym-img { animation:pulseGlowWater 2.6s ease-in-out infinite .4s; }
+    .sym-item.earth .sym-img { animation:pulseGlowEarth 2.6s ease-in-out infinite .8s; }
+    .sym-item.fire  .sym-img { animation:pulseGlowFire  2.6s ease-in-out infinite 1.2s; }
+    .sym-label { font-family:'Philosopher',serif; font-size:clamp(.55rem,1.3vw,.7rem); letter-spacing:.3em; text-transform:uppercase; }
+    .sym-item.air   .sym-label { color:var(--air); }
+    .sym-item.water .sym-label { color:var(--water); }
+    .sym-item.earth .sym-label { color:var(--earth); }
+    .sym-item.fire  .sym-label { color:var(--fire); }
+
+    /* Page */
+    .page { position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+    .anim-header,.anim-title,.anim-sub,.anim-content { opacity:0; }
+    body.page-ready .anim-header  { animation:slideUp .7s cubic-bezier(.22,1,.36,1) .05s both; }
+    body.page-ready .anim-title   { animation:slideUp .8s cubic-bezier(.22,1,.36,1) .18s both; }
+    body.page-ready .anim-sub     { animation:slideUp .8s cubic-bezier(.22,1,.36,1) .30s both; }
+    body.page-ready .anim-content { animation:slideUp .9s cubic-bezier(.22,1,.36,1) .42s both; }
+
+    header { padding:1.4rem 4rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+    .back-link { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); text-decoration:none; border:1px solid var(--dim); padding:.4em 1.2em; border-radius:30px; transition:color .2s,border-color .2s; display:flex; align-items:center; gap:.5em; }
+    .back-link:hover { color:var(--gold); border-color:rgba(201,168,76,.4); }
+
+    .hero { text-align:center; padding:4rem 2rem 2.5rem; }
+    .hero-main { font-family:'Cinzel Decorative',serif; font-weight:900; font-size:clamp(2rem,5vw,4rem); letter-spacing:.1em; background:linear-gradient(135deg,#fff 0%,#e8d4ff 35%,#c89df5 65%,#a87ccc 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:.4rem; }
+    .hero-sub { font-family:'Philosopher',serif; font-style:italic; font-size:clamp(.9rem,2.5vw,1.4rem); color:var(--muted); letter-spacing:.25em; margin-bottom:.6rem; }
+    .hero-badge { display:inline-block; font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.3em; text-transform:uppercase; color:var(--books); border:1px solid rgba(var(--books-rgb),.35); padding:.35em 1.2em; border-radius:20px; background:rgba(var(--books-rgb),.06); }
+
+    /* Series selector */
+    .below-content { width:100%; max-width:1400px; margin:0 auto; padding:2rem clamp(1.5rem,5vw,4rem) 6rem; display:flex; flex-direction:column; gap:0; }
+    .section-divider { display:flex; align-items:center; gap:1rem; margin-bottom:2.5rem; }
+    .section-divider-line { flex:1; height:1px; background:var(--border); }
+    .section-divider-inner { display:flex; align-items:center; gap:.7rem; white-space:nowrap; }
+    .section-divider-title { font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.35em; text-transform:uppercase; color:var(--muted); }
+    .divider-sym { width:14px; height:14px; object-fit:contain; opacity:.55; animation:pulseGlowBooks 2.6s ease-in-out infinite; }
+
+    /* Series pill selector */
+    .season-bar { display:flex; align-items:center; gap:1.2rem; margin-bottom:2rem; position:relative; }
+    .season-label { font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+    .season-pill-wrap { position:relative; }
+    .season-pill { display:flex; align-items:center; gap:.6em; font-family:'Cinzel Decorative',serif; font-size:clamp(.7rem,1.5vw,.88rem); letter-spacing:.06em; color:var(--white); background:rgba(10,17,28,.8); border:1px solid rgba(255,255,255,.14); border-radius:30px; padding:.5em 1.1em .5em .9em; cursor:pointer; transition:border-color .2s,background .2s; user-select:none; }
+    .season-pill:hover, .season-pill.open { border-color:rgba(255,255,255,.3); background:rgba(20,30,50,.9); }
+    .season-pill-sym { width:18px; height:18px; object-fit:contain; flex-shrink:0; }
+    .season-pill-chevron { width:14px; height:14px; margin-left:.2em; transition:transform .25s; flex-shrink:0; opacity:.6; }
+    .season-pill.open .season-pill-chevron { transform:rotate(180deg); }
+    .season-dropdown { position:fixed; z-index:200; background:rgba(8,14,26,.97); border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:.5rem; min-width:220px; backdrop-filter:blur(20px); box-shadow:0 12px 40px rgba(0,0,0,.6); opacity:0; transform:translateY(-6px); pointer-events:none; transition:opacity .2s,transform .2s; }
+    .season-dropdown.open { opacity:1; transform:translateY(0); pointer-events:all; }
+    .season-opt { display:flex; align-items:center; gap:.75rem; padding:.7rem 1rem; border-radius:9px; cursor:pointer; transition:background .15s; user-select:none; }
+    .season-opt:hover { background:rgba(255,255,255,.07); }
+    .season-opt.active { background:rgba(255,255,255,.06); }
+    .season-opt-sym { width:22px; height:22px; object-fit:contain; flex-shrink:0; }
+    .season-opt-info {}
+    .season-opt-name { font-family:'Cinzel Decorative',serif; font-size:.78rem; letter-spacing:.04em; }
+    .season-opt-count { font-family:'Philosopher',serif; font-size:.72rem; color:var(--muted); font-style:italic; margin-top:.1rem; }
+    .season-opt-check { margin-left:auto; width:14px; height:14px; opacity:0; flex-shrink:0; }
+    .season-opt.active .season-opt-check { opacity:1; }
+
+    /* Book grid */
+    .book-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:.75rem; padding:.5rem 0 2rem; }
+    .book-card { background:rgba(8,14,26,.7); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:1.1rem 1.2rem; cursor:pointer; transition:border-color .25s,background .25s,transform .2s,box-shadow .25s; animation:cardIn .3s ease both; display:flex; flex-direction:column; gap:.45rem; position:relative; backdrop-filter:blur(4px); }
+    .book-card:hover { background:rgba(14,22,40,.92); transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,.4),0 0 0 1px rgba(168,124,204,.12); border-color:rgba(168,124,204,.22); }
+    .book-card.active { border-color:rgba(var(--books-rgb),.55); background:rgba(var(--books-rgb),.09); box-shadow:0 0 22px rgba(var(--books-rgb),.12),0 0 0 1px rgba(var(--books-rgb),.2); }
+    .book-card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:.1rem; }
+    .book-num { font-family:'Cinzel',serif; font-size:.43rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
+    .book-now-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:3px; display:none; background:var(--books); animation:pulseGlowBooks 2s ease-in-out infinite; }
+    .book-card.active .book-now-dot { display:block; }
+    .book-title-text { font-family:'Philosopher',serif; font-size:.88rem; color:var(--white); line-height:1.4; }
+    .book-series-label { font-family:'Cinzel',serif; font-size:.4rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-top:.1rem; }
+    .book-open-icon { position:absolute; bottom:.7rem; right:.8rem; opacity:0; transition:opacity .2s; }
+    .book-card:hover .book-open-icon { opacity:.5; }
+
+    /* PDF viewer shell */
+    .viewer-section { width:100%; max-width:1400px; margin:0 auto; padding:0 clamp(1.5rem,5vw,4rem); }
+    .now-reading-bar { display:flex; align-items:center; gap:1rem; padding:.8rem 1.2rem .8rem 0; margin-bottom:.5rem; opacity:0; transition:opacity .4s; }
+    .nr-dot { width:6px; height:6px; border-radius:50%; background:var(--books); flex-shrink:0; animation:pulseGlowBooks 2s ease-in-out infinite; }
+    .nr-label { font-family:'Cinzel',serif; font-size:.46rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+    .nr-title { font-family:'Philosopher',serif; font-size:clamp(.85rem,1.5vw,1rem); color:var(--white); font-style:italic; }
+    .nr-ep { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-left:auto; white-space:nowrap; }
+
+    .viewer-frame { position:relative; padding:5px; border-radius:20px; background:linear-gradient(135deg,rgba(168,124,204,.75) 0%,rgba(100,70,140,.35) 25%,rgba(200,160,230,.55) 50%,rgba(100,70,140,.30) 75%,rgba(168,124,204,.70) 100%); box-shadow:0 0 0 1px rgba(168,124,204,.18),0 0 40px rgba(168,124,204,.13),0 0 80px rgba(168,124,204,.06); }
+    .corner { position:absolute; z-index:30; width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:rgba(4,7,13,.85); border-radius:50%; box-shadow:0 0 0 1px rgba(168,124,204,.3); }
+    .corner-img { width:26px; height:26px; object-fit:contain; opacity:.85; }
+    .corner-tl{top:-20px;left:-20px} .corner-tr{top:-20px;right:-20px} .corner-bl{bottom:-20px;left:-20px} .corner-br{bottom:-20px;right:-20px}
+    .corner-water { animation:pulseGlowWater 2.6s ease-in-out infinite .4s; }
+    .corner-earth { animation:pulseGlowEarth 2.6s ease-in-out infinite .8s; }
+    .corner-fire  { animation:pulseGlowFire  2.6s ease-in-out infinite 1.2s; }
+    .corner-air   { animation:pulseGlowAir   2.6s ease-in-out infinite 0s; }
+
+    .viewer-shell { background:#111; border-radius:16px; overflow:hidden; position:relative; min-height:600px; display:flex; flex-direction:column; }
+    #pdfFrame { width:100%; height:80vh; min-height:500px; border:none; background:#111; display:block; }
+    .viewer-placeholder { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.2rem; padding:4rem 2rem; }
+    .placeholder-icon { opacity:.18; }
+    .placeholder-text { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.4em; text-transform:uppercase; color:var(--muted); text-align:center; line-height:1.8; }
+
+    /* Controls bar below viewer */
+    .viewer-controls { display:flex; align-items:center; justify-content:center; gap:1rem; padding:1rem 1.5rem; background:rgba(8,12,22,.78); backdrop-filter:blur(28px); border-top:1px solid rgba(255,255,255,.07); border-radius:0 0 16px 16px; }
+    .vcbtn { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); background:none; border:1px solid var(--dim); padding:.45em 1.2em; border-radius:20px; cursor:pointer; transition:color .2s,border-color .2s,background .2s; text-decoration:none; display:flex; align-items:center; gap:.4em; }
+    .vcbtn:hover { color:var(--books); border-color:rgba(var(--books-rgb),.5); background:rgba(var(--books-rgb),.06); }
+    .vcbtn svg { width:12px; height:12px; flex-shrink:0; }
+    .vcbtn-primary { color:var(--books); border-color:rgba(var(--books-rgb),.4); background:rgba(var(--books-rgb),.08); }
+    .vcbtn-primary:hover { background:rgba(var(--books-rgb),.18); border-color:rgba(var(--books-rgb),.7); }
+
+    /* Info panel */
+    .info-panel { display:flex; gap:3rem; flex-wrap:wrap; margin-bottom:3.5rem; margin-top:3rem; }
+    .info-main { flex:1; min-width:260px; }
+    .info-title { font-family:'Cinzel Decorative',serif; font-size:clamp(1.1rem,2.5vw,1.6rem); letter-spacing:.06em; margin-bottom:.6rem; background:linear-gradient(135deg,#fff 0%,#d4b8ff 50%,#a87ccc 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .info-meta { font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:.9rem; display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+    .dot { opacity:.4; }
+    .genre-tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.1rem; }
+    .genre-tag { font-family:'Cinzel',serif; font-size:.42rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); border:1px solid var(--dim); padding:.3em .9em; border-radius:20px; background:rgba(255,255,255,.03); }
+    .info-synopsis { font-family:'Philosopher',serif; font-size:clamp(.85rem,1.5vw,.98rem); color:rgba(240,244,255,.75); line-height:1.75; }
+    .info-divider { width:1px; background:var(--border); flex-shrink:0; align-self:stretch; }
+    .info-stats { display:flex; flex-direction:column; gap:1.1rem; min-width:220px; }
+    .stat-item { display:flex; flex-direction:column; gap:.2rem; }
+    .stat-label { font-family:'Cinzel',serif; font-size:.42rem; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); }
+    .stat-value { font-family:'Philosopher',serif; font-size:.9rem; color:var(--white); }
+
+    [data-reveal] { opacity:0; transform:translateY(32px); transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1); }
+    [data-reveal].revealed { opacity:1; transform:translateY(0); }
+
+    .jeffrey-watermark { position:fixed; bottom:14px; right:18px; z-index:50; display:inline-flex; align-items:center; gap:5px; text-decoration:none; font-family:'Cinzel',serif; font-size:.42rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(107,138,171,.45); transition:color .2s,opacity .2s; opacity:.6; }
+    .jeffrey-watermark:hover { color:rgba(240,244,255,.7); opacity:1; }
+
+    @media(max-width:768px) {
+      header { padding:1.5rem 2rem; }
+      .info-panel { flex-direction:column; }
+      .info-divider { display:none; }
+      .book-grid { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="introOverlay" title="Click to enter">
+  <p class="intro-tagline">Four elements. One destiny.</p>
+  <div class="symbols-grid">
+    <div class="sym-item water"><img src="images/water.png" alt="Water" class="sym-img"><span class="sym-label">Water</span></div>
+    <div class="sym-item earth"><img src="images/earth.png" alt="Earth" class="sym-img"><span class="sym-label">Earth</span></div>
+    <div class="sym-item fire"><img src="images/fire.png" alt="Fire" class="sym-img"><span class="sym-label">Fire</span></div>
+    <div class="sym-item air"><img src="images/air.png" alt="Air" class="sym-img"><span class="sym-label">Air</span></div>
+  </div>
+</div>
+
+<div class="bg-layer"></div>
+
+<div class="page">
+  <header class="anim-header">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:11px;height:11px;flex-shrink:0"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Hub
+    </a>
+  </header>
+
+  <section class="hero">
+    <h1 class="hero-main anim-title">The Avatar Books</h1>
+    <p class="hero-sub anim-sub">Graphic Novels &amp; Comics</p>
+    <span class="hero-badge anim-sub" style="animation-delay:.38s">Dark Horse Comics</span>
+  </section>
+
+  <!-- PDF Viewer -->
+  <section class="viewer-section anim-content">
+    <div class="now-reading-bar" id="nowReadingBar">
+      <div class="nr-dot"></div>
+      <span class="nr-label">Now Reading</span>
+      <span class="nr-title" id="nrTitle">Select a book below</span>
+      <span class="nr-ep" id="nrSeries"></span>
+    </div>
+    <div class="viewer-frame" id="viewerFrame">
+      <div class="corner corner-tl"><img src="images/water.png" alt="" class="corner-img corner-water"></div>
+      <div class="corner corner-tr"><img src="images/earth.png" alt="" class="corner-img corner-earth"></div>
+      <div class="corner corner-bl"><img src="images/fire.png" alt="" class="corner-img corner-fire"></div>
+      <div class="corner corner-br"><img src="images/air.png" alt="" class="corner-img corner-air"></div>
+      <div class="viewer-shell" id="viewerShell">
+        <div class="viewer-placeholder" id="viewerPlaceholder">
+          <svg class="placeholder-icon" viewBox="0 0 64 64" width="80" height="80" fill="rgba(168,124,204,.6)">
+            <path d="M10 8h28l16 16v32H10V8zm26 0v16h16M22 28h20M22 36h20M22 44h12"/>
+            <rect x="10" y="8" width="44" height="48" rx="2" fill="none" stroke="rgba(168,124,204,.6)" stroke-width="2.5"/>
+            <path d="M38 8v16h16" fill="none" stroke="rgba(168,124,204,.6)" stroke-width="2.5"/>
+            <line x1="22" y1="28" x2="42" y2="28" stroke="rgba(168,124,204,.4)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="22" y1="36" x2="42" y2="36" stroke="rgba(168,124,204,.4)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="22" y1="44" x2="34" y2="44" stroke="rgba(168,124,204,.4)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <p class="placeholder-text">Select a book from the list below<br>to begin reading</p>
+        </div>
+        <iframe id="pdfFrame" style="display:none;" title="Book Viewer"></iframe>
+        <div class="viewer-controls" id="viewerControls" style="display:none;">
+          <button class="vcbtn" id="prevBookBtn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+            Previous
+          </button>
+          <a class="vcbtn vcbtn-primary" id="openPdfBtn" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            Open in New Tab
+          </a>
+          <button class="vcbtn" id="nextBookBtn">
+            Next
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="below-content anim-content" style="animation-delay:.55s">
+
+    <!-- Book picker -->
+    <div data-reveal style="margin-top:3rem;">
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-inner">
+          <img src="images/air.png" alt="" class="divider-sym">
+          <span class="section-divider-title">Choose Your Book</span>
+          <img src="images/air.png" alt="" class="divider-sym">
+        </div>
+        <div class="section-divider-line"></div>
+      </div>
+    </div>
+
+    <!-- Series pill selector -->
+    <div class="season-bar">
+      <span class="season-label">Series</span>
+      <div class="season-pill-wrap">
+        <div class="season-pill" id="seriesPill">
+          <img class="season-pill-sym" id="pillSym" src="images/water.png" alt="">
+          <span id="pillLabel">The Last Airbender</span>
+          <svg class="season-pill-chevron" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </div>
+        <div class="season-dropdown" id="seriesDropdown"></div>
+      </div>
+    </div>
+
+    <div class="book-grid" id="bookGrid"></div>
+
+    <!-- Info -->
+    <div class="info-panel" data-reveal>
+      <div class="info-main">
+        <h2 class="info-title">Avatar Graphic Novels</h2>
+        <div class="info-meta">
+          <span>2010 – Present</span><span class="dot">·</span>
+          <span>Dark Horse Comics</span><span class="dot">·</span>
+          <span>Official Canon</span>
+        </div>
+        <div class="genre-tags">
+          <span class="genre-tag">Adventure</span>
+          <span class="genre-tag">Fantasy</span>
+          <span class="genre-tag">Action</span>
+          <span class="genre-tag">Graphic Novel</span>
+          <span class="genre-tag">Canon</span>
+        </div>
+        <p class="info-synopsis">
+          The official Avatar graphic novel series bridges the gaps between the animated shows,
+          continuing the stories of Aang, Korra, and their friends in full canon adventures
+          published by Dark Horse Comics. Written and overseen by the original show creators,
+          these books expand the Avatar universe with stories that couldn't be told on screen.
+        </p>
+      </div>
+      <div class="info-divider"></div>
+      <div class="info-stats">
+        <div class="stat-item" data-reveal data-reveal-delay="0.05">
+          <span class="stat-label">Publisher</span>
+          <span class="stat-value">Dark Horse Comics</span>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="0.12">
+          <span class="stat-label">Format</span>
+          <span class="stat-value">Graphic Novel · PDF</span>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="0.19">
+          <span class="stat-label">Canon Status</span>
+          <span class="stat-value">Official — approved by DiMartino &amp; Konietzko</span>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="0.26">
+          <span class="stat-label">Series</span>
+          <span class="stat-value">The Last Airbender · The Legend of Korra</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer style="height:2rem"></footer>
+</div>
+
+<a class="jeffrey-watermark" href="https://www.youtube.com/@Jeffrey_Creates" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" style="width:9px;height:9px;fill:#ff1c1c;flex-shrink:0"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+  Jeffrey Creates
+</a>
+
+<script>
+/* ─── CONFIG ─── */
+const GH    = 'https://github.com/JeffreyHamilton6399/Legend-of-Aang-The-Last-Airbender/releases/download';
+const ASSETS= 'images';
+
+const SERIES = [
+  {
+    id: 'atla',
+    label: 'The Last Airbender',
+    symFile: 'water.png',
+    symAnim: 'pulseGlowWater',
+    symColor: 'var(--water)',
+    books: [
+      { title: 'The Promise, Part 1',       tag: 'books-atla', file: 'thepromise1.pdf' },
+      { title: 'The Promise, Part 2',       tag: 'books-atla', file: 'thepromise2.pdf' },
+      { title: 'The Promise, Part 3',       tag: 'books-atla', file: 'thepromise3.pdf' },
+      { title: 'The Search, Part 1',        tag: 'books-atla', file: 'thesearch1.pdf' },
+      { title: 'The Search, Part 2',        tag: 'books-atla', file: 'thesearch2.pdf' },
+      { title: 'The Search, Part 3',        tag: 'books-atla', file: 'thesearch3.pdf' },
+      { title: 'The Rift, Part 1',          tag: 'books-atla', file: 'therift1.pdf' },
+      { title: 'The Rift, Part 2',          tag: 'books-atla', file: 'therift2.pdf' },
+      { title: 'The Rift, Part 3',          tag: 'books-atla', file: 'therift3.pdf' },
+      { title: 'Smoke and Shadow, Part 1',  tag: 'books-atla', file: 'smokeandshadow1.pdf' },
+      { title: 'Smoke and Shadow, Part 2',  tag: 'books-atla', file: 'smokeandshadow2.pdf' },
+      { title: 'Smoke and Shadow, Part 3',  tag: 'books-atla', file: 'smokeandshadow3.pdf' },
+      { title: 'North and South, Part 1',   tag: 'books-atla', file: 'northandsouth1.pdf' },
+      { title: 'North and South, Part 2',   tag: 'books-atla', file: 'northandsouth2.pdf' },
+      { title: 'North and South, Part 3',   tag: 'books-atla', file: 'northandsouth3.pdf' },
+      { title: 'Imbalance, Part 1',         tag: 'books-atla', file: 'imbalance1.pdf' },
+      { title: 'Imbalance, Part 2',         tag: 'books-atla', file: 'imbalance2.pdf' },
+      { title: 'Imbalance, Part 3',         tag: 'books-atla', file: 'imbalance3.pdf' },
+    ]
+  },
+  {
+    id: 'korra',
+    label: 'The Legend of Korra',
+    symFile: 'earth.png',
+    symAnim: 'pulseGlowEarth',
+    symColor: 'var(--earth)',
+    books: [
+      { title: 'Turf Wars, Part 1',         tag: 'books-korra', file: 'turfwars1.pdf' },
+      { title: 'Turf Wars, Part 2',         tag: 'books-korra', file: 'turfwars2.pdf' },
+      { title: 'Turf Wars, Part 3',         tag: 'books-korra', file: 'turfwars3.pdf' },
+      { title: 'Ruins of the Empire, Part 1', tag: 'books-korra', file: 'ruinsoftheempire1.pdf' },
+      { title: 'Ruins of the Empire, Part 2', tag: 'books-korra', file: 'ruinsoftheempire2.pdf' },
+      { title: 'Ruins of the Empire, Part 3', tag: 'books-korra', file: 'ruinsoftheempire3.pdf' },
+    ]
+  }
+];
+
+/* State */
+let currentSeries = 0;
+let currentBookIdx = null;
+
+/* Intro overlay */
+const overlay = document.getElementById('introOverlay');
+let dismissed = false;
+requestAnimationFrame(() => setTimeout(() => overlay.classList.add('symbols-in'), 80));
+function dismissOverlay(){
+  if(dismissed) return; dismissed = true;
+  overlay.classList.add('fade-out');
+  setTimeout(() => { overlay.style.display = 'none'; document.body.classList.add('page-ready'); }, 650);
+}
+overlay.addEventListener('click', dismissOverlay, { once: true });
+setTimeout(dismissOverlay, 2800);
+
+/* Refs */
+const pill        = document.getElementById('seriesPill');
+const pillSym     = document.getElementById('pillSym');
+const pillLabel   = document.getElementById('pillLabel');
+const dropdown    = document.getElementById('seriesDropdown');
+const bookGrid    = document.getElementById('bookGrid');
+const pdfFrame    = document.getElementById('pdfFrame');
+const placeholder = document.getElementById('viewerPlaceholder');
+const viewerCtrl  = document.getElementById('viewerControls');
+const nrBar       = document.getElementById('nowReadingBar');
+const nrTitle     = document.getElementById('nrTitle');
+const nrSeries    = document.getElementById('nrSeries');
+const openPdfBtn  = document.getElementById('openPdfBtn');
+
+/* Build dropdown */
+document.body.appendChild(dropdown);
+SERIES.forEach((s, i) => {
+  const opt = document.createElement('div');
+  opt.className = 'season-opt' + (i === 0 ? ' active' : '');
+  opt.dataset.idx = i;
+  opt.innerHTML = `
+    <img class="season-opt-sym" src="${ASSETS}/${s.symFile}" alt="" style="animation:${s.symAnim} 2.4s ease-in-out infinite;">
+    <div class="season-opt-info">
+      <div class="season-opt-name" style="color:${s.symColor}">${s.label}</div>
+      <div class="season-opt-count">${s.books.length} Book${s.books.length!==1?'s':''}</div>
+    </div>
+    <svg class="season-opt-check" viewBox="0 0 24 24" fill="${s.symColor}"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`;
+  opt.addEventListener('click', () => { selectSeries(i); closePill(); });
+  dropdown.appendChild(opt);
+});
+
+function setPill(idx) {
+  const s = SERIES[idx];
+  pillSym.src = `${ASSETS}/${s.symFile}`;
+  pillSym.style.animation = `${s.symAnim} 2.4s ease-in-out infinite`;
+  pillLabel.textContent = s.label;
+  pillLabel.style.color = s.symColor;
+  dropdown.querySelectorAll('.season-opt').forEach(o => {
+    o.classList.toggle('active', parseInt(o.dataset.idx) === idx);
+  });
+}
+
+function openPill() {
+  const rect = pill.getBoundingClientRect();
+  dropdown.style.top  = (rect.bottom + 8) + 'px';
+  dropdown.style.left = rect.left + 'px';
+  pill.classList.add('open');
+  dropdown.classList.add('open');
+}
+function closePill() { pill.classList.remove('open'); dropdown.classList.remove('open'); }
+pill.addEventListener('click', e => { e.stopPropagation(); pill.classList.contains('open') ? closePill() : openPill(); });
+document.addEventListener('click', () => closePill());
+dropdown.addEventListener('click', e => e.stopPropagation());
+
+function bookUrl(seriesIdx, bookIdx) {
+  const s = SERIES[seriesIdx];
+  const b = s.books[bookIdx];
+  return `${GH}/${b.tag}/${b.file}`;
+}
+
+function loadBook(seriesIdx, bookIdx) {
+  currentSeries  = seriesIdx;
+  currentBookIdx = bookIdx;
+  const s = SERIES[seriesIdx];
+  const b = s.books[bookIdx];
+  const url = bookUrl(seriesIdx, bookIdx);
+
+  // Update now-reading bar
+  nrTitle.textContent  = b.title;
+  nrSeries.textContent = s.label;
+  nrBar.style.opacity  = '1';
+
+  // Show iframe, hide placeholder
+  placeholder.style.display = 'none';
+  pdfFrame.style.display    = 'block';
+  viewerCtrl.style.display  = 'flex';
+  pdfFrame.src = url;
+  openPdfBtn.href = url;
+
+  // Save last-read
+  localStorage.setItem('avatarbooks_last', JSON.stringify({ seriesIdx, bookIdx }));
+
+  // Highlight card
+  renderBooks(seriesIdx);
+  document.querySelector('.viewer-section').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function renderBooks(seriesIdx) {
+  const s = SERIES[seriesIdx];
+  bookGrid.innerHTML = '';
+  s.books.forEach((b, i) => {
+    const card = document.createElement('div');
+    card.className = 'book-card' + (seriesIdx === currentSeries && i === currentBookIdx ? ' active' : '');
+    card.dataset.sidx = seriesIdx;
+    card.dataset.bidx = i;
+    card.style.animationDelay = (i * 0.025) + 's';
+    card.innerHTML = `
+      <div class="book-card-top">
+        <span class="book-num">${(i+1).toString().padStart(2,'0')}</span>
+        <div class="book-now-dot"></div>
+      </div>
+      <div class="book-title-text">${b.title}</div>
+      <div class="book-series-label">${s.label}</div>
+      <svg class="book-open-icon" viewBox="0 0 24 24" width="14" height="14" fill="rgba(168,124,204,.8)"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>`;
+    card.addEventListener('click', () => loadBook(seriesIdx, i));
+    bookGrid.appendChild(card);
+  });
+}
+
+function selectSeries(idx) {
+  currentSeries = idx;
+  setPill(idx);
+  renderBooks(idx);
+}
+
+/* Prev / Next buttons */
+document.getElementById('prevBookBtn').addEventListener('click', () => {
+  if (currentBookIdx === null) return;
+  if (currentBookIdx > 0) { loadBook(currentSeries, currentBookIdx - 1); }
+  else if (currentSeries > 0) { const prev = currentSeries - 1; loadBook(prev, SERIES[prev].books.length - 1); }
+});
+document.getElementById('nextBookBtn').addEventListener('click', () => {
+  if (currentBookIdx === null) return;
+  const s = SERIES[currentSeries];
+  if (currentBookIdx < s.books.length - 1) { loadBook(currentSeries, currentBookIdx + 1); }
+  else if (currentSeries < SERIES.length - 1) { loadBook(currentSeries + 1, 0); }
+});
+
+/* Init */
+setPill(0);
+renderBooks(0);
+
+/* Auto-load last-read book */
+document.body.addEventListener('animationend', function onReady(e) {
+  if (e.target.classList.contains('anim-content')) {
+    document.body.removeEventListener('animationend', onReady);
+    try {
+      const saved = JSON.parse(localStorage.getItem('avatarbooks_last') || 'null');
+      if (saved && SERIES[saved.seriesIdx] && SERIES[saved.seriesIdx].books[saved.bookIdx]) {
+        selectSeries(saved.seriesIdx);
+        loadBook(saved.seriesIdx, saved.bookIdx);
+      }
+    } catch(e) {}
+  }
+});
+
+/* Scroll reveal */
+(function(){
+  const els = document.querySelectorAll('[data-reveal]');
+  if (!els.length) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (e.target.dataset.revealDelay || 0) + 's';
+        e.target.classList.add('revealed');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: .08 });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
