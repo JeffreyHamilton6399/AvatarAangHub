@@ -823,7 +823,7 @@ async function loadBook(sidx, bidx){
 
   try {
     pdfDoc = await pdfjsLib.getDocument({
-      url: `${GH}/${b.tag}/${b.file}`,
+      url: `https://corsproxy.io/?${encodeURIComponent(`${GH}/${b.tag}/${b.file}`)}`,
       cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
       cMapPacked: true,
     }).promise;
