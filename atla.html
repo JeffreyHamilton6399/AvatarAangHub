@@ -653,6 +653,7 @@ const AUTO_PLAY_SECS        = 10;   // countdown seconds on ended
 
 const BOOKS = [
   { book:1, tag:'atla-season1', label:'Book One', sublabel:'Water', symFile:'water.png',
+    pilot:'Unaired Pilot',
     episodes:['The Boy in the Iceberg','The Avatar Returns','The Southern Air Temple','The Warriors of Kyoshi','The King of Omashu','Imprisoned','The Spirit World','Avatar Roku','The Waterbending Scroll','Jet','The Great Divide','The Storm','The Blue Spirit','The Fortuneteller',"Bato of the Water Tribe",'The Deserter','The Northern Air Temple','The Waterbending Master','The Siege of the North, Part 1','The Siege of the North, Part 2'] },
   { book:2, tag:'atla-season2', label:'Book Two', sublabel:'Earth', symFile:'earth.png',
     episodes:['The Avatar State','The Cave of Two Lovers','Return to Omashu','The Swamp','Avatar Day','The Blind Bandit','Zuko Alone','The Chase','Bitter Work','The Library','The Desert',"The Serpent's Pass",'The Drill','City of Walls and Secrets','The Tales of Ba Sing Se',"Appa's Lost Days",'Lake Laogai','The Earth King','The Guru','The Crossroads of Destiny'] },
@@ -661,8 +662,8 @@ const BOOKS = [
 ];
 
 // epUrl defined below in renderEpisodes block
-function subUrl(b,n){ return `s${b}e${String(n).padStart(2,'0')}.srt`; }
-function getNext(b,n){ const bd=BOOKS[b-1]; if(n<bd.episodes.length) return{book:b,num:n+1,title:bd.episodes[n]}; if(b<3) return{book:b+1,num:1,title:BOOKS[b].episodes[0]}; return null; }
+function subUrl(b,n){ if(b===1&&n===0) return `s1e00.srt`; return `s${b}e${String(n).padStart(2,'0')}.srt`; }
+function getNext(b,n){ const bd=BOOKS[b-1]; if(n===0) return{book:b,num:1,title:bd.episodes[0]}; if(n<bd.episodes.length) return{book:b,num:n+1,title:bd.episodes[n]}; if(b<3) return{book:b+1,num:1,title:BOOKS[b].episodes[0]}; return null; }
 
 /* State */
 let currentEp=null, autoFrame=null, autoStart=null;
@@ -795,7 +796,8 @@ ccBtn.addEventListener('click',()=>{captionsOn=!captionsOn;ccBtn.classList.toggl
 
 /* Load episode */
 function loadEpisode(book,epNum){
-  const bData=BOOKS[book-1],title=bData.episodes[epNum-1];
+  const bData=BOOKS[book-1];
+  const title = epNum===0 ? (bData.pilot||'Unaired Pilot') : bData.episodes[epNum-1];
   currentEp={book,num:epNum,title}; hideNextPanel(); skipBtn.style.display='none';
   srtCues=[];lastCueText=null;hideCaption();
   vid.pause(); vid.src=epUrl(book,epNum)+'#t=0.001'; vid.load();
@@ -807,7 +809,7 @@ function loadEpisode(book,epNum){
   vid.play().catch(()=>{});
   fetch(subUrl(book,epNum)).then(r=>r.ok?r.text():Promise.reject()).then(t=>{srtCues=parseSRT(t);}).catch(()=>{});
   document.getElementById('npTitle').textContent=title;
-  document.getElementById('npEp').textContent=`Book ${book}, Ep ${epNum}`;
+  document.getElementById('npEp').textContent=epNum===0?`Book ${book}, Pilot`:`Book ${book}, Ep ${epNum}`;
   document.getElementById('nowPlayingBar').style.opacity='1';
   // Switch book tab if needed and re-render
   if(currentBook !== book){ selectBook(book); } else { renderEpisodes(book); }
@@ -863,12 +865,36 @@ function setPill(b) {
 
 /* Render episode grid for a book */
 function epUrl(b,n){
+  if(b===1&&n===0) return `${GH}/${BOOKS[0].tag}/S1E0.mkv`;
   if(b===2&&(n===12||n===13)) return `${GH}/${BOOKS[b-1].tag}/S2E12E13.mkv`;
   return `${GH}/${BOOKS[b-1].tag}/S${b}E${n}.mkv`;
 }
 function renderEpisodes(b) {
   const bData = BOOKS[b - 1];
   epGrid.innerHTML = '';
+
+  // Prepend Unaired Pilot card for Book One
+  if (b === 1 && bData.pilot) {
+    const pilotSaved  = parseFloat(localStorage.getItem(`atlaepisodes_b1_e0`) || 0);
+    const pilotWatched = localStorage.getItem(`atlaepisodes_watched_b1_e0`) === '1';
+    const pilotPct    = pilotSaved > 5 ? Math.min(95, pilotSaved / 22 * 100) : 0;
+    const pilotCard   = document.createElement('div');
+    pilotCard.className = 'ep-card' + (pilotWatched ? ' watched' : '');
+    pilotCard.dataset.b  = 1;
+    pilotCard.dataset.ep = 0;
+    pilotCard.style.animationDelay = '0s';
+    pilotCard.innerHTML = `
+      <div class="ep-card-top">
+        <span class="ep-num">S1E0 · Pilot</span>
+        <div class="ep-now-dot"></div>
+      </div>
+      <div class="ep-title-text">${bData.pilot}</div>
+      <div class="ep-prog-bar"><div class="ep-prog-fill" style="width:${pilotPct}%"></div></div>
+      <div class="ep-watched-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>`;
+    pilotCard.addEventListener('click', () => loadEpisode(1, 0));
+    epGrid.appendChild(pilotCard);
+  }
+
   bData.episodes.forEach((title, i) => {
     const epNum = i + 1;
     const saved = parseFloat(localStorage.getItem(`atlaepisodes_b${b}_e${epNum}`) || 0);
@@ -954,6 +980,11 @@ renderEpisodes(1);
   function findLastEp(){
     let best=null, bestTime=0;
     BOOKS.forEach(bData=>{
+      // Check pilot (ep 0) for Book One
+      if(bData.pilot){
+        const t=parseFloat(localStorage.getItem(`atlaepisodes_b${bData.book}_e0`)||0);
+        if(t>5&&t>bestTime){ bestTime=t; best={book:bData.book,num:0,title:bData.pilot,time:t}; }
+      }
       bData.episodes.forEach((_,i)=>{
         const b=bData.book, n=i+1;
         const t=parseFloat(localStorage.getItem(`atlaepisodes_b${b}_e${n}`)||0);
@@ -978,7 +1009,7 @@ renderEpisodes(1);
           vid.removeEventListener('loadedmetadata',restorePreview);
         },{once:true});
         document.getElementById('npTitle').textContent=ep.title;
-        document.getElementById('npEp').textContent=`Book ${ep.book}, Ep ${ep.num}`;
+        document.getElementById('npEp').textContent=ep.num===0?`Book ${ep.book}, Pilot`:`Book ${ep.book}, Ep ${ep.num}`;
         document.getElementById('nowPlayingBar').style.opacity='1';
         // Switch to correct book tab
         if(currentBook!==ep.book){ selectBook(ep.book); } else { renderEpisodes(ep.book); }
