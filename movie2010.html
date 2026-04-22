@@ -12,6 +12,8 @@
   <link rel="apple-touch-icon" href="images/favicon.png">
   <link rel="icon" type="image/jpeg" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://github.com" crossorigin>
+  <link rel="dns-prefetch" href="https://objects.githubusercontent.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700;900&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1461,7 +1463,7 @@ function fmt(s) {
 }
 
 function togglePlay() {
-  vid.paused ? vid.play() : vid.pause();
+  vid.paused ? vid.play().catch(()=>{}) : vid.pause();
 }
 
 function toggleFullscreen() {
@@ -1572,7 +1574,7 @@ const captionBox = document.getElementById('captionBox');
 let captionsOn   = false;
 let srtCues      = [];
 let lastCueText  = null;
-const CAPTION_OFFSET = -0.5; // negative = captions trigger earlier to match speech
+const CAPTION_OFFSET = 0; // adjust if captions are out of sync
 
 function parseSRT(text) {
   return text.replace(/\r/g, '').trim().split(/\n\n+/).reduce((cues, block) => {
@@ -1607,7 +1609,7 @@ function hideCaption() {
 
 function renderCaption() {
   if (!captionsOn || !srtCues.length) { hideCaption(); return; }
-  const t = vid.currentTime - CAPTION_OFFSET;
+  const t = vid.currentTime + CAPTION_OFFSET;
   const cue = srtCues.find(c => t >= c.start && t <= c.end);
   const text = cue?.text ?? null;
   if (text === lastCueText) return;
@@ -1859,6 +1861,12 @@ vid.addEventListener('loadedmetadata', () => {
   applyPQ();
 })();
 
+
+/* Clean up timers on page unload */
+window.addEventListener('pagehide', () => {
+  if (vid) { vid.pause(); }
+  clearTimeout(idleTimer);
+});
 </script>
 </body>
 </html>

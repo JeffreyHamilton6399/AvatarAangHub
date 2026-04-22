@@ -863,7 +863,7 @@ async function loadBook(seriesIdx, bookIdx) {
     await renderSpread(false);
 
   } catch(err) {
-    console.error('PDF load error:', err);
+    /* PDF load error — silently fail */
     loadingEl.classList.remove('active');
     loadingEl.innerHTML = `<span class="viewer-loading-text" style="color:#f97316">Failed to load PDF.<br>Try opening directly.</span>`;
     loadingEl.style.opacity = '1';

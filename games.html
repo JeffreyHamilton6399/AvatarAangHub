@@ -636,7 +636,10 @@ setTimeout(() => { if (!introDone) dismissIntro(); }, 5000);
   });
   let W, H, particles = [];
   function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
+  resize();
+  /* Debounced resize — avoids thrashing on every pixel of window drag */
+  let resizeTimer;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 150); });
   function rand(a,b){ return a + Math.random()*(b-a); }
   function spawn() {
     const img  = imgs[Math.floor(Math.random()*imgs.length)];
@@ -652,6 +655,7 @@ setTimeout(() => { if (!introDone) dismissIntro(); }, 5000);
   }
   for (let i=0; i<80; i++) particles.push(spawn());
   const pad = 60;
+  let rafId;
   function draw() {
     ctx.clearRect(0,0,W,H);
     for (const p of particles) {
@@ -670,9 +674,14 @@ setTimeout(() => { if (!introDone) dismissIntro(); }, 5000);
       ctx.drawImage(p.img,-p.size/2,-p.size/2,p.size,p.size);
       ctx.restore();
     }
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
-  draw();
+  rafId = requestAnimationFrame(draw);
+  /* Pause when tab hidden — saves CPU */
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { cancelAnimationFrame(rafId); }
+    else { rafId = requestAnimationFrame(draw); }
+  });
 })();
 </script>
 </body>

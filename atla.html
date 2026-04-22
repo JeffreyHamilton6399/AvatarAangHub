@@ -12,6 +12,8 @@
   <link rel="apple-touch-icon" href="images/favicon.png">
   <link rel="icon" type="image/jpeg" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://github.com" crossorigin>
+  <link rel="dns-prefetch" href="https://objects.githubusercontent.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700;900&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -907,7 +909,7 @@ speedBtn.addEventListener('click',e=>{e.stopPropagation();speedMenu.classList.to
 speedMenu.querySelectorAll('.speed-opt').forEach(opt=>{opt.addEventListener('click',e=>{e.stopPropagation();setSpeed(parseFloat(opt.dataset.s));speedMenu.classList.remove('open');showOSD(parseFloat(opt.dataset.s)+'×');});});
 document.addEventListener('click',()=>speedMenu.classList.remove('open'));
 function fmt(s){s=Math.floor(s||0);const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=s%60;return h>0?`${h}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`:`${m}:${String(sc).padStart(2,'0')}`;}
-function togglePlay(){ vid.paused?vid.play():vid.pause(); }
+function togglePlay(){ vid.paused?vid.play().catch(()=>{}):vid.pause(); }
 function toggleFullscreen(){
   const inFS=document.fullscreenElement||document.webkitFullscreenElement;
   if(inFS){(document.exitFullscreen||document.webkitExitFullscreen).call(document);}
@@ -1221,6 +1223,12 @@ renderEpisodes(1);
   sModal.addEventListener('click',e=>{ if(e.target===sModal) sModal.classList.remove('open'); });
 })();
 
+
+/* Clean up timers on page unload */
+window.addEventListener('pagehide', () => {
+  if (vid) { vid.pause(); }
+  clearTimeout(idleTimer);
+});
 </script>
 </body>
 </html>

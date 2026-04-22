@@ -764,7 +764,7 @@
     <!-- ATLA -->
     <a href="atla.html" class="hub-card atla">
       <div class="card-poster">
-        <div class="card-poster-bg" style="background-image:url('images/atlabg.png')"></div>
+        <div class="card-poster-bg" data-bg="images/atlabg.png" style="background-image:none"></div>
         <div class="card-poster-overlay"></div>
         <div class="card-progress-strip" id="atlaProg"><div class="card-progress-fill" id="atlaProgFill" style="width:0%"></div></div>
       </div>
@@ -788,7 +788,7 @@
     <!-- Korra -->
     <a href="kora.html" class="hub-card korra">
       <div class="card-poster">
-        <div class="card-poster-bg" style="background-image:url('images/korabg.png')"></div>
+        <div class="card-poster-bg" data-bg="images/korabg.png" style="background-image:none"></div>
         <div class="card-poster-overlay"></div>
         <div class="card-progress-strip" id="korraProg"><div class="card-progress-fill" id="korraProgFill" style="width:0%"></div></div>
       </div>
@@ -812,7 +812,7 @@
     <!-- Live Action Show (Netflix 2024) -->
     <a href="liveshow.html" class="hub-card liveactionshow">
       <div class="card-poster">
-        <div class="card-poster-bg" style="background-image:url('images/liveshowbg.png')"></div>
+        <div class="card-poster-bg" data-bg="images/liveshowbg.png" style="background-image:none"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -834,7 +834,7 @@
     <!-- Movie (2026 Animated) -->
     <a href="movie2026.html" class="hub-card movie">
       <div class="card-poster">
-        <div class="card-poster-bg" style="background-image:url('images/movie2026bg.png')"></div>
+        <div class="card-poster-bg" data-bg="images/movie2026bg.png" style="background-image:none"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -856,7 +856,7 @@
     <!-- Books (Graphic Novels / PDFs) -->
     <a href="books.html" class="hub-card books">
       <div class="card-poster">
-        <div class="card-poster-bg" style="background-image:url('images/booksbg.png')"></div>
+        <div class="card-poster-bg" data-bg="images/booksbg.png" style="background-image:none"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -879,7 +879,7 @@
     <!-- Live Action Movie (2010) -->
     <a href="movie2010.html" class="hub-card liveactionmovie">
       <div class="card-poster">
-        <div class="card-poster-bg" style="background-image:url('images/movie2010bg.png')"></div>
+        <div class="card-poster-bg" data-bg="images/movie2010bg.png" style="background-image:none"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -901,7 +901,7 @@
     <!-- ATLA Games -->
     <a href="games.html" class="hub-card games">
       <div class="card-poster">
-        <div class="card-poster-bg" style="background-image:url('images/gamesbg.png')"></div>
+        <div class="card-poster-bg" data-bg="images/gamesbg.png" style="background-image:none"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -1292,7 +1292,12 @@ function runSearch(q) {
   searchResults.classList.add('open');
 }
 
-searchInput.addEventListener('input', () => runSearch(searchInput.value));
+/* Debounced search — waits 120ms after typing stops */
+let searchDebounce = null;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(() => runSearch(searchInput.value), 120);
+});
 searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') { searchInput.value=''; searchResults.classList.remove('open'); } });
 document.addEventListener('click', e => { if (!e.target.closest('.search-bar-wrap')) searchResults.classList.remove('open'); });
 searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) runSearch(searchInput.value); });
@@ -1309,7 +1314,10 @@ searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) runS
   });
   let W, H, particles = [];
   function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
+  resize();
+  /* Debounced resize — avoids thrashing on every pixel of window drag */
+  let resizeTimer;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 150); });
   function rand(a,b){ return a + Math.random()*(b-a); }
   function spawn() {
     const img  = imgs[Math.floor(Math.random()*imgs.length)];
@@ -1325,6 +1333,7 @@ searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) runS
   }
   for (let i=0; i<100; i++) particles.push(spawn());
   const pad = 60;
+  let rafId;
   function draw() {
     ctx.clearRect(0,0,W,H);
     for (const p of particles) {
@@ -1349,9 +1358,14 @@ searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) runS
       ctx.drawImage(p.img,-p.size/2,-p.size/2,p.size,p.size);
       ctx.restore();
     }
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
-  draw();
+  rafId = requestAnimationFrame(draw);
+  /* Pause when tab hidden — saves CPU */
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { cancelAnimationFrame(rafId); }
+    else { rafId = requestAnimationFrame(draw); }
+  });
 })();
 
 /* ══════════════════════════════════════════
@@ -1471,6 +1485,24 @@ self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>
   window.addEventListener('appinstalled', () => { if(btn) btn.style.display='none'; });
 })();
 
+
+/* ── Lazy-load card poster backgrounds ── */
+(function(){
+  const bgs = document.querySelectorAll('.card-poster-bg[data-bg]');
+  if (!('IntersectionObserver' in window)) {
+    bgs.forEach(el => { el.style.backgroundImage = "url('" + el.dataset.bg + "')"; });
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.backgroundImage = "url('" + e.target.dataset.bg + "')";
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '100px' });
+  bgs.forEach(el => io.observe(el));
+})();
 </script>
 </body>
 </html>
