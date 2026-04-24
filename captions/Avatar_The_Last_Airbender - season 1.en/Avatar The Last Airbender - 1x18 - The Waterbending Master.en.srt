@@ -1,0 +1,1027 @@
+﻿1
+00:00:00,749 --> 00:00:03,121
+<i>Water.</i>
+
+2
+00:00:03,122 --> 00:00:04,995
+<i>Earth.</i>
+
+3
+00:00:04,996 --> 00:00:07,104
+<i>Fire.</i>
+
+4
+00:00:07,105 --> 00:00:08,396
+<i>Air.</i>
+
+5
+00:00:09,462 --> 00:00:13,596
+<i>Long ago, the four nations lived together in harmony.</i>
+
+6
+00:00:13,597 --> 00:00:17,675
+<i>Then, everything changed when the Fire Nation attacked.</i>
+
+7
+00:00:17,876 --> 00:00:21,988
+<i>Only the Avatar, master of all four elements, could stop them.</i>
+
+8
+00:00:21,989 --> 00:00:25,148
+<i>But when the world needed him most, he vanished.</i>
+
+9
+00:00:25,489 --> 00:00:29,310
+<i>A hundred years passed, and my brother and I discovered the new Avatar...</i>
+
+10
+00:00:29,311 --> 00:00:31,150
+<i>...an airbender named Aang.</i>
+
+11
+00:00:31,251 --> 00:00:33,356
+<i>And although his airbending skills are great.</i>
+
+12
+00:00:33,357 --> 00:00:37,089
+<i>He has a lot to learn before he's ready to save anyone.</i>
+
+13
+00:00:37,090 --> 00:00:40,712
+<i>But I believe Aang can save the world.</i>
+
+14
+00:00:45,899 --> 00:00:49,861
+Book One: Water
+Chapter Eighteen: The Waterbending Master
+
+15
+00:00:55,328 --> 00:01:00,730
+I'm not one to complain, but can't Appa fly any higher?
+
+16
+00:01:01,412 --> 00:01:06,584
+I have an idea, why don't we all get on your back and you can fly us to the North Pole?
+
+17
+00:01:06,647 --> 00:01:13,152
+I'd love to! Climb on everyone, Sokka's ready for takeoff!
+
+18
+00:01:14,069 --> 00:01:16,398
+Look, we're all just a little tired and cranky...
+
+19
+00:01:16,460 --> 00:01:18,863
+...because we've been flying for two days straight.
+
+20
+00:01:18,927 --> 00:01:22,190
+And for what? We can't even find the Northern Water Tribe.
+
+21
+00:01:22,247 --> 00:01:24,927
+There's nothing up here.
+
+22
+00:01:41,744 --> 00:01:45,839
+They're waterbenders! We found the Water Tribe!
+
+23
+00:01:48,790 --> 00:01:53,020
+He's heading north. The Northern Water Tribe.
+
+24
+00:01:53,084 --> 00:01:57,987
+The Avatar needs to master waterbending. He's looking for a teacher.
+
+25
+00:01:58,007 --> 00:02:00,872
+Then what are we waiting for? Let's go get him!
+
+26
+00:02:00,935 --> 00:02:06,580
+Patience, Captain Li. This isn't some little Earth village we can just march into.
+
+27
+00:02:06,631 --> 00:02:08,884
+The Water Tribe is a great nation.
+
+28
+00:02:08,937 --> 00:02:12,246
+There's a reason they've survived a hundred years of war.
+
+29
+00:02:12,333 --> 00:02:17,171
+The frozen tundra is treacherous. The landscape itself is an icy fortress.
+
+30
+00:02:17,247 --> 00:02:21,458
+We'll need a massive invasion force.
+
+31
+00:02:23,521 --> 00:02:25,897
+There it is!
+
+32
+00:02:25,943 --> 00:02:28,783
+The Northern Water Tribe...
+
+33
+00:02:28,843 --> 00:02:31,534
+We're finally here...
+
+34
+00:02:51,338 --> 00:02:54,222
+I can't believe how many waterbenders live up here!
+
+35
+00:02:54,265 --> 00:02:58,269
+We'll find a master to teach us, no problem!
+
+36
+00:03:37,441 --> 00:03:40,123
+This place is beautiful.
+
+37
+00:03:40,167 --> 00:03:43,164
+Yeh, she is.
+
+38
+00:03:55,181 --> 00:04:06,107
+♫ Winter, spring, summer and fall. Winter, spring, summer and fall. ♫
+
+39
+00:04:06,169 --> 00:04:18,502
+♫ Four seasons, four loves. Four seasons, four loves. ♫
+
+40
+00:04:39,183 --> 00:04:45,918
+Tonight, we celebrate the arrival of our brother and sister from the Southern Tribe,...
+
+41
+00:04:45,973 --> 00:04:49,317
+...and they have brought with them someone very special,...
+
+42
+00:04:49,352 --> 00:04:54,963
+...someone whom many of us believed disappeared from the world until now.
+
+43
+00:04:55,021 --> 00:04:57,552
+The Avatar!
+
+44
+00:05:00,284 --> 00:05:05,048
+We also celebrate my daughter's 16th birthday.
+
+45
+00:05:05,095 --> 00:05:09,522
+Princess Yue is now of marrying age.
+
+46
+00:05:09,592 --> 00:05:10,573
+Thank you, father.
+
+47
+00:05:10,649 --> 00:05:15,702
+May the great Ocean and Moon Spirits watch over us during these troubled times.
+
+48
+00:05:15,754 --> 00:05:20,910
+Now, Master Pakku and his students will perform!
+
+49
+00:05:40,195 --> 00:05:42,953
+Hi, there. Sokka, Southern Water Tribe.
+
+50
+00:05:42,992 --> 00:05:45,814
+Very nice to meet you.
+
+51
+00:05:46,478 --> 00:05:51,789
+So... uh... you're a Princess, huh?!
+
+52
+00:05:51,847 --> 00:05:55,381
+You know, back in my tribe, I'm kinda like a Prince myself!
+
+53
+00:05:55,435 --> 00:05:57,290
+Ha! Prince of what?
+
+54
+00:05:57,345 --> 00:06:01,153
+A lot of things! Uh, do you mind? I'm trying to have a conversation here!
+
+55
+00:06:01,204 --> 00:06:04,316
+My apologies, Prince Sokka.
+
+56
+00:06:05,052 --> 00:06:07,941
+So it looks like I'm gonna be in town for awhile.
+
+57
+00:06:07,999 --> 00:06:12,105
+I'm thinking maybe we could... do an activity together?
+
+58
+00:06:12,159 --> 00:06:14,959
+Do an "activity"?
+
+59
+00:06:18,784 --> 00:06:20,662
+Very smooth.
+
+60
+00:06:20,709 --> 00:06:25,352
+Master Pakku, meet your newest student, the Avatar.
+
+61
+00:06:25,402 --> 00:06:31,655
+Just because you're destined to save the world, don't expect any special treatment.
+
+62
+00:06:31,701 --> 00:06:34,514
+My friend and I can't wait to start training with you...
+
+63
+00:06:34,552 --> 00:06:36,692
+...after we relax for a couple days.
+
+64
+00:06:36,740 --> 00:06:40,759
+If you want to relax, then I suggest visiting a tropical island.
+
+65
+00:06:40,802 --> 00:06:46,718
+If not, I'll see you both at sunrise. Good night.
+
+66
+00:06:50,868 --> 00:06:53,731
+For the last time, I'm not playing the sumki horn.
+
+67
+00:06:53,783 --> 00:06:59,883
+No, it's about our plans. There's a bit of a problem.
+
+68
+00:07:01,718 --> 00:07:02,967
+I'm taking your crew.
+
+69
+00:07:03,041 --> 00:07:04,092
+What!?
+
+70
+00:07:04,125 --> 00:07:07,679
+I've recruited them for a little expedition to the North Pole.
+
+71
+00:07:07,715 --> 00:07:09,390
+Uncle, is that true?
+
+72
+00:07:09,427 --> 00:07:14,634
+I'm afraid so. He's taking everyone. Even the cook!
+
+73
+00:07:14,707 --> 00:07:18,155
+Sorry you won't be there to watch me capture the Avatar.
+
+74
+00:07:18,224 --> 00:07:22,987
+But I can't have you getting in my way again.
+
+75
+00:07:39,954 --> 00:07:43,581
+I didn't know you were skilled with broadswords, Prince Zuko.
+
+76
+00:07:43,630 --> 00:07:47,912
+I'm not. They're antiques. Just decorative.
+
+77
+00:07:47,984 --> 00:07:51,197
+Have you heard of the Blue Spirit, General Iroh?
+
+78
+00:07:51,253 --> 00:07:54,734
+Just rumors. I don't think he is real.
+
+79
+00:07:54,761 --> 00:07:59,877
+He's real all right. He's a criminal, an enemy of the Fire Nation.
+
+80
+00:07:59,923 --> 00:08:03,363
+But I have a feeling that justice will catch up with him soon.
+
+81
+00:08:03,430 --> 00:08:09,888
+General Iroh, the offer to join my mission still stands if you change your mind.
+
+82
+00:08:13,652 --> 00:08:15,904
+I've waited for this day my whole life!
+
+83
+00:08:15,970 --> 00:08:21,022
+I finally get to learn from a real waterbending master!
+
+84
+00:08:22,555 --> 00:08:24,289
+Good morning, Master Pakku!
+
+85
+00:08:24,349 --> 00:08:28,417
+No, please, march right in, I'm not concentrating or anything.
+
+86
+00:08:28,467 --> 00:08:33,754
+Uhh... this is my friend, Katara, the one I told you about?
+
+87
+00:08:33,797 --> 00:08:37,121
+I'm sorry. I think there's been a misunderstanding.
+
+88
+00:08:37,203 --> 00:08:39,488
+You didn't tell me your friend was a girl.
+
+89
+00:08:39,543 --> 00:08:46,246
+In our tribe, it is forbidden for women to learn waterbending.
+
+90
+00:08:52,036 --> 00:08:54,319
+What do you mean you won't teach me?
+
+91
+00:08:54,355 --> 00:08:58,371
+I didn't travel across the entire world so you could tell me "no"!
+
+92
+00:08:58,418 --> 00:08:59,319
+No.
+
+93
+00:08:59,382 --> 00:09:02,417
+But there must be other female waterbenders in your tribe!
+
+94
+00:09:02,442 --> 00:09:06,803
+Here the women learn from Yugoda to use their waterbending to heal.
+
+95
+00:09:06,848 --> 00:09:11,463
+I'm sure she would be happy to take you as her student despite your bad attitude.
+
+96
+00:09:11,523 --> 00:09:13,587
+I don't want to heal, I want to fight!
+
+97
+00:09:13,644 --> 00:09:17,902
+I can see that. But our tribe has customs, rules.
+
+98
+00:09:17,942 --> 00:09:19,553
+Well your rules stink!
+
+99
+00:09:19,602 --> 00:09:23,761
+Yeh! They're not fair. If you won't teach Katara, then...
+
+100
+00:09:23,808 --> 00:09:24,934
+Then what?
+
+101
+00:09:24,997 --> 00:09:26,969
+Then I won't learn from you!
+
+102
+00:09:27,022 --> 00:09:30,942
+Well have fun teaching yourself. I'm sure you'll do a great job.
+
+103
+00:09:30,994 --> 00:09:34,629
+Wait! Aang didn't mean that.
+
+104
+00:09:34,991 --> 00:09:36,855
+You can't risk your training for me.
+
+105
+00:09:36,910 --> 00:09:42,599
+You have to learn from Master Pakku. Even if he is a big jerk.
+
+106
+00:09:44,551 --> 00:09:47,537
+Why don't we get started then?
+
+107
+00:09:48,954 --> 00:09:52,898
+Princess Yue! Good morning!
+
+108
+00:09:52,917 --> 00:09:55,300
+Hey, how about that picnic last night?
+
+109
+00:09:55,346 --> 00:09:57,782
+Boy, your Dad sure knows how to throw a party.
+
+110
+00:09:57,836 --> 00:09:59,861
+I'm happy you enjoyed yourself.
+
+111
+00:09:59,920 --> 00:10:03,872
+Well, it wasn't as much fun after you left.
+
+112
+00:10:04,557 --> 00:10:07,536
+So, I'm still hoping we can see more of each other.
+
+113
+00:10:07,608 --> 00:10:09,749
+Do an "activity", you mean?
+
+114
+00:10:09,793 --> 00:10:13,729
+Yes! At... a place! For... some time!
+
+115
+00:10:13,775 --> 00:10:17,220
+I'd love to! I'll meet you on that bridge tonight.
+
+116
+00:10:17,270 --> 00:10:20,488
+Great! I'll see you... aahh!
+
+117
+00:10:21,296 --> 00:10:23,028
+Sorry!
+
+118
+00:10:23,384 --> 00:10:27,819
+That's okay, it was worth it. See you tonight.
+
+119
+00:10:28,488 --> 00:10:30,781
+I'm very impressed.
+
+120
+00:10:30,805 --> 00:10:36,366
+You all seem highly qualified for the mission I have in mind.
+
+121
+00:10:37,480 --> 00:10:40,382
+That's some tasty gold!
+
+122
+00:10:40,434 --> 00:10:42,390
+What do you need us to do?
+
+123
+00:10:42,439 --> 00:10:46,600
+I believe you're acquainted with Prince Zuko?
+
+124
+00:10:53,485 --> 00:10:56,415
+Um, hi. Are you Yugoda?
+
+125
+00:10:56,485 --> 00:11:00,234
+Are you here for the healing lesson?
+
+126
+00:11:02,807 --> 00:11:04,110
+I guess I am.
+
+127
+00:11:04,186 --> 00:11:08,536
+Welcome! Welcome!
+
+128
+00:11:13,008 --> 00:11:17,938
+You're moving the water around, but you're not feeling the push and pull.
+
+129
+00:11:17,987 --> 00:11:20,851
+I'm trying!
+
+130
+00:11:22,617 --> 00:11:29,492
+Maybe that move is too advanced for you. Why don't you try an easier one?
+
+131
+00:11:32,475 --> 00:11:34,395
+Thanks for the lesson.
+
+132
+00:11:34,475 --> 00:11:36,276
+So, who's the lucky boy?
+
+133
+00:11:36,327 --> 00:11:36,951
+Huh?
+
+134
+00:11:37,016 --> 00:11:40,936
+Your betrothal necklace. You're getting married, right?
+
+135
+00:11:40,963 --> 00:11:44,370
+Ah, no, I don't think I'm ready for that yet.
+
+136
+00:11:44,430 --> 00:11:46,654
+My grandmother gave my mother this necklace,...
+
+137
+00:11:46,698 --> 00:11:49,643
+...and my mother passed it down to me.
+
+138
+00:11:49,726 --> 00:11:55,122
+I recognize this carving! I don't know why I didn't realize sooner!
+
+139
+00:11:55,182 --> 00:11:57,587
+You're the spitting image of Kana!
+
+140
+00:11:57,629 --> 00:12:00,727
+Wait, how do you know my Gran Gran's name?
+
+141
+00:12:00,749 --> 00:12:05,015
+When I was about your age I was friends with Kana.
+
+142
+00:12:05,054 --> 00:12:08,155
+She was born here, in the Northern Tribe.
+
+143
+00:12:08,198 --> 00:12:09,863
+She never told me.
+
+144
+00:12:09,912 --> 00:12:13,778
+Your grandmother had an arranged marriage with a young waterbender.
+
+145
+00:12:13,826 --> 00:12:16,153
+He carved that necklace for her.
+
+146
+00:12:16,180 --> 00:12:19,362
+If Gran Gran was engaged, why did she leave?
+
+147
+00:12:19,389 --> 00:12:26,645
+I don't know. That's always been a mystery to me. She left without saying goodbye.
+
+148
+00:12:26,665 --> 00:12:28,992
+Good luck!
+
+149
+00:12:30,110 --> 00:12:33,229
+The crew wanted me to wish you safe travels.
+
+150
+00:12:33,291 --> 00:12:35,278
+Good riddance to those traitors.
+
+151
+00:12:35,342 --> 00:12:39,095
+It's a lovely night for a walk. Why don't you join me?
+
+152
+00:12:39,167 --> 00:12:42,347
+It would clear your head.
+
+153
+00:12:43,425 --> 00:12:47,310
+Or, just stay in your room and sit in the dark.
+
+154
+00:12:47,389 --> 00:12:51,425
+Whatever makes you happy.
+
+155
+00:13:16,950 --> 00:13:20,454
+Careful with the blasting jelly!
+
+156
+00:13:23,861 --> 00:13:28,361
+Uncle? Uncle, is that you?
+
+157
+00:14:09,631 --> 00:14:11,763
+Zuko!
+
+158
+00:14:19,104 --> 00:14:21,773
+Zuko...
+
+159
+00:14:31,634 --> 00:14:37,341
+Hi, Princess Yue. I made you something. I carved it myself.
+
+160
+00:14:37,403 --> 00:14:38,475
+It's a bear.
+
+161
+00:14:38,523 --> 00:14:43,664
+Actually, it's suppose to be a fish, see it has a fin.
+
+162
+00:14:43,708 --> 00:14:52,452
+Oh. I'm sorry! I made a mistake. I shouldn't have asked you to come here!
+
+163
+00:14:58,557 --> 00:15:02,038
+How's warrior training going?
+
+164
+00:15:02,071 --> 00:15:03,099
+That bad?
+
+165
+00:15:03,161 --> 00:15:05,952
+No, it's Princess Yue. I don't get it.
+
+166
+00:15:05,998 --> 00:15:10,080
+One minute she wants to go out with me and the next she's telling me to get lost!
+
+167
+00:15:10,126 --> 00:15:12,385
+So how's waterbending training?
+
+168
+00:15:12,444 --> 00:15:16,436
+Master Poophead won't teach her because she's a girl.
+
+169
+00:15:16,479 --> 00:15:18,902
+Why don't you just teach her, Aang?
+
+170
+00:15:18,962 --> 00:15:21,111
+Why didn't I think of that?
+
+171
+00:15:21,146 --> 00:15:24,682
+At night, you can teach me whatever moves you learned from Master Pakku.
+
+172
+00:15:24,739 --> 00:15:28,210
+That way you have someone to practice with and I get to learn waterbending.
+
+173
+00:15:28,257 --> 00:15:29,777
+Everyone's happy!
+
+174
+00:15:29,839 --> 00:15:31,292
+I'm not happy.
+
+175
+00:15:31,349 --> 00:15:34,946
+But you're never happy. Come on, Aang!
+
+176
+00:15:38,945 --> 00:15:45,021
+Master Pakku said this move is all about sinking and floating.
+
+177
+00:15:45,549 --> 00:15:48,249
+I got it!
+
+178
+00:15:48,327 --> 00:15:49,902
+That was amazing!
+
+179
+00:15:49,969 --> 00:15:52,961
+That wasn't me.
+
+180
+00:15:53,021 --> 00:15:55,548
+I... I was just showing Katara a few moves.
+
+181
+00:15:55,595 --> 00:16:00,033
+You have disrespected me, my teachings, and my entire culture.
+
+182
+00:16:00,078 --> 00:16:01,148
+I'm sorry, I...
+
+183
+00:16:01,205 --> 00:16:05,945
+You are no longer welcome as my student.
+
+184
+00:16:11,147 --> 00:16:16,710
+What do you want me to do? Force Master Pakku to take Aang back as his student?
+
+185
+00:16:16,771 --> 00:16:18,690
+Yes... please!
+
+186
+00:16:18,742 --> 00:16:27,699
+I suspect he might change his mind if you swallow your pride and apologize to him.
+
+187
+00:16:28,935 --> 00:16:30,565
+Fine.
+
+188
+00:16:30,607 --> 00:16:33,405
+I'm waiting, little girl.
+
+189
+00:16:33,452 --> 00:16:39,715
+No! No way am I apologizing to a sour old man like you!
+
+190
+00:16:39,765 --> 00:16:41,054
+Uh, Katara...
+
+191
+00:16:41,110 --> 00:16:44,864
+I'll be outside... if you're man enough to fight me!
+
+192
+00:16:48,181 --> 00:16:49,858
+I'm sure she didn't mean that.
+
+193
+00:16:49,923 --> 00:16:52,805
+Yeh, I think she did.
+
+194
+00:16:53,482 --> 00:16:59,648
+I'm devastated to hear about Prince Zuko. Just devastated.
+
+195
+00:16:59,698 --> 00:17:04,590
+The Fire Lord will not be pleased when he learns who was responsible.
+
+196
+00:17:04,655 --> 00:17:07,400
+You know who... was behind the attack?
+
+197
+00:17:07,449 --> 00:17:13,411
+Yes... pirates! We had a run in with them awhile back.
+
+198
+00:17:13,475 --> 00:17:16,242
+They wanted revenge.
+
+199
+00:17:17,144 --> 00:17:20,335
+So, have you reconsidered my offer?
+
+200
+00:17:20,389 --> 00:17:28,172
+Yes, I accept. It will be an honor to serve as your general. To the Fire Nation!
+
+201
+00:17:28,239 --> 00:17:30,306
+To victory!
+
+202
+00:17:33,040 --> 00:17:36,340
+Are you crazy, Katara? You're not gonna win this fight!
+
+203
+00:17:36,384 --> 00:17:38,164
+I know! I don't care!
+
+204
+00:17:38,227 --> 00:17:41,542
+You don't have to do this for me. I can find another teacher.
+
+205
+00:17:41,582 --> 00:17:46,880
+I'm not doing it for you! Someone needs to slap some sense into that guy!
+
+206
+00:17:46,932 --> 00:17:50,645
+So, you decided to show up?
+
+207
+00:17:52,104 --> 00:17:53,621
+Aren't you gonna fight?
+
+208
+00:17:53,696 --> 00:17:58,773
+Go back to the healing huts with the other women where you belong.
+
+209
+00:18:01,537 --> 00:18:07,511
+Fine. You want to learn to fight so bad, study closely!
+
+210
+00:18:16,007 --> 00:18:19,533
+Don't worry, I'm not going to hurt you!
+
+211
+00:18:37,297 --> 00:18:39,416
+You can't knock me down!
+
+212
+00:18:39,493 --> 00:18:41,406
+Go Katara!
+
+213
+00:19:22,123 --> 00:19:26,681
+Well, I'm impressed. You are an excellent waterbender.
+
+214
+00:19:26,727 --> 00:19:28,961
+But you still won't teach me, will you?
+
+215
+00:19:29,021 --> 00:19:30,994
+No.
+
+216
+00:19:54,647 --> 00:19:56,664
+This fight is over.
+
+217
+00:19:56,704 --> 00:19:58,914
+Come back here! I'm not finished yet!
+
+218
+00:19:58,968 --> 00:20:02,128
+Yes, you are.
+
+219
+00:20:03,399 --> 00:20:05,952
+This is my necklace!
+
+220
+00:20:06,021 --> 00:20:08,634
+No it's not, it's mine! Give it back!
+
+221
+00:20:08,685 --> 00:20:15,483
+I made this sixty years ago... for the love of my life. For Kana.
+
+222
+00:20:15,553 --> 00:20:19,825
+My Gran Gran was supposed to marry you?
+
+223
+00:20:23,899 --> 00:20:29,794
+Our plan is working perfectly. Zhao doesn't suspect a thing.
+
+224
+00:20:29,857 --> 00:20:31,350
+You didn't have to do this.
+
+225
+00:20:31,400 --> 00:20:36,416
+No nephew of mine is going to stow away on a ship without some backup!
+
+226
+00:20:36,468 --> 00:20:38,329
+Thank you, Uncle.
+
+227
+00:20:38,397 --> 00:20:40,485
+Someone's coming!
+
+228
+00:20:40,541 --> 00:20:48,460
+Stay hidden until we get to the North Pole and the Avatar will be yours! Good luck!
+
+229
+00:20:49,767 --> 00:20:53,804
+I carved this necklace for your grandmother when we got engaged.
+
+230
+00:20:53,879 --> 00:20:59,094
+I thought we would have a long, happy life together. I loved her.
+
+231
+00:20:59,137 --> 00:21:04,337
+But she didn't love you, did she? It was an arranged marriage.
+
+232
+00:21:04,399 --> 00:21:08,315
+Gran Gran wouldn't let your tribe's stupid customs run her life.
+
+233
+00:21:08,359 --> 00:21:14,031
+That's why she left. It must have taken a lot of courage.
+
+234
+00:21:14,660 --> 00:21:17,362
+Go get her.
+
+235
+00:21:23,312 --> 00:21:25,368
+What do you want from me?
+
+236
+00:21:25,433 --> 00:21:29,337
+Nothing. I just want you to know, I think you're beautiful...
+
+237
+00:21:29,383 --> 00:21:32,523
+...and, I never thought a girl like you would even notice a guy like me.
+
+238
+00:21:32,574 --> 00:21:34,195
+You don't understand.
+
+239
+00:21:34,232 --> 00:21:38,741
+No, no, see, that's the thing. I think I do understand now.
+
+240
+00:21:38,812 --> 00:21:43,096
+You're a princess, and I... I'm just a southern peasant.
+
+241
+00:21:43,141 --> 00:21:44,620
+No, Sokka...
+
+242
+00:21:44,665 --> 00:21:51,383
+It's okay. You don't have to say anything. I'll see ya around, okay?
+
+243
+00:21:53,092 --> 00:21:58,709
+Okay, now I'm really confused! Happy... but confused!
+
+244
+00:21:58,771 --> 00:22:05,736
+I do like you! A lot. But, we can't be together... and not for the reason you think.
+
+245
+00:22:05,798 --> 00:22:10,317
+It's because... I'm engaged.
+
+246
+00:22:11,418 --> 00:22:13,618
+I'm sorry!
+
+247
+00:22:23,179 --> 00:22:25,723
+Not bad! Not bad! Heheh!
+
+248
+00:22:25,783 --> 00:22:31,047
+Keep practicing and maybe you'll get it by the time you're my age!
+
+249
+00:22:31,880 --> 00:22:33,272
+Hey Katara!
+
+250
+00:22:33,339 --> 00:22:39,362
+What do you think you're doing? It's past sunrise. You're late.
+
+251
+00:22:39,419 --> 00:22:40,597
+Good to see ya here.
+
+252
+00:22:40,653 --> 00:22:42,778
+You too.
+
+253
+00:22:50,195 --> 00:22:56,847
+My fleet is ready. Set a course for the Northern Water Tribe.
+
+254
+00:23:04,688 --> 00:23:07,986
+Subtitle by rendy1287 [at gmail dot com]
+
+255
+00:23:08,061 --> 00:23:10,350
+Thanks to Acastus for The Transcript.
+http://www.avatarspiritmedia.net/
+
+
+
+0
+00:00:0,500 --> 00:00:2,00
+<font color="#ffff00" size=14>www.tvsubtitles.net</font>

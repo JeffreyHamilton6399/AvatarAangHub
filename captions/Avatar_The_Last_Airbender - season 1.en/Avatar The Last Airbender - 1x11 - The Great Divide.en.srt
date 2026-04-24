@@ -1,0 +1,1125 @@
+1
+00:00:00,849 --> 00:00:03,221
+<i>Water.</i>
+
+2
+00:00:03,222 --> 00:00:05,095
+<i>Earth.</i>
+
+3
+00:00:05,096 --> 00:00:07,204
+<i>Fire.</i>
+
+4
+00:00:07,205 --> 00:00:08,496
+<i>Air.</i>
+
+5
+00:00:09,562 --> 00:00:13,696
+<i>Long ago, the four nations lived together in harmony.</i>
+
+6
+00:00:13,697 --> 00:00:17,775
+<i>Then, everything changed when the Fire Nation attacked.</i>
+
+7
+00:00:17,976 --> 00:00:22,088
+<i>Only the Avatar, master of all four elements, could stop them.</i>
+
+8
+00:00:22,089 --> 00:00:25,248
+<i>But when the world needed him most, he vanished.</i>
+
+9
+00:00:25,589 --> 00:00:29,410
+<i>A hundred years passed, and my brother and I discovered the new Avatar...</i>
+
+10
+00:00:29,411 --> 00:00:31,250
+<i>...an airbender named Aang.</i>
+
+11
+00:00:31,351 --> 00:00:33,456
+<i>And although his airbending skills are great.</i>
+
+12
+00:00:33,457 --> 00:00:37,189
+<i>He has a lot to learn before he's ready to save anyone.</i>
+
+13
+00:00:37,190 --> 00:00:40,812
+<i>But I believe Aang can save the world.</i>
+
+14
+00:00:47,351 --> 00:00:50,677
+Book One: Water
+Chapter Eleven: The Great Divide
+
+15
+00:00:58,368 --> 00:01:01,033
+Um... aren't you forgetting the tarp?
+
+16
+00:01:01,121 --> 00:01:03,174
+Right... got it.
+
+17
+00:01:03,249 --> 00:01:06,539
+Sokka, you're supposed to put the tarp on top of the tent.
+
+18
+00:01:06,596 --> 00:01:08,716
+You know, so we don't get rained on.
+
+19
+00:01:08,796 --> 00:01:13,040
+Ordinarily you'd be right, but seeing how it's the dry season, you're not.
+
+20
+00:01:13,161 --> 00:01:14,892
+Besides, that tarp makes a pretty warm blanket.
+
+21
+00:01:14,947 --> 00:01:16,353
+But what if it does rain?
+
+22
+00:01:16,397 --> 00:01:20,394
+But what if it doesn't? Then I would have put the tarp up for nothing.
+
+23
+00:01:20,464 --> 00:01:21,929
+You're infuriating!
+
+24
+00:01:22,005 --> 00:01:24,410
+Katara, why don't you worry about gathering the firewood...
+
+25
+00:01:24,495 --> 00:01:27,648
+...because that kindling's looking pretty sorry.
+
+26
+00:01:27,749 --> 00:01:31,174
+Well if you don't like my firewood... have it!
+
+27
+00:01:31,250 --> 00:01:35,100
+Fine by me! If you're not going to do your job... urg!
+
+28
+00:01:35,165 --> 00:01:37,425
+Okay, I got the grub if you guys got the...
+
+29
+00:01:37,535 --> 00:01:40,673
+Hey, where's the campfire? And what happened to the tent?
+
+30
+00:01:40,747 --> 00:01:43,703
+Why don't you ask Miss Know It All? Queen of the Twigs!
+
+31
+00:01:43,803 --> 00:01:50,344
+Oh yeah? Well you're Mister Lazy Bum, King of the... Tents!
+
+32
+00:01:50,423 --> 00:01:55,629
+Okay, listen guys. Harsh words won't solve problems, action will.
+
+33
+00:01:55,720 --> 00:01:57,571
+Why don't you just switch jobs?
+
+34
+00:01:57,638 --> 00:01:58,931
+- Sounds good.
+- Whatever.
+
+35
+00:01:59,030 --> 00:02:06,819
+You see that? Settling feuds and making peace. All in a days work for the Avatar.
+
+36
+00:02:20,252 --> 00:02:26,399
+Come on Momo, that's fair. Appa's got five stomachs.
+
+37
+00:02:28,354 --> 00:02:31,529
+Here it is, guys, The Great Divide.
+
+38
+00:02:31,601 --> 00:02:34,501
+Wow! I could just stare at it forever.
+
+39
+00:02:34,578 --> 00:02:36,272
+Okay. I've seen enough.
+
+40
+00:02:36,353 --> 00:02:41,639
+How can you not be fascinated, Sokka? This is the largest canyon in the entire world.
+
+41
+00:02:41,731 --> 00:02:45,547
+Then I'm sure we'll be able to see it very clearly from the air while we fly away.
+
+42
+00:02:45,619 --> 00:02:48,769
+Hey! If you're looking for the Canyon Guide, I was here first!
+
+43
+00:02:48,847 --> 00:02:52,021
+Ooooo... canyon guide. Sounds informative.
+
+44
+00:02:52,100 --> 00:02:55,447
+Believe me, he's more than a tour guide, he's an earthbender.
+
+45
+00:02:55,537 --> 00:02:58,587
+And the only way in and out of the canyon is with his help.
+
+46
+00:02:58,660 --> 00:03:01,002
+And he's takin' my tribe across next!
+
+47
+00:03:01,086 --> 00:03:02,542
+Calm down, we know you're next.
+
+48
+00:03:02,640 --> 00:03:06,524
+You wouldn't be calm if the Fire Nation destroyed your home and forced you to flee.
+
+49
+00:03:06,595 --> 00:03:11,576
+My whole tribe has to walk thousands of miles to the capital city of Ba Sing Se!
+
+50
+00:03:11,669 --> 00:03:13,121
+You're a refugee.
+
+51
+00:03:13,225 --> 00:03:16,995
+Humph. Tell me somethin' I don't know.
+
+52
+00:03:17,879 --> 00:03:19,206
+Is that your tribe?
+
+53
+00:03:19,307 --> 00:03:20,868
+It most certainly is not.
+
+54
+00:03:20,980 --> 00:03:24,393
+That's the Zhang tribe.
+A bunch of low-life thieves.
+
+55
+00:03:24,482 --> 00:03:28,140
+They've been the enemies of my tribe for hundred years.
+
+56
+00:03:28,223 --> 00:03:33,180
+Hey Zhangs! I'm savin' a spot for my tribe so don't even think of stealing it!
+
+57
+00:03:33,281 --> 00:03:38,144
+Where are the rest of the Gan Jin? Still tidying up their campsite?
+
+58
+00:03:38,235 --> 00:03:41,254
+Yes! But they sent me ahead of them to hold a spot.
+
+59
+00:03:41,350 --> 00:03:43,698
+I didn't know the canyon Guide took reservations.
+
+60
+00:03:43,799 --> 00:03:48,561
+Heh! Of course you didn't. That's the ignorance I'd expect from a messy Zhang!
+
+61
+00:03:48,643 --> 00:03:53,932
+So unorganized and ill prepared for a journey.
+
+62
+00:04:02,104 --> 00:04:07,876
+Sorry about the wait, youngsters. Who's ready to cross this here canyon?
+
+63
+00:04:07,977 --> 00:04:10,167
+Um... one of them I think.
+
+64
+00:04:10,257 --> 00:04:12,590
+I was here first! My party's on their way!
+
+65
+00:04:12,692 --> 00:04:15,439
+I can't guide people who aren't here.
+
+66
+00:04:15,540 --> 00:04:19,568
+Guess you guys'll have to make the trip tomorrow.
+
+67
+00:04:19,815 --> 00:04:22,203
+Wait! Here they come!
+
+68
+00:04:27,934 --> 00:04:31,157
+You're not seriously going to cave into these spoiled Gan Jins!
+
+69
+00:04:31,274 --> 00:04:35,591
+I mean, we're refugees too! And we've got sick people that need shelter.
+
+70
+00:04:35,697 --> 00:04:37,522
+I... uh... well...
+
+71
+00:04:37,603 --> 00:04:40,122
+We've got old people who are weary from traveling.
+
+72
+00:04:40,225 --> 00:04:42,928
+Sick people get priority over old people.
+
+73
+00:04:43,009 --> 00:04:47,729
+Maybe you Zhang's wouldn't have so many sick people if you weren't such slobs.
+
+74
+00:04:47,814 --> 00:04:52,414
+If you Gan Jins weren't so clean, maybe you wouldn't live to be so old.
+
+75
+00:04:52,510 --> 00:04:56,780
+I could smell your stink a mile away.
+
+76
+00:04:53,333 --> 00:04:55,044
+Well Aang, ready to put your peace...
+
+77
+00:04:55,131 --> 00:04:56,780
+...making skills to the test?
+
+78
+00:04:56,870 --> 00:05:00,084
+I... don't know. A fight over chores is one thing.
+
+79
+00:05:00,176 --> 00:05:02,904
+These people have been feuding for hundred years.
+
+80
+00:05:02,970 --> 00:05:08,103
+Everyone, listen up! This is the Avatar! And if you give him a chance,...
+
+81
+00:05:08,184 --> 00:05:13,792
+...I'm sure he can come up with a compromise that will make everyone happy.
+
+82
+00:05:13,887 --> 00:05:17,731
+Uh... you could share the earthbender and travel together?
+
+83
+00:05:17,808 --> 00:05:18,752
+Absolutely not!
+
+84
+00:05:18,845 --> 00:05:23,374
+We'd rather be taken by the Fire Nation than travel with those stinking thieves.
+
+85
+00:05:23,458 --> 00:05:25,962
+We wouldn't travel with you pompous fools anyway!
+
+86
+00:05:26,057 --> 00:05:27,737
+I am not pompous!
+
+87
+00:05:27,830 --> 00:05:29,308
+Alright! Here's the deal!
+
+88
+00:05:29,393 --> 00:05:33,422
+We're all going down together and Appa here will fly your sick and elderly across.
+
+89
+00:05:33,525 --> 00:05:36,506
+Does that seem fair?
+
+90
+00:05:45,616 --> 00:05:48,865
+Sorry Appa. You'll have to do this on your own.
+
+91
+00:05:48,969 --> 00:05:51,348
+And this feuding tribe stuff is serious business.
+
+92
+00:05:51,434 --> 00:05:53,587
+Are you sure it's a good idea getting involved in this?
+
+93
+00:05:53,689 --> 00:05:57,987
+To tell the truth, I'm not sure. But when have I ever been?
+
+94
+00:05:58,098 --> 00:06:02,345
+He's the Avatar, Sokka. Making peace between people is his job.
+
+95
+00:06:02,442 --> 00:06:05,497
+His job's gonna make us cross this whole thing on foot, isn't it?
+
+96
+00:06:05,601 --> 00:06:08,150
+Okay, now comes the bad news.
+
+97
+00:06:08,244 --> 00:06:14,784
+No food allowed in the canyon. It attracts dangerous predators.
+
+98
+00:06:14,875 --> 00:06:17,402
+No food! This is ridiculous.
+
+99
+00:06:17,490 --> 00:06:25,657
+Aww, you babies can go a day without food. Would you rather be hungry... or dead?
+
+100
+00:06:25,746 --> 00:06:28,234
+Now, we're headin' down in ten minutes.
+
+101
+00:06:28,363 --> 00:06:34,358
+All food better be in your gut, or in the garbage!
+
+102
+00:06:38,512 --> 00:06:42,222
+Appas's gonna take good care of you until we get there.
+
+103
+00:06:42,324 --> 00:06:47,555
+See ya on the other side, buddy. Yip, yip!
+
+104
+00:06:59,484 --> 00:07:01,493
+Nice bending!
+
+105
+00:07:01,600 --> 00:07:07,635
+The job's much more than bending, kid. Folks want information.
+
+106
+00:07:07,730 --> 00:07:12,019
+Many of you are probably wondering how canyons are formed.
+
+107
+00:07:12,110 --> 00:07:17,717
+Experts tell us this canyon was most likely carved into the ground by Earth Spirits...
+
+108
+00:07:17,793 --> 00:07:26,652
+...who were angry at local farmers for not offering them a proper sacrifice.
+
+109
+00:07:32,508 --> 00:07:40,726
+Guess the spirits are still angry! Hope you all brought sacrifices.
+
+110
+00:07:42,878 --> 00:07:48,713
+Okay... everyone stand clear of the wall.
+
+111
+00:07:52,200 --> 00:07:53,442
+Why'd you do that?
+
+112
+00:07:53,531 --> 00:07:56,647
+These people are fleeing the Fire Nation, aren't they?
+
+113
+00:07:56,712 --> 00:08:02,644
+I gotta make sure we can't be followed. We'll be safe now.
+
+114
+00:08:05,997 --> 00:08:08,913
+We gotta help him!
+
+115
+00:08:13,071 --> 00:08:16,563
+Okay... now you gotta help me!
+
+116
+00:08:35,402 --> 00:08:36,671
+What was that?
+
+117
+00:08:36,763 --> 00:08:41,888
+Canyon crawler. Oh, ugh! And there's sure to be more.
+
+118
+00:08:41,969 --> 00:08:44,319
+Your arms... they're broken.
+
+119
+00:08:44,401 --> 00:08:48,471
+Without my arms, I got no bending. In other words...
+
+120
+00:08:48,557 --> 00:08:51,913
+...we're trapped in this canyon.
+
+121
+00:09:00,054 --> 00:09:01,586
+I thought the whole point of ditching our food...
+
+122
+00:09:01,661 --> 00:09:04,776
+...was so we wouldn't have to deal with things like... canyon crawlers...
+
+123
+00:09:04,851 --> 00:09:10,102
+It's the Zhangs! They took food down here, even after the guide told them not to!
+
+124
+00:09:10,184 --> 00:09:13,965
+What! If there's anyone who can't go without food for a day,...
+
+125
+00:09:14,050 --> 00:09:16,039
+...it's you pampered Gan Jins!
+
+126
+00:09:16,130 --> 00:09:19,644
+I hope you're happy. We're stuck in the canyon with no way out.
+
+127
+00:09:19,733 --> 00:09:22,148
+Why don't you thank yourself, food hider!
+
+128
+00:09:22,238 --> 00:09:24,394
+Look. Sticking together is the only way to...
+
+129
+00:09:24,494 --> 00:09:27,385
+I'm not walkin' another step with the likes of them.
+
+130
+00:09:27,476 --> 00:09:30,536
+Now, there's something we can agree on.
+
+131
+00:09:30,607 --> 00:09:31,758
+Any ideas?
+
+132
+00:09:31,853 --> 00:09:34,878
+No bending. We need to get out of this canyon.
+
+133
+00:09:34,972 --> 00:09:40,461
+I won't die down here! I won't become part of the food chain!
+
+134
+00:09:40,541 --> 00:09:43,909
+See? We're going to become part of the food chain because of you!
+
+135
+00:09:44,013 --> 00:09:47,363
+Sure. Unjustly blame the Zhangs like you always do!
+
+136
+00:09:47,472 --> 00:09:48,213
+Gladly!
+
+137
+00:09:48,304 --> 00:09:51,602
+Enough! I thought I could help you guys get along,...
+
+138
+00:09:51,681 --> 00:09:55,442
+...but I guess that's not going to happen.
+
+139
+00:09:55,675 --> 00:10:00,079
+We should split up. Gan Jins on this side... and Zhangs on that side.
+
+140
+00:10:00,166 --> 00:10:04,405
+We'll travel in two separate lines.
+
+141
+00:10:08,967 --> 00:10:12,943
+Sokka, you go with the Zhangs. And Katara, you go with the Gan Jins.
+
+142
+00:10:13,038 --> 00:10:18,468
+See if you can figure out why they hate each other so much.
+
+143
+00:10:34,641 --> 00:10:36,841
+So, you guys aren't going to put up your tarps?
+
+144
+00:10:36,938 --> 00:10:39,075
+What for? It's the dry season.
+
+145
+00:10:39,167 --> 00:10:40,476
+Exactly!
+
+146
+00:10:40,570 --> 00:10:43,431
+Besides, we like to use the tarp as a blanket.
+
+147
+00:10:43,512 --> 00:10:47,708
+Finally, someone gets it.
+
+148
+00:10:52,892 --> 00:10:54,534
+You really think it'll rain?
+
+149
+00:10:54,626 --> 00:11:00,391
+No, but you can never be too careful, right?
+
+150
+00:11:16,540 --> 00:11:18,524
+Would you care for some bread, Katara?
+
+151
+00:11:18,617 --> 00:11:20,835
+So it was you guys who had food!
+
+152
+00:11:20,916 --> 00:11:25,067
+Oh come now. You really think that tribe of thieves isn't smuggling food?
+
+153
+00:11:25,134 --> 00:11:30,301
+Why should my people go hungry when the sneaky Zhangs are stuffing their faces?
+
+154
+00:11:30,384 --> 00:11:36,377
+Well, I guess it's okay if everyone's doing it.
+
+155
+00:11:38,098 --> 00:11:41,647
+So, why does your tribe hate the Zhang so much?
+
+156
+00:11:41,736 --> 00:11:49,799
+You seem like a smart girl, Katara. I bet you would enjoy hearing some history.
+
+157
+00:11:53,969 --> 00:11:55,689
+The patriarch of our tribe,...
+
+158
+00:11:55,789 --> 00:12:00,764
+...Jin Wei, was an earthbender warrior who was assigned an important duty,...
+
+159
+00:12:00,827 --> 00:12:10,026
+...transporting our sacred orb from the Great Eastern Gate to the Great Western Gate.
+
+160
+00:12:11,711 --> 00:12:17,119
+Taking the orb from the east to the west represents the sun's rising and setting.
+
+161
+00:12:17,195 --> 00:12:21,383
+It was our tribe's ancient redemption ritual...
+
+162
+00:12:21,414 --> 00:12:26,504
+...but as he approached the gate, Jin Wei was attacked by one of the Zhang!
+
+163
+00:12:26,580 --> 00:12:32,116
+A vermin, named Wei Jin, who looked at the orb with envy.
+
+164
+00:12:32,207 --> 00:12:39,397
+That coward, Wei Jin, knocked Jin Wei to the ground and stole our sacred orb.
+
+165
+00:12:39,492 --> 00:12:48,315
+Our people have never forgotten. You can never trust a Zhang.
+
+166
+00:12:50,911 --> 00:12:52,200
+Care for some meat?
+
+167
+00:12:52,305 --> 00:12:54,197
+Would I!?
+
+168
+00:12:54,260 --> 00:12:55,773
+I know what you must be thinking.
+
+169
+00:12:55,866 --> 00:13:00,332
+We're horrible for endangering everybody by bringing food down here.
+
+170
+00:13:00,422 --> 00:13:04,435
+The Gan Jin think so badly of us they probably assumed we brought food in...
+
+171
+00:13:04,520 --> 00:13:09,102
+...and decided to bring food in themselves. That's why we brought food in.
+
+172
+00:13:09,196 --> 00:13:15,612
+Our conflict with the Gan Jin goes back over a hundred years...
+
+173
+00:13:17,463 --> 00:13:21,251
+Our forefather, Wei Jin, was leaving the western gate of our village...
+
+174
+00:13:21,337 --> 00:13:23,751
+...when he saw a figure in the distance.
+
+175
+00:13:23,837 --> 00:13:29,163
+It was a man of the Gan Jin tribe, Jin Wei, collapsed on the ground.
+
+176
+00:13:29,254 --> 00:13:34,685
+Noble Wei Jin stopped to help him. Jin Wei was transporting a sacred orb,...
+
+177
+00:13:34,774 --> 00:13:39,243
+...a very powerful relic used in his tribe's redemption ritual.
+
+178
+00:13:39,313 --> 00:13:41,380
+Wei Jin tried to tend to the man's wounds,...
+
+179
+00:13:41,455 --> 00:13:44,683
+...but Jin Wei insisted the orb was more important,...
+
+180
+00:13:44,727 --> 00:13:47,515
+...and asked him to take it back to his tribe.
+
+181
+00:13:47,579 --> 00:13:51,855
+Kind Wei Jin promised to send help for the man as soon as he could,...
+
+182
+00:13:51,908 --> 00:13:56,362
+...but as Wei Jin crossed the border to return the orb into Gan Jin territory...
+
+183
+00:13:56,441 --> 00:13:58,704
+...he was arrested!
+
+184
+00:14:02,106 --> 00:14:05,377
+Instead of thanking him for his kind and selfless deed,...
+
+185
+00:14:05,483 --> 00:14:09,737
+...they sentenced him to twenty long years in prison.
+
+186
+00:14:10,318 --> 00:14:13,426
+We Zhang's will never forget that injustice.
+
+187
+00:14:13,526 --> 00:14:18,826
+That's just terrible. You gonna finish that?
+
+188
+00:14:18,910 --> 00:14:22,074
+Sure would be nice to be around one of those campfires,...
+
+189
+00:14:22,164 --> 00:14:26,384
+...telling stories and laughing. It's okay, Momo,...
+
+190
+00:14:26,489 --> 00:14:33,255
+...we'll be out of here soon enough and then we can eat our weight in leechy nuts!
+
+191
+00:14:36,677 --> 00:14:39,733
+Nah, I'll wait for the leechy nuts.
+
+192
+00:14:39,830 --> 00:14:43,954
+It's lonely, isn't it? Being impartial.
+
+193
+00:14:44,030 --> 00:14:48,059
+I wish I could help these people get along, but it just seems impossible.
+
+194
+00:14:48,152 --> 00:14:51,007
+Anyhow, I guess our biggest problem is getting out of here.
+
+195
+00:14:51,103 --> 00:14:58,046
+I'm not so sure the two problems are unrelated.
+
+196
+00:15:02,580 --> 00:15:07,824
+All clear! We're almost to the other side.
+
+197
+00:15:16,084 --> 00:15:20,318
+Katara, Sokka, will these people cooperate long enough to get out of the canyon?
+
+198
+00:15:20,406 --> 00:15:24,066
+I don't think so, Aang, the Zhang's really wronged the Gan Jins.
+
+199
+00:15:24,171 --> 00:15:27,130
+They ambushed Jin We and stole the sacred orb.
+
+200
+00:15:27,231 --> 00:15:28,609
+What are you talking about?
+
+201
+00:15:28,702 --> 00:15:30,823
+Yeh, Katara, what are you talking about?
+
+202
+00:15:30,915 --> 00:15:32,822
+We Jin didn't steal the orb,...
+
+203
+00:15:32,904 --> 00:15:36,610
+...he was returning it to their village gate and was wrongfully punished by the Gan Jin.
+
+204
+00:15:36,695 --> 00:15:39,145
+Not punished enough if you ask me!
+
+205
+00:15:39,233 --> 00:15:41,652
+Okay! Okay! I get it! Now I need your help.
+
+206
+00:15:41,742 --> 00:15:47,342
+Let's get everyone together at the base of the canyon wall.
+
+207
+00:15:52,730 --> 00:15:55,605
+Please everyone! As soon as we get out of here we can eat,...
+
+208
+00:15:55,713 --> 00:15:57,164
+...and then go our separate ways,...
+
+209
+00:15:57,251 --> 00:16:00,859
+...but I need you all to put your heads together and figure out a way up this cliff.
+
+210
+00:16:00,957 --> 00:16:05,129
+Maybe the Zhang can climb the walls with their long, disgusting fingernails.
+
+211
+00:16:05,221 --> 00:16:08,159
+Oh, sorry! I forgot that to the Gan Jin,...
+
+212
+00:16:08,240 --> 00:16:12,299
+...unclipped fingernails is a crime punishable by twenty years in jail!
+
+213
+00:16:12,415 --> 00:16:13,823
+Why you dirty thief!
+
+214
+00:16:13,917 --> 00:16:17,592
+You pompous fool!
+
+215
+00:16:17,818 --> 00:16:21,329
+Guys! focus! How many times do I have to say it?
+
+216
+00:16:21,428 --> 00:16:25,445
+Harsh words won't solve problems, action will!
+
+217
+00:16:25,537 --> 00:16:27,725
+Perhaps the Avatar is right.
+
+218
+00:16:27,828 --> 00:16:31,427
+Yes, perhaps he is.
+
+219
+00:16:32,054 --> 00:16:34,870
+Harsh words will never solve our problems...
+
+220
+00:16:34,958 --> 00:16:37,404
+...action will!
+
+221
+00:16:43,838 --> 00:16:47,706
+To the death! And let this be the end of this rivalry!
+
+222
+00:16:47,787 --> 00:16:53,706
+You know, I take it back! Harsh words aren't so bad!
+
+223
+00:17:16,901 --> 00:17:22,483
+Is that... food? Everyone smuggled food down here!? Unbelievable!
+
+224
+00:17:22,585 --> 00:17:26,631
+You guys put our lives in danger because you couldn't go without a snack for a day!?
+
+225
+00:17:26,719 --> 00:17:31,163
+You are all... awful!
+
+226
+00:17:35,892 --> 00:17:43,825
+So hungry... is that... egg custard in that tart?
+
+227
+00:17:50,653 --> 00:17:53,945
+Oh no! That's a lot of canyon crawlers!
+
+228
+00:17:54,048 --> 00:17:55,866
+We barely survived one!
+
+229
+00:17:55,948 --> 00:18:01,181
+They're coming back for me! They've had a taste, and they're coming back for me!
+
+230
+00:18:01,271 --> 00:18:06,864
+Sokka, wait! I don't care about this stupid feud! I just want us to get out of here alive.
+
+231
+00:18:06,941 --> 00:18:12,135
+Me too. I only took their side because they fed me.
+
+232
+00:19:11,666 --> 00:19:17,121
+Everybody! Watch me! Do what I do!
+
+233
+00:19:41,917 --> 00:19:47,480
+Now, follow me! We're riding out of this hole!
+
+234
+00:20:02,176 --> 00:20:05,564
+Everyone! Get off!
+
+235
+00:20:08,408 --> 00:20:10,470
+We made it!
+
+236
+00:20:22,298 --> 00:20:25,404
+I never thought a Gan Jin could get his hands dirty like that.
+
+237
+00:20:25,507 --> 00:20:28,956
+And I never knew you Zhang's were so reliable in a pinch.
+
+238
+00:20:29,048 --> 00:20:32,976
+Perhaps we're not so different after all.
+
+239
+00:20:33,047 --> 00:20:39,495
+Too bad we can't rewrite history. You thieves stole our sacred orb from Jin Wei!
+
+240
+00:20:39,564 --> 00:20:45,158
+You tyrants unjustly imprisoned We Jin for twenty long years!
+
+241
+00:20:45,257 --> 00:20:50,909
+Wait a second! Jin Wei? Wei Jin? I know those guys!
+
+242
+00:20:50,963 --> 00:20:53,877
+Yes, yes, we're all aware of the story.
+
+243
+00:20:53,962 --> 00:20:59,417
+No! I mean I really knew them. I may not look it, but I'm 112 years old.
+
+244
+00:20:59,496 --> 00:21:03,669
+I was there a hundred years ago on the day you're talking about...
+
+245
+00:21:03,710 --> 00:21:06,711
+There seems to be a lot of confusion about what happened.
+
+246
+00:21:06,780 --> 00:21:10,933
+First of all, Jin Wei and Wei Jin weren't enemies, they were brothers,...
+
+247
+00:21:10,999 --> 00:21:15,726
+...twins in fact and they were eight and most importantly,...
+
+248
+00:21:15,796 --> 00:21:21,311
+...they were just playing a game! The sacred orb from the legend... that was the ball.
+
+249
+00:21:21,376 --> 00:21:24,353
+And the eastern and western gates were the goal posts.
+
+250
+00:21:24,439 --> 00:21:28,329
+Jin Wei had the ball and was running toward the goal when he fell and fumbled it.
+
+251
+00:21:28,410 --> 00:21:30,149
+Win Jei didn't steal the ball,...
+
+252
+00:21:30,236 --> 00:21:33,176
+...he picked it up and started running it back toward the other goal.
+
+253
+00:21:33,255 --> 00:21:37,986
+But he stepped out of bounds, so the official put him in the penalty box,...
+
+254
+00:21:38,064 --> 00:21:42,774
+...not for twenty long years, but for two short minutes.
+
+255
+00:21:42,849 --> 00:21:47,439
+There was no stealing and no putting anyone in prison. Just a game.
+
+256
+00:21:47,512 --> 00:21:50,351
+You're saying the sacred orb was actually a sacred ball?
+
+257
+00:21:50,424 --> 00:21:52,520
+Nope, just a regular ball.
+
+258
+00:21:52,589 --> 00:21:54,549
+What about our tribe's redemption ritual?
+
+259
+00:21:54,633 --> 00:21:57,137
+That's what the game was called, Redemption.
+
+260
+00:21:57,231 --> 00:21:59,884
+As soon as someone got the ball from one goal to the other,...
+
+261
+00:21:59,974 --> 00:22:04,168
+...everyone would yell, "redemption!"
+
+262
+00:22:04,232 --> 00:22:05,061
+Don't get me wrong,...
+
+263
+00:22:05,154 --> 00:22:09,457
+...Wei Jin was kind of a slob and Jin Wei was a little stuffy, that much is true,...
+
+264
+00:22:09,533 --> 00:22:14,051
+...but they respected each others differences enough to share the same playing field.
+
+265
+00:22:14,119 --> 00:22:17,348
+I suppose it's time we forget the past...
+
+266
+00:22:17,401 --> 00:22:20,592
+...and look to the future.
+
+267
+00:22:27,902 --> 00:22:31,455
+Good to see ya, boy! Did you miss me?
+
+268
+00:22:31,526 --> 00:22:33,998
+I cannot thank you enough, Avatar.
+
+269
+00:22:34,084 --> 00:22:38,461
+Well, you know, I try.
+
+270
+00:22:38,547 --> 00:22:44,460
+Let us travel to the Earth Kingdom capital as one tribe!
+
+271
+00:22:44,547 --> 00:22:48,686
+I'm goin' too! I'm sick of this place!
+
+272
+00:22:48,783 --> 00:22:51,118
+That's some luck you knew Jin Wei and Wei Jin.
+
+273
+00:22:51,207 --> 00:22:54,585
+You could call it luck. Or, you could call it... lying!
+
+274
+00:22:54,669 --> 00:22:55,433
+What!?
+
+275
+00:22:55,501 --> 00:22:57,176
+I made the whole thing up.
+
+276
+00:22:57,266 --> 00:23:01,136
+You did not! That is so wrong.
+
+277
+00:23:01,221 --> 00:23:06,701
+Now where's that custard tart? I'm starving!
+
+278
+00:23:07,438 --> 00:23:10,614
+Subtitle by rendy1287 [at gmail dot com]
+
+279
+00:23:11,012 --> 00:23:13,297
+Thanks to Acastus & Unbridled Joy of Flight.
+http://www.avatarspiritmedia.net/
+
+
+
+0
+00:00:0,500 --> 00:00:2,00
+<font color="#ffff00" size=14>www.tvsubtitles.net</font>

@@ -1,0 +1,883 @@
+1
+00:00:00,649 --> 00:00:03,021
+<i>Water.</i>
+
+2
+00:00:03,022 --> 00:00:04,895
+<i>Earth.</i>
+
+3
+00:00:04,896 --> 00:00:07,004
+<i>Fire.</i>
+
+4
+00:00:07,005 --> 00:00:08,296
+<i>Air.</i>
+
+5
+00:00:09,362 --> 00:00:13,496
+<i>Long ago, the four nations lived together in harmony.</i>
+
+6
+00:00:13,497 --> 00:00:17,575
+<i>Then, everything changed when the Fire Nation attacked.</i>
+
+7
+00:00:17,776 --> 00:00:21,888
+<i>Only the Avatar, master of all four elements, could stop them.</i>
+
+8
+00:00:21,889 --> 00:00:25,048
+<i>But when the world needed him most, he vanished.</i>
+
+9
+00:00:25,389 --> 00:00:29,210
+<i>A hundred years passed, and my brother and I discovered the new Avatar...</i>
+
+10
+00:00:29,211 --> 00:00:31,050
+<i>...an airbender named Aang.</i>
+
+11
+00:00:31,151 --> 00:00:33,256
+<i>And although his airbending skills are great.</i>
+
+12
+00:00:33,257 --> 00:00:36,989
+<i>He has a lot to learn before he's ready to save anyone.</i>
+
+13
+00:00:36,990 --> 00:00:40,612
+<i>But I believe Aang can save the world.</i>
+
+14
+00:00:46,989 --> 00:00:50,529
+Book One: Water | Chapter Nineteen:
+The Siege of the North Part 1
+
+15
+00:01:12,580 --> 00:01:14,871
+Nice try, Pupil Sangok.
+
+16
+00:01:14,912 --> 00:01:20,100
+A couple of more years and you might be ready to fight a sea sponge.
+
+17
+00:01:22,501 --> 00:01:26,758
+Would anyone care for a rematch with Katara?
+
+18
+00:01:27,650 --> 00:01:32,330
+Katara, you have advanced more quickly than any student I have ever trained.
+
+19
+00:01:32,366 --> 00:01:35,050
+You have proven that with fierce determination,...
+
+20
+00:01:35,067 --> 00:01:39,516
+...passion and hard work you can accomplish anything.
+
+21
+00:01:39,561 --> 00:01:42,412
+Raw talent alone is not enough.
+
+22
+00:01:42,451 --> 00:01:43,323
+Pupil Aang!
+
+23
+00:01:43,400 --> 00:01:44,625
+Yes, Master Pakku?
+
+24
+00:01:44,683 --> 00:01:47,571
+Care to step into the sparring circle?
+
+25
+00:01:47,644 --> 00:01:50,379
+I figure since you've found time to play with house pets...
+
+26
+00:01:50,394 --> 00:01:53,202
+...you must have already mastered waterbending.
+
+27
+00:01:53,255 --> 00:01:57,604
+I wouldn't say "mastered", but check this out!
+
+28
+00:02:06,556 --> 00:02:09,074
+So they don't have palaces in the Southern Tribe?
+
+29
+00:02:09,138 --> 00:02:15,744
+Are you kidding? I grew up in a block of ice. It's not exactly a cultural hub.
+
+30
+00:02:16,870 --> 00:02:19,267
+Sokka, this is wrong.
+
+31
+00:02:19,327 --> 00:02:21,699
+What's wrong? We're taking a walk!
+
+32
+00:02:21,739 --> 00:02:25,968
+I'm engaged. It just... feels...
+
+33
+00:02:26,014 --> 00:02:29,133
+I know what you need! You need to meet my good friend Appa!
+
+34
+00:02:29,191 --> 00:02:31,094
+Who?
+
+35
+00:02:31,113 --> 00:02:34,045
+Appa and I go way back. Don't we boy?
+
+36
+00:02:34,106 --> 00:02:35,894
+Ahh! Easy!
+
+37
+00:02:35,954 --> 00:02:38,255
+Down boy! Ahh! No! Up!
+
+38
+00:02:38,313 --> 00:02:42,213
+Looks like you haven't been giving Appa enough attention.
+
+39
+00:02:43,641 --> 00:02:45,495
+So how does this work?
+
+40
+00:02:45,560 --> 00:02:46,887
+You hangin' on tight?
+
+41
+00:02:46,926 --> 00:02:48,004
+Mmm hmm.
+
+42
+00:02:48,044 --> 00:02:50,876
+Yip... yip!
+
+43
+00:02:50,926 --> 00:02:53,896
+Oh... my... goodness!
+
+44
+00:02:55,414 --> 00:02:59,179
+Wow! I can't believe you do this every day!
+
+45
+00:02:59,223 --> 00:03:01,370
+Yeh, we pretty much live up here.
+
+46
+00:03:01,414 --> 00:03:04,670
+Is it always this cold in the sky?
+
+47
+00:03:05,107 --> 00:03:08,207
+Not when you're with someone.
+
+48
+00:03:08,230 --> 00:03:09,989
+It's beautiful up here.
+
+49
+00:03:10,007 --> 00:03:11,650
+Yeh.
+
+50
+00:03:15,566 --> 00:03:21,808
+Whoo! Yeh! Huh... Good times! Good times!
+
+51
+00:03:21,863 --> 00:03:23,883
+Hey, look!
+
+52
+00:03:23,914 --> 00:03:26,095
+What's happening?
+
+53
+00:03:26,129 --> 00:03:28,498
+Oh no.
+
+54
+00:03:51,859 --> 00:03:52,624
+Soot.
+
+55
+00:03:52,688 --> 00:03:53,039
+What?
+
+56
+00:03:53,108 --> 00:03:58,894
+I've seen it before. Right before my village was attacked. It's soot mixed with snow.
+
+57
+00:03:58,952 --> 00:03:59,758
+But why?
+
+58
+00:03:59,819 --> 00:04:03,442
+It's the Fire Nation. They've closed in on the North Pole.
+
+59
+00:04:03,475 --> 00:04:05,305
+And from the looks of the stuff...
+
+60
+00:04:05,334 --> 00:04:08,016
+...I'd say there's a lot of them.
+
+61
+00:04:10,871 --> 00:04:14,710
+This will truly be one for the history books, General Iroh.
+
+62
+00:04:14,772 --> 00:04:19,533
+Just think, centuries from now, people will study the great Admiral Zhao...
+
+63
+00:04:19,577 --> 00:04:23,251
+...who destroyed the last of the Water Tribe civilization.
+
+64
+00:04:23,296 --> 00:04:25,229
+You're lucky you're here to see it.
+
+65
+00:04:25,281 --> 00:04:31,794
+Be careful what you wish for, Admiral. History is not always kind to its subjects.
+
+66
+00:04:31,831 --> 00:04:34,645
+I suppose you speak from experience?
+
+67
+00:04:34,688 --> 00:04:40,686
+But rest assured, this will be nothing like your legendary failure at Ba Sing Se.
+
+68
+00:04:40,709 --> 00:04:43,311
+I hope not, for your sake.
+
+69
+00:04:43,350 --> 00:04:47,653
+Tell the Captains to prepare for first strike.
+
+70
+00:04:54,340 --> 00:04:57,617
+We'll be landing soon. Do you have a plan?
+
+71
+00:04:57,653 --> 00:05:00,590
+I'm working on it, Uncle.
+
+72
+00:05:09,719 --> 00:05:12,167
+What's wrong? We have to go!
+
+73
+00:05:12,193 --> 00:05:16,241
+No, Sokka, wait. I can't see you anymore. Not at all.
+
+74
+00:05:16,290 --> 00:05:18,855
+What? We're just friends.
+
+75
+00:05:18,904 --> 00:05:20,788
+I wish we could just be friends,...
+
+76
+00:05:20,820 --> 00:05:24,798
+...but I like you too much and it's too confusing to be around you.
+
+77
+00:05:24,832 --> 00:05:27,638
+I'm marrying someone else.
+
+78
+00:05:27,692 --> 00:05:31,422
+You don't love him, do you? You don't even seem to like him.
+
+79
+00:05:31,459 --> 00:05:33,456
+But I do love my people.
+
+80
+00:05:33,499 --> 00:05:36,071
+You're not marrying them.
+
+81
+00:05:36,112 --> 00:05:40,413
+You don't understand. I have duties to my father, to my tribe.
+
+82
+00:05:40,438 --> 00:05:43,817
+I have to do this, goodbye!
+
+83
+00:05:46,131 --> 00:05:53,258
+The day we have feared for so long has arrived. The Fire Nation is on our doorstep.
+
+84
+00:05:53,282 --> 00:05:58,178
+It is with great sadness I call my family here before me,...
+
+85
+00:05:58,228 --> 00:06:05,157
+...knowing well that some of these faces are about to vanish from our tribe.
+
+86
+00:06:05,204 --> 00:06:09,116
+But they will never vanish from our hearts.
+
+87
+00:06:09,159 --> 00:06:17,243
+Now, as we approach the battle for our existence, I call upon the great spirits!
+
+88
+00:06:17,278 --> 00:06:23,294
+Spirit of the Ocean! Spirit of the Moon! Be with us!
+
+89
+00:06:23,339 --> 00:06:27,424
+I'm going to need volunteers for a dangerous mission.
+
+90
+00:06:27,448 --> 00:06:28,605
+Count me in.
+
+91
+00:06:28,649 --> 00:06:29,881
+Sokka!
+
+92
+00:06:29,919 --> 00:06:33,753
+Be warned. Many of you will not return.
+
+93
+00:06:33,805 --> 00:06:39,959
+Come forward to receive my mark if you accept the task.
+
+94
+00:07:05,333 --> 00:07:10,904
+The stillness before battle is unbearable. Such a quite dread.
+
+95
+00:07:10,958 --> 00:07:14,490
+I wasn't there when the Fire Nation attacked my people.
+
+96
+00:07:14,529 --> 00:07:17,729
+I'm gonna make a difference this time.
+
+97
+00:08:02,299 --> 00:08:04,316
+Yip! Yip!
+
+98
+00:08:08,511 --> 00:08:10,514
+Katara!?
+
+99
+00:08:32,469 --> 00:08:35,126
+I'll take it from here, boy!
+
+100
+00:09:43,908 --> 00:09:45,938
+Appa!
+
+101
+00:09:48,911 --> 00:09:51,380
+Thanks for the rescue, buddy!
+
+102
+00:10:11,685 --> 00:10:14,902
+You have got to be kidding me.
+
+103
+00:10:16,196 --> 00:10:19,980
+Men, you'll be infiltrating the Fire Nation navy.
+
+104
+00:10:20,015 --> 00:10:25,074
+That means you'll all need one of these uniforms...
+
+105
+00:10:29,792 --> 00:10:31,220
+What's your problem?
+
+106
+00:10:31,256 --> 00:10:33,840
+Fire Navy uniforms don't look like that.
+
+107
+00:10:33,885 --> 00:10:39,452
+Of course they do. These are real uniforms captured from actual Fire Navy soldiers.
+
+108
+00:10:39,481 --> 00:10:41,916
+When, like a hundred years ago?
+
+109
+00:10:41,970 --> 00:10:43,554
+Eighty five.
+
+110
+00:10:43,624 --> 00:10:45,862
+The Fire Nation doesn't wear shoulder spikes anymore.
+
+111
+00:10:45,900 --> 00:10:48,848
+The newer uniforms are more streamlined.
+
+112
+00:10:48,908 --> 00:10:53,366
+How do we know we can trust this guy? Such bold talk for a new recruit.
+
+113
+00:10:53,422 --> 00:11:00,464
+Sokka is from our sister tribe, Hahn, he is a capable warrior and I value his input.
+
+114
+00:11:00,548 --> 00:11:06,314
+Now, our first objective is to determine the identity of their commanding officer.
+
+115
+00:11:06,329 --> 00:11:11,818
+His name is Zhao. Middle-aged. Big sideburns. Bigger temper.
+
+116
+00:11:11,862 --> 00:11:17,478
+Sokka, I want you to tell everything you know to Hahn, he is leading this mission.
+
+117
+00:11:17,515 --> 00:11:25,922
+Hahn, show Sokka your respect. I expect nothing less from my future son-in-law.
+
+118
+00:11:25,945 --> 00:11:27,719
+Princess Yue's marrying you?
+
+119
+00:11:27,748 --> 00:11:29,401
+Yeh, what of it?
+
+120
+00:11:29,447 --> 00:11:32,733
+Nothing, congratulations.
+
+121
+00:11:38,270 --> 00:11:40,732
+Stop those fireballs!
+
+122
+00:11:49,229 --> 00:11:51,367
+It's almost twilight, Admiral.
+
+123
+00:11:51,430 --> 00:11:55,588
+As your military consultant I must advise you to halt your attack.
+
+124
+00:11:55,636 --> 00:12:00,808
+The waterbenders draw their power from the moon and it is nearly full tonight.
+
+125
+00:12:00,831 --> 00:12:04,078
+You should wait and resume the attack at daybreak.
+
+126
+00:12:04,124 --> 00:12:09,001
+Oh, I'm well aware of the moon problem and I am working on a solution.
+
+127
+00:12:09,023 --> 00:12:12,821
+But for now, daybreak it is.
+
+128
+00:12:18,834 --> 00:12:20,322
+They've stopped firing.
+
+129
+00:12:20,380 --> 00:12:22,486
+Aang!
+
+130
+00:12:27,704 --> 00:12:31,186
+I can't do it. I can't do it.
+
+131
+00:12:31,216 --> 00:12:32,057
+What happened?
+
+132
+00:12:32,088 --> 00:12:34,771
+I must have taken out a dozen Fire Navy ships,...
+
+133
+00:12:34,810 --> 00:12:39,098
+...but there's just too many of them. I can't fight them all.
+
+134
+00:12:39,117 --> 00:12:42,381
+But, you have to! You're the Avatar!
+
+135
+00:12:42,396 --> 00:12:45,808
+I'm just one kid.
+
+136
+00:12:54,155 --> 00:12:56,752
+If you're fishing for an octopus, my nephew,...
+
+137
+00:12:56,782 --> 00:13:03,149
+...you need a tightly woven net or he will squeeze through the tiniest hole and escape.
+
+138
+00:13:03,192 --> 00:13:05,441
+I don't need your wisdom right now, Uncle.
+
+139
+00:13:05,472 --> 00:13:12,335
+I'm sorry, I just nag you because, well, ever since I lost my son...
+
+140
+00:13:12,393 --> 00:13:14,939
+Uncle, you don't have to say it.
+
+141
+00:13:14,989 --> 00:13:18,670
+I think of you as my own.
+
+142
+00:13:19,572 --> 00:13:23,089
+I know, Uncle. We'll meet again...
+
+143
+00:13:23,980 --> 00:13:26,796
+...after I have the Avatar.
+
+144
+00:13:28,831 --> 00:13:33,153
+Remember your Breathe of Fire! It could save your life out there!
+
+145
+00:13:33,211 --> 00:13:34,420
+I will.
+
+146
+00:13:34,468 --> 00:13:37,520
+And put your hood up, keep your ears warm!
+
+147
+00:13:37,571 --> 00:13:39,656
+I'll be fine.
+
+148
+00:13:47,578 --> 00:13:50,552
+Let me tell ya, Sokka, I've courted a lot of girls,...
+
+149
+00:13:50,596 --> 00:13:54,294
+...but Yue is the finest... and she comes with the most perks.
+
+150
+00:13:54,327 --> 00:13:56,506
+Perks!? What does that mean?
+
+151
+00:13:56,570 --> 00:13:58,749
+I mean, Yue's nice and everything,...
+
+152
+00:13:58,797 --> 00:14:01,072
+...but the points I'll get with the Chief aren't bad either.
+
+153
+00:14:01,123 --> 00:14:04,948
+Princess Yue is wasted on a self absorbed weasel like you!
+
+154
+00:14:04,992 --> 00:14:07,628
+Whoa. Hang on. What do you care?
+
+155
+00:14:07,646 --> 00:14:10,209
+You're just a simple rube from the Southern Tribe.
+
+156
+00:14:10,226 --> 00:14:15,985
+What would you know of the political complexities of our life? No offense.
+
+157
+00:14:18,285 --> 00:14:22,637
+You're just a jerk without a soul! No offense!
+
+158
+00:14:23,633 --> 00:14:28,478
+That's enough! Sokka, you're off the mission.
+
+159
+00:14:28,496 --> 00:14:30,378
+All right, fall in men!
+
+160
+00:14:30,391 --> 00:14:35,137
+Everybody listen to what I say and we'll take out this Admiral Jo in no time.
+
+161
+00:14:35,157 --> 00:14:37,875
+It's Admiral Zhao!
+
+162
+00:15:12,725 --> 00:15:15,317
+Where are they going?
+
+163
+00:15:16,763 --> 00:15:19,940
+They're coming up for air somewhere...
+
+164
+00:15:28,132 --> 00:15:30,953
+The legends say the moon was the first waterbender.
+
+165
+00:15:30,975 --> 00:15:33,614
+Our ancestors saw how it pushed and pulled the tides...
+
+166
+00:15:33,645 --> 00:15:35,576
+...and learned how to do it themselves.
+
+167
+00:15:35,617 --> 00:15:39,434
+I've always noticed my waterbending is stronger at night.
+
+168
+00:15:39,475 --> 00:15:42,048
+Our strength comes from the Spirit of the Moon,...
+
+169
+00:15:42,073 --> 00:15:47,812
+...our life comes from the Spirit of the Ocean. They work together to keep balance.
+
+170
+00:15:47,862 --> 00:15:51,702
+The Spirits! Maybe I can find them and get their help!
+
+171
+00:15:51,744 --> 00:15:53,225
+How can you do that?
+
+172
+00:15:53,266 --> 00:15:56,794
+The Avatar is the bridge between our world and the Spirit World.
+
+173
+00:15:56,839 --> 00:15:58,496
+Aang can talk to them!
+
+174
+00:15:58,552 --> 00:16:01,485
+Maybe they'll give you the wisdom to win this battle!
+
+175
+00:16:01,527 --> 00:16:06,916
+Or, maybe they'll unleash a crazy amazing spirit attack on the Fire Nation!
+
+176
+00:16:07,277 --> 00:16:09,269
+Or wisdom. That's good too.
+
+177
+00:16:09,299 --> 00:16:13,350
+The only problem is, last time you got to the Spirit World by accident.
+
+178
+00:16:13,380 --> 00:16:15,124
+How are you going to get there this time?
+
+179
+00:16:15,146 --> 00:16:17,837
+I have an idea, follow me.
+
+180
+00:16:24,440 --> 00:16:26,988
+So is this the way to the Spirit World?
+
+181
+00:16:27,034 --> 00:16:29,573
+No, you'll have to get there on your own.
+
+182
+00:16:29,604 --> 00:16:34,857
+But I can take you to the most spiritual place in the entire North Pole.
+
+183
+00:16:50,348 --> 00:16:53,454
+I never thought I'd miss grass this much!
+
+184
+00:16:53,503 --> 00:16:56,522
+It's so warm here! How is that possible?
+
+185
+00:16:56,542 --> 00:17:00,805
+It's the center of all spiritual energy in our land.
+
+186
+00:17:09,092 --> 00:17:16,626
+You're right, Yue. I can feel... something... it's so... tranquil.
+
+187
+00:17:33,826 --> 00:17:35,861
+Be quiet!
+
+188
+00:17:54,910 --> 00:17:57,222
+Is something wrong, Sokka?
+
+189
+00:17:57,265 --> 00:17:59,840
+Oh no! Hahn's out there on the top secret mission...
+
+190
+00:17:59,895 --> 00:18:03,445
+...while I'm here sharpening my boomerang. Everything's fine!
+
+191
+00:18:03,473 --> 00:18:07,580
+Listen to me. I took you off the mission for selfish reasons.
+
+192
+00:18:07,621 --> 00:18:10,893
+I have a special task in mind for you.
+
+193
+00:18:10,941 --> 00:18:12,705
+What? You want me to scrub the barracks?
+
+194
+00:18:12,750 --> 00:18:17,029
+I want you to guard my daughter, Princess Yue.
+
+195
+00:18:17,075 --> 00:18:21,905
+Er, sure. That shouldn't be too hard.
+
+196
+00:19:13,797 --> 00:19:15,861
+Why is he sitting like that?
+
+197
+00:19:15,882 --> 00:19:19,550
+He's meditating... trying to cross over into the Spirit World.
+
+198
+00:19:19,596 --> 00:19:22,210
+It takes all his concentration.
+
+199
+00:19:22,250 --> 00:19:23,726
+Is there any way we can help?
+
+200
+00:19:23,759 --> 00:19:29,850
+How 'bout some quiet!? C'mon guys! I can hear every word you're saying!
+
+201
+00:19:49,308 --> 00:19:50,420
+Is he okay?
+
+202
+00:19:50,477 --> 00:19:55,056
+He's crossing into the Spirit World. He'll be fine as long as we don't move his body.
+
+203
+00:19:55,069 --> 00:19:57,201
+That's his way back to the physical world.
+
+204
+00:19:57,244 --> 00:19:58,516
+Maybe we should get some help?
+
+205
+00:19:58,555 --> 00:20:03,049
+No, he's my friend. I'm perfectly capable of protecting him.
+
+206
+00:20:03,075 --> 00:20:06,067
+Well, aren't you a big girl now?
+
+207
+00:20:06,110 --> 00:20:07,037
+No!
+
+208
+00:20:07,068 --> 00:20:11,750
+Yes! Hand him over, and I won't have to hurt you.
+
+209
+00:20:22,465 --> 00:20:27,528
+I see you've learned a new trick. But I didn't come this far to lose to you.
+
+210
+00:20:46,414 --> 00:20:52,054
+You little peasant. You've found a master, haven't you?
+
+211
+00:21:24,708 --> 00:21:30,384
+It's daybreak at last. Let's write history.
+
+212
+00:21:51,161 --> 00:21:56,441
+You rise with the moon. I rise with the sun.
+
+213
+00:22:07,122 --> 00:22:15,051
+The Water Tribe can try to resist the inevitable, but their city will fall today.
+
+214
+00:22:20,739 --> 00:22:22,945
+Aang!
+
+215
+00:22:24,530 --> 00:22:26,413
+What happened? Where's Zuko?
+
+216
+00:22:26,453 --> 00:22:30,754
+He took Aang. He took him right out from under me.
+
+217
+00:22:30,803 --> 00:22:33,036
+Where did they go?
+
+218
+00:22:56,083 --> 00:22:58,858
+Subtitle by rendy1287 [at gmail dot com]
+
+219
+00:22:58,928 --> 00:23:02,207
+Thanks to Acastus for The Transcript.
+http://www.avatarspiritmedia.net/
+
+
+
+0
+00:00:0,500 --> 00:00:2,00
+<font color="#ffff00" size=14>www.tvsubtitles.net</font>
