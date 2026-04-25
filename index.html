@@ -1062,17 +1062,14 @@
 
 <script>
 /* ══════════════════════════════════════════
-   AUDIO ENGINE + WORLD MAP INTRO
-   - Ambient state read first to avoid TDZ
-   - Intro audio decoded in parallel with page load
-   - If returning from sub-page with ambient on → skip intro jingle, resume ambient instantly
-   - If first visit → play intro jingle, then crossfade to ambient loop
-   - Ambient toggle persists to localStorage; cross-page state via sessionStorage
+   AUDIO ENGINE + LOADING SCREEN + WORLD MAP INTRO
+   Flow (first visit, authed):  loading screen (queues audio) → intro plays → map (min 5s) → main
+   Flow (returning, ambient on): short map → main, ambient resumes instantly
+   Flow (password gate):         gate submit → loading screen → intro → map → main
 ══════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  // ── State (read before any function uses them) ──────────────────────────
   const savedMuted       = localStorage.getItem('avatarhub_ambient_off') === '1';
   const ambientWasActive = sessionStorage.getItem('avatarhub_ambient_active') === '1';
   const isAuthed         = localStorage.getItem('avatarhub_auth') === '1';
@@ -1088,8 +1085,14 @@
   let introStarted  = false;
   let fadeTimer     = null;
   let nudgeTimer    = null;
+  let mapDone       = false;
+  let mapShowTs     = 0;
+  let autoMapTimer  = null;
 
-  // Pre-fetch raw bytes immediately (no AudioContext needed yet)
+  const MAP_MIN  = 5000;  // minimum ms the map stays visible before tap works
+  const MAP_AUTO = 10000; // auto-dismiss if user never taps
+
+  // ── Pre-fetch raw audio bytes immediately (no AudioContext yet) ─────────
   let _introRaw   = null;
   let _ambientRaw = null;
   fetch('audio/intro.MP3')  .then(r => r.ok ? r.arrayBuffer() : null).then(b => { _introRaw   = b; }).catch(() => {});
@@ -1113,7 +1116,6 @@
 
   async function decodeBuffers() {
     if (!audioCtx) return;
-    // Decode from pre-fetched bytes when available; fall back to fetch
     if (!_introDecoded) {
       try {
         const raw = _introRaw || await fetch('audio/intro.MP3').then(r => r.ok ? r.arrayBuffer() : null);
@@ -1150,8 +1152,7 @@
     gain.gain.value = 0;
     src.connect(gain).connect(audioCtx.destination);
     src.start(0);
-    ambientSrc    = src;
-    ambientGain   = gain;
+    ambientSrc = src; ambientGain = gain;
     ambientActive = true;
     ambientBtn.classList.add('active');
     hideSoundNudge();
@@ -1176,10 +1177,7 @@
     sessionStorage.setItem('avatarhub_ambient_active', '0');
     fadeTimer = setInterval(() => {
       g.gain.value = Math.max(0, g.gain.value - 0.04);
-      if (g.gain.value <= 0) {
-        clearInterval(fadeTimer);
-        try { s.stop(); } catch (e) {}
-      }
+      if (g.gain.value <= 0) { clearInterval(fadeTimer); try { s.stop(); } catch (e) {} }
     }, 60);
   }
 
@@ -1197,22 +1195,16 @@
     if (introStarted || savedMuted) return;
     introStarted = true;
     const ok = await ensureCtx();
-    if (!ok) return;
+    if (!ok) { showSoundNudge(); return; }
     await decodeBuffers();
 
-    // Returning with ambient already playing → skip intro jingle
     if (ambientWasActive) {
       if (!ambientActive && _ambientDecoded) ambientFadeIn();
       return;
     }
-
-    // Fresh visit → play intro then fade into ambient
     if (_introDecoded) {
       const src = playOnce(_introDecoded, 1);
-      if (src) {
-        src.onended = () => { if (!ambientActive) ambientFadeIn(); };
-        return;
-      }
+      if (src) { src.onended = () => { if (!ambientActive) ambientFadeIn(); }; return; }
     }
     ambientFadeIn();
   }
@@ -1221,13 +1213,8 @@
   ambientBtn.addEventListener('click', async () => {
     const ok = await ensureCtx();
     if (!ok) return;
-    if (ambientActive) {
-      ambientFadeOut();
-    } else {
-      await decodeBuffers();
-      if (_ambientDecoded) ambientFadeIn();
-      else showSoundNudge();
-    }
+    if (ambientActive) { ambientFadeOut(); }
+    else { await decodeBuffers(); if (_ambientDecoded) ambientFadeIn(); else showSoundNudge(); }
   });
 
   soundNudge && soundNudge.addEventListener('click', async () => {
@@ -1238,47 +1225,172 @@
     if (!ambientActive && _ambientDecoded) ambientFadeIn();
   });
 
-  // ── World-map splash ────────────────────────────────────────────────────
-  let mapDone = false;
-  requestAnimationFrame(() => setTimeout(() => mapSplash.classList.add('map-in'), 60));
+  // ── Loading screen ──────────────────────────────────────────────────────
+  const lsCss = document.createElement('style');
+  lsCss.textContent = `
+    #avatarLoader{
+      position:fixed;inset:0;z-index:210;
+      background:radial-gradient(ellipse at 50% 38%,#071422 0%,#04070d 68%);
+      display:none;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;
+    }
+    #avatarLoader.ls-show{display:flex;}
+    #avatarLoader.ls-out{animation:lsOut .75s ease forwards;pointer-events:none;}
+    .ls-logo{
+      font-family:'Cinzel Decorative',Georgia,serif;
+      font-size:clamp(1.1rem,3.5vw,2rem);letter-spacing:.15em;
+      background:linear-gradient(135deg,#fff 0%,#d4e8ff 40%,#4db8ff 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      opacity:0;animation:lsFadeUp .7s ease .15s both;
+    }
+    .ls-syms{
+      display:flex;gap:clamp(.7rem,2vw,1.5rem);
+      opacity:0;animation:lsFadeUp .6s ease .3s both;
+    }
+    .ls-sym{
+      width:clamp(22px,3vw,34px);height:clamp(22px,3vw,34px);
+      object-fit:contain;opacity:.75;
+    }
+    .ls-msg{
+      font-family:'Philosopher',Georgia,serif;font-style:italic;
+      font-size:clamp(.52rem,1.3vw,.7rem);letter-spacing:.38em;text-transform:uppercase;
+      color:rgba(107,138,171,.9);min-height:1.3em;text-align:center;
+      opacity:0;animation:lsFadeUp .5s ease .45s both;
+      transition:opacity .25s ease;
+    }
+    .ls-track{
+      width:clamp(160px,36vw,280px);height:2px;
+      background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;
+      opacity:0;animation:lsFadeUp .5s ease .55s both;
+    }
+    .ls-fill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg,#4db8ff,#c9a84c);
+      border-radius:2px;transition:width .5s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes lsFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes lsOut{to{opacity:0;transform:scale(1.03)}}
+  `;
+  document.head.appendChild(lsCss);
+
+  const loader = document.createElement('div');
+  loader.id = 'avatarLoader';
+  loader.innerHTML = `
+    <div class="ls-logo">AvatarArchive</div>
+    <div class="ls-syms">
+      <img class="ls-sym" src="images/air.png"   alt="">
+      <img class="ls-sym" src="images/water.png" alt="">
+      <img class="ls-sym" src="images/earth.png" alt="">
+      <img class="ls-sym" src="images/fire.png"  alt="">
+    </div>
+    <div class="ls-msg" id="loaderMsg">Entering the Avatar World…</div>
+    <div class="ls-track"><div class="ls-fill" id="loaderFill"></div></div>
+  `;
+  document.body.appendChild(loader);
+
+  const LOAD_MSGS = [
+    'Entering the Avatar World…',
+    'Locating the four nations…',
+    'Summoning the Avatar Spirit…',
+    'Preparing the elements…',
+    'Opening the spirit portal…',
+  ];
+  const STEP_MS = 520;
+
+  function runLoader(onDone) {
+    const msgEl  = document.getElementById('loaderMsg');
+    const fillEl = document.getElementById('loaderFill');
+    loader.classList.remove('ls-show','ls-out');
+    void loader.offsetWidth;
+    loader.classList.add('ls-show');
+    let step = 0;
+    const total = LOAD_MSGS.length;
+    function advance() {
+      if (msgEl) {
+        msgEl.style.opacity = '0';
+        setTimeout(() => { if (msgEl){ msgEl.textContent = LOAD_MSGS[step]; msgEl.style.opacity = '1'; } }, 220);
+      }
+      if (fillEl) fillEl.style.width = ((step + 1) / total * 100) + '%';
+      step++;
+      if (step < total) setTimeout(advance, STEP_MS);
+    }
+    advance();
+    setTimeout(() => {
+      loader.classList.add('ls-out');
+      setTimeout(() => { loader.classList.remove('ls-show','ls-out'); onDone(); }, 750);
+    }, total * STEP_MS + 420);
+  }
+
+  // ── Map splash helpers ──────────────────────────────────────────────────
+  mapSplash.style.display = 'none'; // hide until loader finishes
+
+  function showMap() {
+    mapSplash.style.display = '';
+    mapShowTs = Date.now();
+    requestAnimationFrame(() => setTimeout(() => mapSplash.classList.add('map-in'), 60));
+  }
 
   function dismissMap() {
     if (mapDone) return;
     mapDone = true;
+    clearTimeout(autoMapTimer);
     mapSplash.classList.add('fade-out');
-    setTimeout(() => {
-      mapSplash.style.display = 'none';
-      document.body.classList.add('page-ready');
-    }, 800);
+    setTimeout(() => { mapSplash.style.display = 'none'; document.body.classList.add('page-ready'); }, 800);
   }
 
-  if (isAuthed) {
-    // Auto-dismiss: shorter wait when ambient was already going
-    const delay = ambientWasActive ? 900 : 1400;
-    setTimeout(() => { if (!mapDone) { dismissMap(); startAudio(); } }, delay);
-    mapSplash.addEventListener('click', async () => {
-      await ensureCtx();
-      dismissMap();
-      startAudio();
-    }, { once: true });
-    mapSplash.addEventListener('keydown', async e => {
-      if (e.code === 'Space' || e.code === 'Enter') {
-        await ensureCtx();
-        dismissMap();
-        startAudio();
-      }
-    });
+  function armMap() {
+    autoMapTimer = setTimeout(() => { if (!mapDone) dismissMap(); }, MAP_AUTO);
     mapSplash.setAttribute('tabindex', '0');
-  } else {
-    // Password gate is covering everything — skip splash entirely
-    mapSplash.style.display = 'none';
-    mapDone = true;
-    document.body.classList.add('page-ready');
+
+    mapSplash.addEventListener('click', async () => {
+      if (mapDone) return;
+      if (!introStarted && !savedMuted) { await ensureCtx(); await startAudio(); }
+      const elapsed = Date.now() - mapShowTs;
+      const wait    = Math.max(0, MAP_MIN - elapsed);
+      setTimeout(dismissMap, wait);
+    }, { once: true });
+
+    mapSplash.addEventListener('keydown', e => {
+      if ((e.code === 'Space' || e.code === 'Enter') && !mapDone) dismissMap();
+    });
   }
 
-  // Expose startAudio for password gate callback
-  window._avatarStartAudio = startAudio;
+  // ── Orchestration ───────────────────────────────────────────────────────
+  if (isAuthed) {
+    if (ambientWasActive) {
+      // Returning from sub-page: skip loader + intro, brief map
+      showMap();
+      startAudio();
+      autoMapTimer = setTimeout(() => { if (!mapDone) dismissMap(); }, 2000);
+      mapSplash.addEventListener('click', () => { clearTimeout(autoMapTimer); dismissMap(); }, { once: true });
+      mapSplash.setAttribute('tabindex','0');
+    } else {
+      // Fresh authenticated visit: loader first, then intro + map
+      loader.addEventListener('click', () => ensureCtx(), { once: true });
+      runLoader(async () => {
+        const ok = await ensureCtx();
+        if (ok) { await startAudio(); } else { showSoundNudge(); }
+        showMap();
+        armMap();
+      });
+    }
+  }
+  // else: password gate is showing; _avatarStartAudio handles the full flow
+
+  // ── Hooks for password gate ─────────────────────────────────────────────
   window._avatarEnsureCtx  = ensureCtx;
+  window._avatarStartAudio = async function () {
+    await ensureCtx(); // grab AudioContext inside the gate's click gesture
+    decodeBuffers();   // start decoding immediately, fire & forget
+    // Wait for gate's 500ms leave animation, then run loader
+    setTimeout(() => {
+      runLoader(async () => {
+        await decodeBuffers(); // ensure decoded before playing
+        await startAudio();
+        showMap();
+        armMap();
+      });
+    }, 520);
+  };
 
 })();
 </script>
@@ -1538,22 +1650,11 @@ self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>
 })();
 
 
-/* ── Lazy-load card poster backgrounds ── */
+/* ── Card poster backgrounds — eager load (all cards visible on load) ── */
 (function(){
-  const bgs = document.querySelectorAll('.card-poster-bg[data-bg]');
-  if (!('IntersectionObserver' in window)) {
-    bgs.forEach(el => { el.style.backgroundImage = "url('" + el.dataset.bg + "')"; });
-    return;
-  }
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.backgroundImage = "url('" + e.target.dataset.bg + "')";
-        io.unobserve(e.target);
-      }
-    });
-  }, { rootMargin: '100px' });
-  bgs.forEach(el => io.observe(el));
+  document.querySelectorAll('.card-poster-bg[data-bg]').forEach(function(el){
+    el.style.backgroundImage = "url('" + el.dataset.bg + "')";
+  });
 })();
 </script>
 </body>
