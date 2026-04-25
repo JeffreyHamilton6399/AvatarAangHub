@@ -766,7 +766,7 @@
     <!-- ATLA -->
     <a href="atla.html" class="hub-card atla">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/atlabg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/atlabg.png')"></div>
         <div class="card-poster-overlay"></div>
         <div class="card-progress-strip" id="atlaProg"><div class="card-progress-fill" id="atlaProgFill" style="width:0%"></div></div>
       </div>
@@ -790,7 +790,7 @@
     <!-- Korra -->
     <a href="kora.html" class="hub-card korra">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/korabg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/korabg.png')"></div>
         <div class="card-poster-overlay"></div>
         <div class="card-progress-strip" id="korraProg"><div class="card-progress-fill" id="korraProgFill" style="width:0%"></div></div>
       </div>
@@ -814,7 +814,7 @@
     <!-- Live Action Show (Netflix 2024) -->
     <a href="liveshow.html" class="hub-card liveactionshow">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/liveshowbg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/liveshowbg.png')"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -836,7 +836,7 @@
     <!-- Movie (2026 Animated) -->
     <a href="movie2026.html" class="hub-card movie">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/movie2026bg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/movie2026bg.png')"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -858,7 +858,7 @@
     <!-- Books (Graphic Novels / PDFs) -->
     <a href="books.html" class="hub-card books">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/booksbg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/booksbg.png')"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -881,7 +881,7 @@
     <!-- Live Action Movie (2010) -->
     <a href="movie2010.html" class="hub-card liveactionmovie">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/movie2010bg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/movie2010bg.png')"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -903,7 +903,7 @@
     <!-- ATLA Games -->
     <a href="games.html" class="hub-card games">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/gamesbg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/gamesbg.png')"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -925,7 +925,7 @@
     <!-- Official Merch -->
     <a href="merch.html" class="hub-card merch">
       <div class="card-poster">
-        <div class="card-poster-bg" data-bg="images/storebg.png" style="background-image:none"></div>
+        <div class="card-poster-bg" style="background-image:url('images/storebg.png')"></div>
         <div class="card-poster-overlay"></div>
       </div>
       <div class="card-body">
@@ -1063,9 +1063,9 @@
 <script>
 /* ══════════════════════════════════════════
    AUDIO ENGINE + LOADING SCREEN + WORLD MAP INTRO
-   Flow (first visit, authed):  loading screen (queues audio) → intro plays → map (min 5s) → main
-   Flow (returning, ambient on): short map → main, ambient resumes instantly
-   Flow (password gate):         gate submit → loading screen → intro → map → main
+   Flow (first visit):  loading screen (queues audio) → intro plays → map (min 5s) → main
+   Flow (returning):    short map → main, ambient resumes instantly
+   Flow (after gate):   gate submit → loading screen → intro → map → main
 ══════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -1089,16 +1089,16 @@
   let mapShowTs     = 0;
   let autoMapTimer  = null;
 
-  const MAP_MIN  = 5000;  // minimum ms the map stays visible before tap works
-  const MAP_AUTO = 10000; // auto-dismiss if user never taps
+  const MAP_MIN  = 5000;   // minimum ms the map stays visible before tap dismisses
+  const MAP_AUTO = 10000;  // auto-dismiss if user never taps
 
-  // ── Pre-fetch raw audio bytes immediately (no AudioContext yet) ─────────
+  // Pre-fetch raw bytes immediately — no AudioContext needed yet
   let _introRaw   = null;
   let _ambientRaw = null;
   fetch('audio/intro.MP3')  .then(r => r.ok ? r.arrayBuffer() : null).then(b => { _introRaw   = b; }).catch(() => {});
   fetch('audio/ambient.MP3').then(r => r.ok ? r.arrayBuffer() : null).then(b => { _ambientRaw = b; }).catch(() => {});
 
-  // ── AudioContext ────────────────────────────────────────────────────────
+  // ── AudioContext ─────────────────────────────────────────────────────────
   async function ensureCtx() {
     if (!audioCtx) {
       try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
@@ -1110,7 +1110,7 @@
     return audioCtx.state === 'running';
   }
 
-  // ── Decode helpers ──────────────────────────────────────────────────────
+  // ── Decode helpers ───────────────────────────────────────────────────────
   let _introDecoded   = null;
   let _ambientDecoded = null;
 
@@ -1130,13 +1130,12 @@
     }
   }
 
-  // ── Playback helpers ────────────────────────────────────────────────────
+  // ── Playback ─────────────────────────────────────────────────────────────
   function playOnce(buf, vol = 1) {
     if (!buf || !audioCtx) return null;
     const src  = audioCtx.createBufferSource();
     const gain = audioCtx.createGain();
-    src.buffer = buf;
-    gain.gain.value = vol;
+    src.buffer = buf; gain.gain.value = vol;
     src.connect(gain).connect(audioCtx.destination);
     src.start(0);
     return src;
@@ -1147,21 +1146,17 @@
     clearInterval(fadeTimer);
     const src  = audioCtx.createBufferSource();
     const gain = audioCtx.createGain();
-    src.buffer = _ambientDecoded;
-    src.loop   = true;
-    gain.gain.value = 0;
+    src.buffer = _ambientDecoded; src.loop = true; gain.gain.value = 0;
     src.connect(gain).connect(audioCtx.destination);
     src.start(0);
-    ambientSrc = src; ambientGain = gain;
-    ambientActive = true;
+    ambientSrc = src; ambientGain = gain; ambientActive = true;
     ambientBtn.classList.add('active');
     hideSoundNudge();
     localStorage.setItem('avatarhub_ambient_off', '0');
     sessionStorage.setItem('avatarhub_ambient_active', '1');
     let v = 0;
     fadeTimer = setInterval(() => {
-      v = Math.min(0.55, v + 0.015);
-      gain.gain.value = v;
+      v = Math.min(0.55, v + 0.015); gain.gain.value = v;
       if (v >= 0.55) clearInterval(fadeTimer);
     }, 60);
   }
@@ -1190,14 +1185,13 @@
     soundNudge && soundNudge.classList.remove('show');
   }
 
-  // ── Main audio sequence ─────────────────────────────────────────────────
+  // ── Main audio sequence ──────────────────────────────────────────────────
   async function startAudio() {
     if (introStarted || savedMuted) return;
     introStarted = true;
     const ok = await ensureCtx();
     if (!ok) { showSoundNudge(); return; }
     await decodeBuffers();
-
     if (ambientWasActive) {
       if (!ambientActive && _ambientDecoded) ambientFadeIn();
       return;
@@ -1209,7 +1203,7 @@
     ambientFadeIn();
   }
 
-  // ── Ambient toggle ──────────────────────────────────────────────────────
+  // ── Ambient toggle ───────────────────────────────────────────────────────
   ambientBtn.addEventListener('click', async () => {
     const ok = await ensureCtx();
     if (!ok) return;
@@ -1225,48 +1219,29 @@
     if (!ambientActive && _ambientDecoded) ambientFadeIn();
   });
 
-  // ── Loading screen ──────────────────────────────────────────────────────
+  // ── Loading screen ───────────────────────────────────────────────────────
   const lsCss = document.createElement('style');
   lsCss.textContent = `
-    #avatarLoader{
-      position:fixed;inset:0;z-index:210;
+    #avatarLoader{position:fixed;inset:0;z-index:210;
       background:radial-gradient(ellipse at 50% 38%,#071422 0%,#04070d 68%);
-      display:none;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;
-    }
+      display:none;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;}
     #avatarLoader.ls-show{display:flex;}
     #avatarLoader.ls-out{animation:lsOut .75s ease forwards;pointer-events:none;}
-    .ls-logo{
-      font-family:'Cinzel Decorative',Georgia,serif;
+    .ls-logo{font-family:'Cinzel Decorative',Georgia,serif;
       font-size:clamp(1.1rem,3.5vw,2rem);letter-spacing:.15em;
       background:linear-gradient(135deg,#fff 0%,#d4e8ff 40%,#4db8ff 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      opacity:0;animation:lsFadeUp .7s ease .15s both;
-    }
-    .ls-syms{
-      display:flex;gap:clamp(.7rem,2vw,1.5rem);
-      opacity:0;animation:lsFadeUp .6s ease .3s both;
-    }
-    .ls-sym{
-      width:clamp(22px,3vw,34px);height:clamp(22px,3vw,34px);
-      object-fit:contain;opacity:.75;
-    }
-    .ls-msg{
-      font-family:'Philosopher',Georgia,serif;font-style:italic;
+      opacity:0;animation:lsFadeUp .7s ease .15s both;}
+    .ls-syms{display:flex;gap:clamp(.7rem,2vw,1.5rem);opacity:0;animation:lsFadeUp .6s ease .3s both;}
+    .ls-sym{width:clamp(22px,3vw,34px);height:clamp(22px,3vw,34px);object-fit:contain;opacity:.75;}
+    .ls-msg{font-family:'Philosopher',Georgia,serif;font-style:italic;
       font-size:clamp(.52rem,1.3vw,.7rem);letter-spacing:.38em;text-transform:uppercase;
       color:rgba(107,138,171,.9);min-height:1.3em;text-align:center;
-      opacity:0;animation:lsFadeUp .5s ease .45s both;
-      transition:opacity .25s ease;
-    }
-    .ls-track{
-      width:clamp(160px,36vw,280px);height:2px;
-      background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;
-      opacity:0;animation:lsFadeUp .5s ease .55s both;
-    }
-    .ls-fill{
-      height:100%;width:0%;
-      background:linear-gradient(90deg,#4db8ff,#c9a84c);
-      border-radius:2px;transition:width .5s cubic-bezier(.22,1,.36,1);
-    }
+      opacity:0;animation:lsFadeUp .5s ease .45s both;transition:opacity .25s ease;}
+    .ls-track{width:clamp(160px,36vw,280px);height:2px;background:rgba(255,255,255,.07);
+      border-radius:2px;overflow:hidden;opacity:0;animation:lsFadeUp .5s ease .55s both;}
+    .ls-fill{height:100%;width:0%;background:linear-gradient(90deg,#4db8ff,#c9a84c);
+      border-radius:2px;transition:width .5s cubic-bezier(.22,1,.36,1);}
     @keyframes lsFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
     @keyframes lsOut{to{opacity:0;transform:scale(1.03)}}
   `;
@@ -1305,10 +1280,7 @@
     let step = 0;
     const total = LOAD_MSGS.length;
     function advance() {
-      if (msgEl) {
-        msgEl.style.opacity = '0';
-        setTimeout(() => { if (msgEl){ msgEl.textContent = LOAD_MSGS[step]; msgEl.style.opacity = '1'; } }, 220);
-      }
+      if (msgEl) { msgEl.style.opacity = '0'; setTimeout(() => { if (msgEl) { msgEl.textContent = LOAD_MSGS[step]; msgEl.style.opacity = '1'; } }, 220); }
       if (fillEl) fillEl.style.width = ((step + 1) / total * 100) + '%';
       step++;
       if (step < total) setTimeout(advance, STEP_MS);
@@ -1320,8 +1292,8 @@
     }, total * STEP_MS + 420);
   }
 
-  // ── Map splash helpers ──────────────────────────────────────────────────
-  mapSplash.style.display = 'none'; // hide until loader finishes
+  // ── Map splash helpers ───────────────────────────────────────────────────
+  mapSplash.style.display = 'none';
 
   function showMap() {
     mapSplash.style.display = '';
@@ -1340,31 +1312,28 @@
   function armMap() {
     autoMapTimer = setTimeout(() => { if (!mapDone) dismissMap(); }, MAP_AUTO);
     mapSplash.setAttribute('tabindex', '0');
-
     mapSplash.addEventListener('click', async () => {
       if (mapDone) return;
       if (!introStarted && !savedMuted) { await ensureCtx(); await startAudio(); }
-      const elapsed = Date.now() - mapShowTs;
-      const wait    = Math.max(0, MAP_MIN - elapsed);
+      const wait = Math.max(0, MAP_MIN - (Date.now() - mapShowTs));
       setTimeout(dismissMap, wait);
     }, { once: true });
-
     mapSplash.addEventListener('keydown', e => {
       if ((e.code === 'Space' || e.code === 'Enter') && !mapDone) dismissMap();
     });
   }
 
-  // ── Orchestration ───────────────────────────────────────────────────────
+  // ── Orchestration ────────────────────────────────────────────────────────
   if (isAuthed) {
     if (ambientWasActive) {
-      // Returning from sub-page: skip loader + intro, brief map
+      // Returning from sub-page: skip loader, quick map
       showMap();
       startAudio();
       autoMapTimer = setTimeout(() => { if (!mapDone) dismissMap(); }, 2000);
       mapSplash.addEventListener('click', () => { clearTimeout(autoMapTimer); dismissMap(); }, { once: true });
       mapSplash.setAttribute('tabindex','0');
     } else {
-      // Fresh authenticated visit: loader first, then intro + map
+      // Fresh visit: loader → audio → map
       loader.addEventListener('click', () => ensureCtx(), { once: true });
       runLoader(async () => {
         const ok = await ensureCtx();
@@ -1374,17 +1343,15 @@
       });
     }
   }
-  // else: password gate is showing; _avatarStartAudio handles the full flow
 
-  // ── Hooks for password gate ─────────────────────────────────────────────
+  // ── Password gate hooks ──────────────────────────────────────────────────
   window._avatarEnsureCtx  = ensureCtx;
   window._avatarStartAudio = async function () {
-    await ensureCtx(); // grab AudioContext inside the gate's click gesture
-    decodeBuffers();   // start decoding immediately, fire & forget
-    // Wait for gate's 500ms leave animation, then run loader
+    await ensureCtx();  // grab ctx inside the gate click gesture
+    decodeBuffers();    // fire & forget
     setTimeout(() => {
       runLoader(async () => {
-        await decodeBuffers(); // ensure decoded before playing
+        await decodeBuffers();
         await startAudio();
         showMap();
         armMap();
@@ -1650,11 +1617,22 @@ self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>
 })();
 
 
-/* ── Card poster backgrounds — eager load (all cards visible on load) ── */
+/* ── Lazy-load card poster backgrounds ── */
 (function(){
-  document.querySelectorAll('.card-poster-bg[data-bg]').forEach(function(el){
-    el.style.backgroundImage = "url('" + el.dataset.bg + "')";
-  });
+  const bgs = document.querySelectorAll('.card-poster-bg[data-bg]');
+  if (!('IntersectionObserver' in window)) {
+    bgs.forEach(el => { el.style.backgroundImage = "url('" + el.dataset.bg + "')"; });
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.backgroundImage = "url('" + e.target.dataset.bg + "')";
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '100px' });
+  bgs.forEach(el => io.observe(el));
 })();
 </script>
 </body>

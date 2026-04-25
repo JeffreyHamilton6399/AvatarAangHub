@@ -720,46 +720,63 @@ setTimeout(() => { if (!introDone) dismissIntro(); }, 1400);
   if (localStorage.getItem('avatarhub_ambient_off') === '1') return;
   if (sessionStorage.getItem('avatarhub_ambient_active') !== '1') return;
 
-  // Create AudioContext immediately — decodeAudioData works on suspended context
-  let ctx = null, decoded = null, started = false;
-  try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+  let _raw     = null;   // raw ArrayBuffer from fetch
+  let _ctx     = null;   // AudioContext (created inside gesture)
+  let _started = false;
 
+  // Pre-fetch bytes immediately — no AudioContext needed for this
   fetch('audio/ambient.MP3')
     .then(r => r.ok ? r.arrayBuffer() : null)
-    .then(buf => buf ? ctx.decodeAudioData(buf) : null)
-    .then(d => { decoded = d; tryPlay(); })
+    .then(b => { _raw = b; })
     .catch(() => {});
 
-  function tryPlay() {
-    if (!decoded || started) return;
-    if (ctx.state === 'suspended') {
-      ctx.resume()
-        .then(() => ctx.state === 'running' ? startAmbient() : onGesture(tryPlay))
-        .catch(() => onGesture(tryPlay));
+  // Try to start immediately (works on desktop, usually blocked on mobile)
+  setTimeout(tryStart, 80);
+
+  // Also arm a one-time gesture listener as fallback for mobile
+  function armGesture() {
+    ['click','touchstart','keydown'].forEach(ev =>
+      document.addEventListener(ev, function handler() {
+        document.removeEventListener(ev, handler);
+        tryStart();
+      }, { passive: true })
+    );
+  }
+  armGesture();
+
+  async function tryStart() {
+    if (_started) return;
+    // Create context inside this call (may or may not be inside a gesture)
+    if (!_ctx) {
+      try { _ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch (e) { return; }
+    }
+    // Try to resume — succeeds without gesture on desktop, may need gesture on mobile
+    try { await _ctx.resume(); } catch (e) {}
+    if (_ctx.state !== 'running') {
+      // Still blocked — gesture listener will fire tryStart on next interaction
+      armGesture();
       return;
     }
-    startAmbient();
-  }
-
-  function startAmbient() {
-    if (started || !decoded) return;
-    started = true;
-    const src  = ctx.createBufferSource();
-    const gain = ctx.createGain();
+    // Decode
+    const raw = _raw || await fetch('audio/ambient.MP3')
+      .then(r => r.ok ? r.arrayBuffer() : null).catch(() => null);
+    if (!raw) return;
+    let decoded;
+    try { decoded = await _ctx.decodeAudioData(raw.slice(0)); }
+    catch (e) { return; }
+    if (_started) return;
+    _started = true;
+    const src  = _ctx.createBufferSource();
+    const gain = _ctx.createGain();
     src.buffer = decoded; src.loop = true; gain.gain.value = 0;
-    src.connect(gain).connect(ctx.destination);
+    src.connect(gain).connect(_ctx.destination);
     src.start(0);
     let v = 0;
-    const timer = setInterval(() => {
+    const t = setInterval(() => {
       gain.gain.value = v = Math.min(0.55, v + 0.015);
-      if (v >= 0.55) clearInterval(timer);
+      if (v >= 0.55) clearInterval(t);
     }, 60);
-  }
-
-  function onGesture(cb) {
-    ['click', 'keydown', 'touchstart'].forEach(ev =>
-      document.addEventListener(ev, cb, { once: true, passive: true })
-    );
   }
 })();
 </script>
