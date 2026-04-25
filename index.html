@@ -309,7 +309,7 @@
       width: 100%; max-width: 1180px;
       display: grid;
       grid-template-columns: repeat(3,1fr);
-    grid-template-rows: auto;
+      grid-template-rows: auto;
       gap: clamp(1.2rem,2.5vw,2rem);
       padding-top: clamp(1.5rem,3vh,2.5rem);
       padding-bottom: clamp(4rem,8vh,7rem);
@@ -327,12 +327,12 @@
       .card-label { font-size: .48rem; }
       .card-tag   { font-size: .44rem; padding: .3em .9em; }
       .card-cta   { font-size: .52rem; padding-top: .85rem; }
-      /* Prevent "AvatarArchive" from wrapping and stretching the hero vertically */
       .hero { padding-top: clamp(2.5rem,6vh,4rem); }
       .hero-main {
-        font-size: clamp(1.45rem, 8.5vw, 2.4rem);
-        letter-spacing: .04em;
-        white-space: nowrap;
+        font-size: clamp(1.3rem, 7.5vw, 2.4rem);
+        letter-spacing: .03em;
+        overflow: visible;
+        padding: 0 .25rem;
       }
       .hero-sub { font-size: .88rem; }
     }
@@ -697,10 +697,8 @@
       localStorage.setItem(KEY, '1');
       gate.classList.add('leaving');
       /* Start audio from within this click gesture (browser autoplay policy) */
-      if (typeof startAudioSequence === 'function') {
-        if (typeof ensureAudioCtx === 'function') {
-          ensureAudioCtx().then(() => startAudioSequence());
-        }
+      if (window._avatarEnsureCtx && window._avatarStartAudio) {
+        window._avatarEnsureCtx().then(() => window._avatarStartAudio());
       }
       setTimeout(function(){ gate.style.display = 'none'; }, 500);
     } else {
@@ -1064,230 +1062,226 @@
 
 <script>
 /* ══════════════════════════════════════════
-   AUDIO ENGINE  — Web Audio API
-   Fixed: AudioContext is properly created &
-   resumed before any decode/play call.
+   AUDIO ENGINE + WORLD MAP INTRO
+   - Ambient state read first to avoid TDZ
+   - Intro audio decoded in parallel with page load
+   - If returning from sub-page with ambient on → skip intro jingle, resume ambient instantly
+   - If first visit → play intro jingle, then crossfade to ambient loop
+   - Ambient toggle persists to localStorage; cross-page state via sessionStorage
 ══════════════════════════════════════════ */
-const ambientBtn = document.getElementById('ambientRow');
-const soundNudge = document.getElementById('soundNudge');
+(function () {
+  'use strict';
 
-let audioCtx       = null;
-let ambientSource  = null;
-let gainNode       = null;
-let introBuffer    = null;
-let ambientBuffer  = null;
-let ambientPlaying = false;
-let introStarted   = false;
-let fadeTimer      = null;
-let nudgeTimer     = null;
-const savedMuted   = localStorage.getItem('avatarhub_ambient_off') === '1';
+  // ── State (read before any function uses them) ──────────────────────────
+  const savedMuted       = localStorage.getItem('avatarhub_ambient_off') === '1';
+  const ambientWasActive = sessionStorage.getItem('avatarhub_ambient_active') === '1';
+  const isAuthed         = localStorage.getItem('avatarhub_auth') === '1';
 
-/* Create & resume AudioContext — call synchronously inside a user gesture */
-async function ensureAudioCtx() {
-  if (!audioCtx) {
-    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-    catch(e) { return false; }
-  }
-  if (audioCtx.state === 'suspended') {
-    try { await audioCtx.resume(); } catch(e) {}
-  }
-  return audioCtx.state === 'running';
-}
+  const ambientBtn = document.getElementById('ambientRow');
+  const soundNudge = document.getElementById('soundNudge');
+  const mapSplash  = document.getElementById('mapSplash');
 
-/* Fetch + decode — only called after ctx is running */
-async function fetchBuffer(url) {
-  try {
-    const resp = await fetch(url);
-    if (!resp.ok) return null;
-    const arr  = await resp.arrayBuffer();
-    return await audioCtx.decodeAudioData(arr);
-  } catch(e) { return null; }
-}
+  let audioCtx      = null;
+  let ambientSrc    = null;
+  let ambientGain   = null;
+  let ambientActive = false;
+  let introStarted  = false;
+  let fadeTimer     = null;
+  let nudgeTimer    = null;
 
-/* Pre-fetch raw bytes passively (no ctx needed) */
-let _introRaw   = null;
-let _ambientRaw = null;
-fetch('audio/intro.MP3')  .then(r => r.ok ? r.arrayBuffer() : null).then(b => { _introRaw   = b; }).catch(()=>{});
-fetch('audio/ambient.MP3').then(r => r.ok ? r.arrayBuffer() : null).then(b => { _ambientRaw = b; }).catch(()=>{});
+  // Pre-fetch raw bytes immediately (no AudioContext needed yet)
+  let _introRaw   = null;
+  let _ambientRaw = null;
+  fetch('audio/intro.MP3')  .then(r => r.ok ? r.arrayBuffer() : null).then(b => { _introRaw   = b; }).catch(() => {});
+  fetch('audio/ambient.MP3').then(r => r.ok ? r.arrayBuffer() : null).then(b => { _ambientRaw = b; }).catch(() => {});
 
-/* Decode pre-fetched raw buffers once ctx exists */
-async function ensureBuffers() {
-  if (!audioCtx) return;
-  if (!introBuffer && _introRaw) {
-    try { introBuffer = await audioCtx.decodeAudioData(_introRaw.slice(0)); } catch(e) {}
-  }
-  if (!ambientBuffer && _ambientRaw) {
-    try { ambientBuffer = await audioCtx.decodeAudioData(_ambientRaw.slice(0)); } catch(e) {}
-  }
-  /* Fallback: fetch if passive pre-fetch missed */
-  if (!introBuffer)   introBuffer   = await fetchBuffer('audio/intro.MP3');
-  if (!ambientBuffer) ambientBuffer = await fetchBuffer('audio/ambient.MP3');
-}
-
-function _playBuffer(buf, loop, vol) {
-  if (!buf || !audioCtx) return null;
-  const src  = audioCtx.createBufferSource();
-  src.buffer = buf; src.loop = !!loop;
-  const gain = audioCtx.createGain();
-  gain.gain.value = vol ?? 1;
-  src.connect(gain); gain.connect(audioCtx.destination);
-  src.start(0);
-  return { src, gain };
-}
-
-function ambientFadeIn() {
-  if (ambientPlaying || !audioCtx || !ambientBuffer) return;
-  clearInterval(fadeTimer);
-  const nodes = _playBuffer(ambientBuffer, true, 0);
-  if (!nodes) return;
-  ambientSource  = nodes.src;
-  gainNode       = nodes.gain;
-  ambientPlaying = true;
-  ambientBtn.classList.add('active');
-  hideSoundNudge();
-  localStorage.setItem('avatarhub_ambient_off', '0');
-  sessionStorage.setItem('avatarhub_ambient_active', '1');
-  fadeTimer = setInterval(() => {
-    const cur = gainNode.gain.value;
-    gainNode.gain.value = Math.min(0.55, cur + 0.015);
-    if (gainNode.gain.value >= 0.55) clearInterval(fadeTimer);
-  }, 60);
-}
-
-function ambientFadeOut() {
-  if (!ambientPlaying) return;
-  clearInterval(fadeTimer);
-  const g = gainNode, s = ambientSource;
-  ambientPlaying = false;
-  ambientBtn.classList.remove('active');
-  hideSoundNudge();
-  localStorage.setItem('avatarhub_ambient_off', '1');
-  sessionStorage.setItem('avatarhub_ambient_active', '0');
-  fadeTimer = setInterval(() => {
-    if (!g) { clearInterval(fadeTimer); return; }
-    g.gain.value = Math.max(0, g.gain.value - 0.04);
-    if (g.gain.value <= 0) {
-      clearInterval(fadeTimer);
-      try { s.stop(); } catch(e) {}
+  // ── AudioContext ────────────────────────────────────────────────────────
+  async function ensureCtx() {
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch (e) { return false; }
     }
-  }, 60);
-}
-
-function showSoundNudge() {
-  clearTimeout(nudgeTimer);
-  nudgeTimer = setTimeout(() => { if (soundNudge) soundNudge.classList.add('show'); }, 1000);
-}
-function hideSoundNudge() {
-  clearTimeout(nudgeTimer);
-  if (soundNudge) soundNudge.classList.remove('show');
-}
-
-/* Play intro then crossfade to ambient */
-async function startAudioSequence() {
-  if (introStarted) return;
-  introStarted = true;
-
-  /* If ambient was playing when user left the page, skip intro and just resume ambient */
-  if (ambientWasPlaying && !savedMuted) {
-    const ok = await ensureAudioCtx();
-    if (!ok) return;
-    await ensureBuffers();
-    if (!ambientPlaying && ambientBuffer) ambientFadeIn();
-    return;
+    if (audioCtx.state === 'suspended') {
+      try { await audioCtx.resume(); } catch (e) {}
+    }
+    return audioCtx.state === 'running';
   }
 
-  if (savedMuted) return;
-  const ok = await ensureAudioCtx();
-  if (!ok) return;
-  await ensureBuffers();
-  if (introBuffer) {
-    const nodes = _playBuffer(introBuffer, false, 1);
-    if (nodes) {
-      const dur = (introBuffer.duration > 0 ? introBuffer.duration * 1000 + 400 : 5500);
-      nodes.src.onended = () => { if (!ambientPlaying && !savedMuted) ambientFadeIn(); };
-      setTimeout(() => { if (!ambientPlaying && !savedMuted) ambientFadeIn(); }, dur);
+  // ── Decode helpers ──────────────────────────────────────────────────────
+  let _introDecoded   = null;
+  let _ambientDecoded = null;
+
+  async function decodeBuffers() {
+    if (!audioCtx) return;
+    // Decode from pre-fetched bytes when available; fall back to fetch
+    if (!_introDecoded) {
+      try {
+        const raw = _introRaw || await fetch('audio/intro.MP3').then(r => r.ok ? r.arrayBuffer() : null);
+        if (raw) _introDecoded = await audioCtx.decodeAudioData(raw.slice(0));
+      } catch (e) {}
+    }
+    if (!_ambientDecoded) {
+      try {
+        const raw = _ambientRaw || await fetch('audio/ambient.MP3').then(r => r.ok ? r.arrayBuffer() : null);
+        if (raw) _ambientDecoded = await audioCtx.decodeAudioData(raw.slice(0));
+      } catch (e) {}
+    }
+  }
+
+  // ── Playback helpers ────────────────────────────────────────────────────
+  function playOnce(buf, vol = 1) {
+    if (!buf || !audioCtx) return null;
+    const src  = audioCtx.createBufferSource();
+    const gain = audioCtx.createGain();
+    src.buffer = buf;
+    gain.gain.value = vol;
+    src.connect(gain).connect(audioCtx.destination);
+    src.start(0);
+    return src;
+  }
+
+  function ambientFadeIn() {
+    if (ambientActive || !audioCtx || !_ambientDecoded) return;
+    clearInterval(fadeTimer);
+    const src  = audioCtx.createBufferSource();
+    const gain = audioCtx.createGain();
+    src.buffer = _ambientDecoded;
+    src.loop   = true;
+    gain.gain.value = 0;
+    src.connect(gain).connect(audioCtx.destination);
+    src.start(0);
+    ambientSrc    = src;
+    ambientGain   = gain;
+    ambientActive = true;
+    ambientBtn.classList.add('active');
+    hideSoundNudge();
+    localStorage.setItem('avatarhub_ambient_off', '0');
+    sessionStorage.setItem('avatarhub_ambient_active', '1');
+    let v = 0;
+    fadeTimer = setInterval(() => {
+      v = Math.min(0.55, v + 0.015);
+      gain.gain.value = v;
+      if (v >= 0.55) clearInterval(fadeTimer);
+    }, 60);
+  }
+
+  function ambientFadeOut() {
+    if (!ambientActive) return;
+    clearInterval(fadeTimer);
+    const g = ambientGain, s = ambientSrc;
+    ambientActive = false;
+    ambientBtn.classList.remove('active');
+    hideSoundNudge();
+    localStorage.setItem('avatarhub_ambient_off', '1');
+    sessionStorage.setItem('avatarhub_ambient_active', '0');
+    fadeTimer = setInterval(() => {
+      g.gain.value = Math.max(0, g.gain.value - 0.04);
+      if (g.gain.value <= 0) {
+        clearInterval(fadeTimer);
+        try { s.stop(); } catch (e) {}
+      }
+    }, 60);
+  }
+
+  function showSoundNudge() {
+    clearTimeout(nudgeTimer);
+    nudgeTimer = setTimeout(() => soundNudge && soundNudge.classList.add('show'), 1000);
+  }
+  function hideSoundNudge() {
+    clearTimeout(nudgeTimer);
+    soundNudge && soundNudge.classList.remove('show');
+  }
+
+  // ── Main audio sequence ─────────────────────────────────────────────────
+  async function startAudio() {
+    if (introStarted || savedMuted) return;
+    introStarted = true;
+    const ok = await ensureCtx();
+    if (!ok) return;
+    await decodeBuffers();
+
+    // Returning with ambient already playing → skip intro jingle
+    if (ambientWasActive) {
+      if (!ambientActive && _ambientDecoded) ambientFadeIn();
       return;
     }
-  }
-  if (!savedMuted) ambientFadeIn();
-}
 
-/* Toggle button — reliable click handler */
-ambientBtn.addEventListener('click', async () => {
-  const ok = await ensureAudioCtx();
-  if (!ok) return;
-  if (ambientPlaying) {
-    ambientFadeOut();
-  } else {
-    await ensureBuffers();
-    if (ambientBuffer) {
-      ambientFadeIn();
-    } else {
-      showSoundNudge();
+    // Fresh visit → play intro then fade into ambient
+    if (_introDecoded) {
+      const src = playOnce(_introDecoded, 1);
+      if (src) {
+        src.onended = () => { if (!ambientActive) ambientFadeIn(); };
+        return;
+      }
     }
+    ambientFadeIn();
   }
-});
 
-if (soundNudge) {
-  soundNudge.addEventListener('click', async () => {
-    const ok = await ensureAudioCtx();
+  // ── Ambient toggle ──────────────────────────────────────────────────────
+  ambientBtn.addEventListener('click', async () => {
+    const ok = await ensureCtx();
+    if (!ok) return;
+    if (ambientActive) {
+      ambientFadeOut();
+    } else {
+      await decodeBuffers();
+      if (_ambientDecoded) ambientFadeIn();
+      else showSoundNudge();
+    }
+  });
+
+  soundNudge && soundNudge.addEventListener('click', async () => {
+    const ok = await ensureCtx();
     if (!ok) return;
     hideSoundNudge();
-    await ensureBuffers();
-    if (!ambientPlaying && ambientBuffer) ambientFadeIn();
+    await decodeBuffers();
+    if (!ambientActive && _ambientDecoded) ambientFadeIn();
   });
-}
 
-/* ══════════════════════════════════════════
-   WORLD MAP SPLASH  →  MAIN PAGE
-══════════════════════════════════════════ */
-const mapSplash = document.getElementById('mapSplash');
-let mapDone = false;
+  // ── World-map splash ────────────────────────────────────────────────────
+  let mapDone = false;
+  requestAnimationFrame(() => setTimeout(() => mapSplash.classList.add('map-in'), 60));
 
-/* Check if returning from another page with ambient playing */
-const ambientWasPlaying = sessionStorage.getItem('avatarhub_ambient_active') === '1';
-
-/* Animate map in on load */
-requestAnimationFrame(() => setTimeout(() => mapSplash.classList.add('map-in'), 60));
-
-function dismissMap(withAudio) {
-  if (mapDone) return; mapDone = true;
-  mapSplash.classList.add('fade-out');
-  setTimeout(() => {
-    mapSplash.style.display = 'none';
-    document.body.classList.add('page-ready');
-  }, 800);
-  if (withAudio) startAudioSequence();
-}
-
-/* If already authenticated, auto-dismiss after a short intro animation */
-const isAuthed = localStorage.getItem('avatarhub_auth') === '1';
-if (isAuthed) {
-  /* Show the splash briefly then auto-dismiss — no click needed */
-  const autoDismissDelay = ambientWasPlaying ? 1200 : 1600;
-  setTimeout(() => {
-    if (!mapDone) dismissMap(true);
-  }, autoDismissDelay);
-
-  /* Also allow click to skip the wait */
-  mapSplash.addEventListener('click', async () => {
-    await ensureAudioCtx();
-    dismissMap(true);
-  }, { once: true });
-} else {
-  /* Not authed — password gate is showing; hide splash immediately (gate is on top anyway) */
-  mapSplash.style.display = 'none';
-  mapDone = true;
-  document.body.classList.add('page-ready');
-}
-
-mapSplash.addEventListener('keydown', async e => {
-  if (e.code === 'Space' || e.code === 'Enter') {
-    await ensureAudioCtx();
-    dismissMap(true);
+  function dismissMap() {
+    if (mapDone) return;
+    mapDone = true;
+    mapSplash.classList.add('fade-out');
+    setTimeout(() => {
+      mapSplash.style.display = 'none';
+      document.body.classList.add('page-ready');
+    }, 800);
   }
-});
-mapSplash.setAttribute('tabindex', '0');
+
+  if (isAuthed) {
+    // Auto-dismiss: shorter wait when ambient was already going
+    const delay = ambientWasActive ? 900 : 1400;
+    setTimeout(() => { if (!mapDone) { dismissMap(); startAudio(); } }, delay);
+    mapSplash.addEventListener('click', async () => {
+      await ensureCtx();
+      dismissMap();
+      startAudio();
+    }, { once: true });
+    mapSplash.addEventListener('keydown', async e => {
+      if (e.code === 'Space' || e.code === 'Enter') {
+        await ensureCtx();
+        dismissMap();
+        startAudio();
+      }
+    });
+    mapSplash.setAttribute('tabindex', '0');
+  } else {
+    // Password gate is covering everything — skip splash entirely
+    mapSplash.style.display = 'none';
+    mapDone = true;
+    document.body.classList.add('page-ready');
+  }
+
+  // Expose startAudio for password gate callback
+  window._avatarStartAudio = startAudio;
+  window._avatarEnsureCtx  = ensureCtx;
+
+})();
+</script>
 
 /* ══════════════════════════════════════════
    GLOBAL SEARCH

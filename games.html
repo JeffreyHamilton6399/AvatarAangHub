@@ -715,39 +715,42 @@ setTimeout(() => { if (!introDone) dismissIntro(); }, 1400);
 </script>
 
 <script>
-/* ══════════════════════════════════════════
-   BACKGROUND AMBIENT — seamless cross-page
-══════════════════════════════════════════ */
-(function(){
-  const AMBIENT_SRC = 'audio/ambient.MP3';
-  const MUTED_KEY   = 'avatarhub_ambient_off';
-  const SESSION_KEY = 'avatarhub_ambient_active';
-  if (localStorage.getItem(MUTED_KEY) === '1') return;
-  if (sessionStorage.getItem(SESSION_KEY) !== '1') return;
-  let audioCtx = null, gainNode = null, src = null, rawBuf = null;
-  fetch(AMBIENT_SRC).then(r => r.ok ? r.arrayBuffer() : null).then(b => { rawBuf = b; tryStart(); }).catch(()=>{});
-  function tryStart() {
-    if (!rawBuf || audioCtx) return;
-    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return; }
-    audioCtx.resume().then(() => {
-      if (audioCtx.state !== 'running') { scheduleRetry(); return; }
-      audioCtx.decodeAudioData(rawBuf.slice(0)).then(buf => {
-        src = audioCtx.createBufferSource(); src.buffer = buf; src.loop = true;
-        gainNode = audioCtx.createGain(); gainNode.gain.value = 0;
-        src.connect(gainNode); gainNode.connect(audioCtx.destination); src.start(0);
+/* ── Background ambient — resumes seamlessly from hub ── */
+(function () {
+  if (localStorage.getItem('avatarhub_ambient_off') === '1') return;
+  if (sessionStorage.getItem('avatarhub_ambient_active') !== '1') return;
+
+  let ctx = null, raw = null, started = false;
+
+  fetch('audio/ambient.MP3')
+    .then(r => r.ok ? r.arrayBuffer() : null)
+    .then(b => { raw = b; tryPlay(); })
+    .catch(() => {});
+
+  function tryPlay() {
+    if (!raw || started) return;
+    try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+    ctx.resume().then(() => {
+      if (ctx.state !== 'running') { onGesture(tryPlay); return; }
+      ctx.decodeAudioData(raw.slice(0)).then(buf => {
+        if (started) return;
+        started = true;
+        const src  = ctx.createBufferSource();
+        const gain = ctx.createGain();
+        src.buffer = buf; src.loop = true; gain.gain.value = 0;
+        src.connect(gain).connect(ctx.destination);
+        src.start(0);
         let v = 0;
-        const fade = setInterval(() => { v = Math.min(0.55, v + 0.015); gainNode.gain.value = v; if (v >= 0.55) clearInterval(fade); }, 60);
-        sessionStorage.setItem(SESSION_KEY, '1');
-      }).catch(()=>{});
-    }).catch(()=>{});
+        const t = setInterval(() => { gain.gain.value = v = Math.min(0.55, v + 0.015); if (v >= 0.55) clearInterval(t); }, 60);
+      }).catch(() => {});
+    }).catch(() => {});
   }
-  function scheduleRetry() {
-    const h = () => { audioCtx.resume().then(() => { if (!src) tryStart(); }); };
-    document.addEventListener('click', h, { once: true });
-    document.addEventListener('keydown', h, { once: true });
-    document.addEventListener('touchstart', h, { once: true, passive: true });
+
+  function onGesture(cb) {
+    ['click','keydown','touchstart'].forEach(ev =>
+      document.addEventListener(ev, cb, { once: true, passive: true })
+    );
   }
-  tryStart();
 })();
 </script>
 </body>
