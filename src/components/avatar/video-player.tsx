@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { X, ExternalLink, Loader2 } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
 import { saveProgress, getProgress } from "@/lib/watch-progress";
 import { useCaptions, getActiveCue } from "@/lib/captions";
 import { cn } from "@/lib/utils";
@@ -33,7 +33,9 @@ export function VideoPlayer({
   const [error, setError] = React.useState<string | null>(null);
   const [ccOn, setCcOn] = React.useState(true);
   const [currentTime, setCurrentTime] = React.useState(0);
+  const [isPlaying, setIsPlaying] = React.useState(false);
   const saveTimerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+  const rafRef = React.useRef<number | null>(null);
 
   const { cues, loaded: captionsLoaded } = useCaptions(caption);
   const activeCue = caption && ccOn ? getActiveCue(cues, currentTime) : null;
@@ -84,6 +86,25 @@ export function VideoPlayer({
     };
   }, [src, title, meta]);
 
+  // Use requestAnimationFrame for smooth, accurate caption sync while playing
+  React.useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    const tick = () => {
+      // Always update so captions sync even when paused/seeking
+      setCurrentTime(v.currentTime);
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    // Start RAF loop
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -106,7 +127,7 @@ export function VideoPlayer({
       aria-label={`Playing ${title}`}
     >
       <div className="aa-slide-up relative flex w-full max-w-5xl flex-col overflow-hidden rounded-lg border border-border bg-black shadow-2xl">
-        {/* Top bar */}
+        {/* Top bar — minimal: just title + CC toggle + close */}
         <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-card px-4 py-2.5">
           <span className="font-serif truncate text-sm font-semibold text-foreground">
             {title}
@@ -116,11 +137,11 @@ export function VideoPlayer({
               onClick={toggleCc}
               disabled={!hasCaptions}
               className={cn(
-                "press-aa flex h-8 items-center gap-1.5 rounded-full px-3 font-serif text-[0.6rem] uppercase tracking-widest transition-colors",
+                "press-aa flex h-8 items-center gap-1.5 rounded-full px-3 font-serif text-[0.65rem] font-bold uppercase tracking-widest transition-all",
                 hasCaptions
                   ? ccOn
-                    ? "bg-gold text-black"
-                    : "border border-border text-muted-foreground hover:text-foreground"
+                    ? "bg-primary text-primary-foreground shadow-[0_0_12px_rgba(201,168,76,0.5)]"
+                    : "border border-border text-muted-foreground hover:text-foreground hover:border-[var(--gold)]"
                   : "cursor-not-allowed border border-border/30 text-muted-foreground/40"
               )}
               aria-label="Toggle captions"
@@ -128,16 +149,6 @@ export function VideoPlayer({
             >
               CC
             </button>
-            <a
-              href={src}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="press-aa flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-              aria-label="Open in new tab"
-              title="Open in new tab"
-            >
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
             <button
               onClick={onClose}
               className="press-aa flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
@@ -161,14 +172,6 @@ export function VideoPlayer({
           {error && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 p-6 text-center">
               <p className="font-body-aa text-sm text-[#f97316]">{error}</p>
-              <a
-                href={src}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-body-aa mt-2 text-xs text-gold underline"
-              >
-                Open directly in new tab
-              </a>
             </div>
           )}
           <video
@@ -181,11 +184,11 @@ export function VideoPlayer({
             onLoadStart={() => setLoading(true)}
             onCanPlay={() => setLoading(false)}
             onWaiting={() => setLoading(true)}
-            onPlaying={() => setLoading(false)}
-            onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+            onPlaying={() => { setLoading(false); setIsPlaying(true); }}
+            onPause={() => setIsPlaying(false)}
             onError={() => {
               setLoading(false);
-              setError("Unable to stream this video. It may still be processing on GitHub, or your connection is slow. Try opening it directly.");
+              setError("Unable to stream this video. It may still be processing on GitHub, or your connection is slow.");
             }}
           />
           {/* Caption overlay — sits above the video, below the native controls */}

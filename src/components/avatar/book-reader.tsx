@@ -10,7 +10,6 @@ let pdfjsPromise: Promise<typeof import("pdfjs-dist")> | null = null;
 function loadPdfjs() {
   if (!pdfjsPromise) {
     pdfjsPromise = import("pdfjs-dist").then((pdfjs) => {
-      // Use the worker from the same package version
       pdfjs.GlobalWorkerOptions.workerSrc = new URL(
         "pdfjs-dist/build/pdf.worker.min.mjs",
         import.meta.url
@@ -42,12 +41,13 @@ export function BookReader({
 }: BookReaderProps) {
   const [pdf, setPdf] = React.useState<PDFDocumentProxy | null>(null);
   const [numPages, setNumPages] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(1); // left page of the spread
+  const [currentPage, setCurrentPage] = React.useState(1);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const leftCanvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const rightCanvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const renderTaskRef = React.useRef<{ left?: { cancel: () => void }; right?: { cancel: () => void } }>({});
 
   // Load the PDF document
   React.useEffect(() => {
@@ -87,15 +87,22 @@ export function BookReader({
     };
   }, [pdfUrl]);
 
-  // Render the current spread (2 pages side by side)
+  // Render the current spread (2 pages side by side), fit to HEIGHT
   React.useEffect(() => {
     if (!pdf || loading) return;
     let cancelled = false;
 
     const renderPage = async (
       pageNum: number,
-      canvas: HTMLCanvasElement | null
+      canvas: HTMLCanvasElement | null,
+      side: "left" | "right"
     ) => {
+      // Cancel any previous render on this side
+      const prev = renderTaskRef.current[side];
+      if (prev) {
+        try { prev.cancel(); } catch { /* ignore */ }
+      }
+
       if (!canvas || pageNum < 1 || pageNum > numPages) {
         // Clear canvas if out of range
         if (canvas) {
@@ -111,25 +118,43 @@ export function BookReader({
         if (cancelled) return;
         const container = containerRef.current;
         if (!container) return;
-        // Fit to half the container width (minus gap), preserve aspect ratio
-        const containerWidth = container.clientWidth;
-        const targetWidth = Math.floor((containerWidth - 16) / 2);
-        const viewport = page.getViewport({ scale: 1 });
-        const scale = targetWidth / viewport.width;
-        const scaledViewport = page.getViewport({ scale });
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-        canvas.width = scaledViewport.width;
-        canvas.height = scaledViewport.height;
-        await page.render({ canvasContext: ctx, viewport: scaledViewport }).promise;
+        // Fit to container height so the whole page is visible.
+        // Leave a little padding.
+        const targetHeight = container.clientHeight - 32;
+        const viewport0 = page.getViewport({ scale: 1 });
+        const scale = Math.max(0.3, targetHeight / viewport0.height);
+        const viewport = page.getViewport({ scale });
+
+        // Also ensure we don't exceed half the container width
+        const halfWidth = (container.clientWidth - 24) / 2;
+        if (viewport.width > halfWidth) {
+          const widthScale = halfWidth / viewport0.width;
+          const finalScale = Math.min(scale, widthScale);
+          const finalViewport = page.getViewport({ scale: finalScale });
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return;
+          canvas.width = finalViewport.width;
+          canvas.height = finalViewport.height;
+          const task = page.render({ canvasContext: ctx, viewport: finalViewport });
+          renderTaskRef.current[side] = task;
+          await task.promise;
+        } else {
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return;
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          const task = page.render({ canvasContext: ctx, viewport });
+          renderTaskRef.current[side] = task;
+          await task.promise;
+        }
       } catch (e) {
-        // page render failed — skip
+        // render cancelled or failed — skip
       }
     };
 
-    renderPage(currentPage, leftCanvasRef.current);
-    renderPage(currentPage + 1, rightCanvasRef.current);
+    renderPage(currentPage, leftCanvasRef.current, "left");
+    renderPage(currentPage + 1, rightCanvasRef.current, "right");
 
     return () => {
       cancelled = true;
@@ -139,12 +164,16 @@ export function BookReader({
   // Re-render on resize
   React.useEffect(() => {
     if (!pdf || loading) return;
+    let timer: ReturnType<typeof setTimeout>;
     const onResize = () => {
-      // Force re-render by toggling a state
-      setCurrentPage((p) => p);
+      clearTimeout(timer);
+      timer = setTimeout(() => setCurrentPage((p) => p), 150);
     };
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      clearTimeout(timer);
+    };
   }, [pdf, loading]);
 
   const goPrev = () => setCurrentPage((p) => Math.max(1, p - 2));
@@ -169,12 +198,12 @@ export function BookReader({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex flex-col bg-[#1a1a1a] backdrop-blur"
+      className="fixed inset-0 z-[80] flex flex-col bg-[#1a1a1a]"
       role="dialog"
       aria-modal="true"
       aria-label={`Reading ${title}`}
     >
-      {/* Top bar */}
+      {/* Top bar — minimal: just title + close + part selector */}
       <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-card px-4 py-2.5">
         <div className="flex min-w-0 items-center gap-2">
           <BookOpen className="h-4 w-4 shrink-0 text-gold" />
@@ -183,23 +212,46 @@ export function BookReader({
               {title}
             </p>
             <p className="font-body-aa text-[0.55rem] uppercase tracking-wider text-muted-foreground">
-              {trilogyName}
+              {trilogyName} · Pages {currentPage}
+              {currentPage + 1 <= numPages ? `–${currentPage + 1}` : ""} of {numPages}
             </p>
           </div>
         </div>
-        <button
-          onClick={onClose}
-          className="press-aa flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-          aria-label="Close"
-        >
-          <X className="h-4 w-4" />
-        </button>
+
+        {/* Part selector */}
+        <div className="flex items-center gap-1.5">
+          <span className="font-body-aa hidden text-[0.55rem] uppercase tracking-wider text-muted-foreground sm:inline">
+            Part
+          </span>
+          {parts.map((p) => (
+            <button
+              key={p.part}
+              onClick={() => onSelectPart(p.part)}
+              className={cn(
+                "press-aa flex h-6 w-6 items-center justify-center rounded-md font-mono text-xs font-bold transition-all",
+                p.part === currentPart
+                  ? "bg-primary text-primary-foreground"
+                  : "border border-border/60 bg-background/40 text-muted-foreground hover:text-foreground"
+              )}
+              title={p.title}
+            >
+              {p.part}
+            </button>
+          ))}
+          <button
+            onClick={onClose}
+            className="press-aa ml-2 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
       </div>
 
-      {/* Book spread */}
+      {/* Book spread — full area */}
       <div
         ref={containerRef}
-        className="aa-scroll relative flex flex-1 items-center justify-center overflow-auto p-4"
+        className="aa-scroll relative flex flex-1 items-center justify-center overflow-hidden p-4"
       >
         {loading && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-muted-foreground">
@@ -223,74 +275,34 @@ export function BookReader({
           </div>
         )}
         {!loading && !error && (
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex h-full items-center justify-center gap-3">
             <canvas ref={leftCanvasRef} className="max-h-full rounded shadow-2xl" />
             <canvas ref={rightCanvasRef} className="max-h-full rounded shadow-2xl" />
           </div>
         )}
-      </div>
 
-      {/* Page navigation */}
-      {!loading && !error && numPages > 0 && (
-        <div className="flex items-center justify-between gap-3 border-t border-border/60 bg-card px-4 py-2.5">
+        {/* Floating transparent bubble nav — left middle */}
+        {!loading && !error && !isFirstSpread && (
           <button
             onClick={goPrev}
-            disabled={isFirstSpread}
-            className={cn(
-              "press-aa flex h-8 w-8 items-center justify-center rounded-full transition-colors",
-              isFirstSpread
-                ? "cursor-not-allowed text-muted-foreground/30"
-                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-            )}
+            className="press-aa absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all hover:bg-black/60 hover:scale-110"
             aria-label="Previous pages"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-6 w-6" />
           </button>
+        )}
 
-          <div className="flex items-center gap-3">
-            <span className="font-body-aa text-xs text-muted-foreground">
-              Pages {currentPage}
-              {currentPage + 1 <= numPages ? `–${currentPage + 1}` : ""} of {numPages}
-            </span>
-            <div className="h-4 w-px bg-border" />
-            {/* Part selector */}
-            <div className="flex items-center gap-1.5">
-              <span className="font-body-aa text-[0.55rem] uppercase tracking-wider text-muted-foreground">
-                Part
-              </span>
-              {parts.map((p) => (
-                <button
-                  key={p.part}
-                  onClick={() => onSelectPart(p.part)}
-                  className={cn(
-                    "press-aa flex h-6 w-6 items-center justify-center rounded-md font-mono text-xs font-bold transition-all",
-                    p.part === currentPart
-                      ? "bg-gold text-black"
-                      : "border border-border/60 bg-background/40 text-muted-foreground hover:text-foreground"
-                  )}
-                  title={p.title}
-                >
-                  {p.part}
-                </button>
-              ))}
-            </div>
-          </div>
-
+        {/* Floating transparent bubble nav — right middle */}
+        {!loading && !error && !isLastSpread && (
           <button
             onClick={goNext}
-            disabled={isLastSpread}
-            className={cn(
-              "press-aa flex h-8 w-8 items-center justify-center rounded-full transition-colors",
-              isLastSpread
-                ? "cursor-not-allowed text-muted-foreground/30"
-                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-            )}
+            className="press-aa absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all hover:bg-black/60 hover:scale-110"
             aria-label="Next pages"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-6 w-6" />
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
