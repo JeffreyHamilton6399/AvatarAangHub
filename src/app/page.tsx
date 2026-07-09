@@ -1,14 +1,16 @@
 "use client";
 
 import * as React from "react";
-import { Search, Settings } from "lucide-react";
+import { Search } from "lucide-react";
 import { Hero } from "@/components/avatar/hero";
 import { NetflixRow } from "@/components/avatar/netflix-row";
 import { VideoPlayer } from "@/components/avatar/video-player";
-import { PdfReader } from "@/components/avatar/pdf-reader";
+import { NovelReader } from "@/components/avatar/novel-reader";
+import { SeriesDetail } from "@/components/avatar/series-detail";
 import { Footer } from "@/components/avatar/footer";
 import { SearchCommand } from "@/components/avatar/search-command";
 import { ThemeSwitcher } from "@/components/avatar/theme-switcher";
+import { useContinueWatching } from "@/lib/watch-progress";
 import {
   SERIES,
   CHARACTERS,
@@ -22,27 +24,33 @@ import {
   type Character,
   type Novel,
   type TimelineEvent,
-  type ElementId,
 } from "@/lib/avatar-data";
 
-interface PlayState {
-  kind: "video" | "pdf";
-  src: string;
-  title: string;
-  caption?: string;
+type PlayState =
+  | { kind: "video"; src: string; title: string; caption?: string; meta: VideoMeta }
+  | { kind: "pdf"; novel: Novel };
+
+interface VideoMeta {
+  seriesShort: string;
+  bookSublabel: string;
+  episodeTitle: string;
+  episodeN: number;
+  backgroundImage: string;
+  accent: string;
 }
 
 export default function Home() {
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [play, setPlay] = React.useState<PlayState | null>(null);
+  const [detailSeries, setDetailSeries] = React.useState<Series | null>(null);
+  const { continueList } = useContinueWatching();
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       const typing =
-        target &&
-        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
-      if (e.key === "/" && !typing && !searchOpen && !play) {
+        target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
+      if (e.key === "/" && !typing && !searchOpen && !play && !detailSeries) {
         e.preventDefault();
         setSearchOpen(true);
       }
@@ -53,27 +61,25 @@ export default function Home() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [searchOpen, play]);
+  }, [searchOpen, play, detailSeries]);
 
   const playEpisode = (s: Series, b: Book, ep: Episode) => {
     if (!ep.video) return;
-    setPlay({ kind: "video", src: ep.video, title: `${s.short} · ${b.sublabel} · Ep ${ep.n}: ${ep.title}`, caption: ep.caption });
+    setPlay({
+      kind: "video",
+      src: ep.video,
+      title: `${s.short} · ${b.sublabel} · Ep ${ep.n}: ${ep.title}`,
+      caption: ep.caption,
+      meta: {
+        seriesShort: s.short,
+        bookSublabel: b.sublabel,
+        episodeTitle: ep.title,
+        episodeN: ep.n,
+        backgroundImage: s.backgroundImage,
+        accent: s.accent,
+      },
+    });
   };
-
-  const playNovel = (n: Novel) => {
-    setPlay({ kind: "pdf", src: n.url, title: n.title });
-  };
-
-  // Flatten all episodes into one list for the "All Episodes" row
-  const allEpisodes = React.useMemo(
-    () =>
-      SERIES.flatMap((s) =>
-        s.books.flatMap((b) =>
-          b.episodes.map((ep) => ({ s, b, ep }))
-        )
-      ),
-    []
-  );
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -94,28 +100,53 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
 
-        {/* Series row */}
-        <div className="space-y-6 py-8">
+        <div className="space-y-8 py-8">
+          {/* Continue Watching — only shows when there's saved progress */}
+          {continueList.length > 0 && (
+            <NetflixRow
+              title="Continue Watching"
+              items={continueList}
+              keyExtractor={(e) => e.videoUrl}
+              renderItem={(e) => (
+                <ContinueCard
+                  entry={e}
+                  onClick={() => {
+                    // Find the matching series/book/episode
+                    for (const s of SERIES) {
+                      for (const b of s.books) {
+                        const ep = b.episodes.find((x) => x.video === e.videoUrl);
+                        if (ep) {
+                          playEpisode(s, b, ep);
+                          return;
+                        }
+                      }
+                    }
+                    // Fallback: just open the video directly
+                    setPlay({
+                      kind: "video",
+                      src: e.videoUrl,
+                      title: e.title,
+                      meta: {
+                        seriesShort: e.seriesShort,
+                        bookSublabel: e.bookSublabel,
+                        episodeTitle: e.episodeTitle,
+                        episodeN: e.episodeN,
+                        backgroundImage: e.backgroundImage,
+                        accent: e.accent,
+                      },
+                    });
+                  }}
+                />
+              )}
+            />
+          )}
+
+          {/* Series row — click opens Netflix-style detail */}
           <NetflixRow
             title="Series"
             items={SERIES}
             keyExtractor={(s) => s.id}
-            renderItem={(s) => <SeriesCard s={s} />}
-          />
-
-          {/* Continue / All Episodes row — Netflix style episode cards */}
-          <NetflixRow
-            title="Episodes"
-            items={allEpisodes}
-            keyExtractor={({ s, b, ep }) => `${s.id}-${b.tag}-${ep.n}`}
-            renderItem={({ s, b, ep }) => (
-              <EpisodeCard
-                s={s}
-                b={b}
-                ep={ep}
-                onClick={() => playEpisode(s, b, ep)}
-              />
-            )}
+            renderItem={(s) => <SeriesCard s={s} onClick={() => setDetailSeries(s)} />}
           />
 
           {/* Characters row */}
@@ -126,13 +157,18 @@ export default function Home() {
             renderItem={(c) => <CharacterCard c={c} />}
           />
 
-          {/* Graphic novels row */}
-          <NetflixRow
-            title="Graphic Novels"
-            items={TRILOGIES.flatMap((t) => t.parts)}
-            keyExtractor={(n) => n.file}
-            renderItem={(n) => <NovelCard n={n} onClick={() => playNovel(n)} />}
-          />
+          {/* Graphic Novels — organized by trilogy, each trilogy is a row */}
+          {TRILOGIES.map((trilogy) => (
+            <NetflixRow
+              key={trilogy.name}
+              title={`Graphic Novels · ${trilogy.name}`}
+              items={trilogy.parts}
+              keyExtractor={(n) => n.file}
+              renderItem={(n) => (
+                <NovelCard n={n} onClick={() => setPlay({ kind: "pdf", novel: n })} />
+              )}
+            />
+          ))}
 
           {/* Timeline row */}
           <NetflixRow
@@ -148,16 +184,36 @@ export default function Home() {
 
       <Footer />
 
+      {/* Series detail (Netflix-style) */}
+      {detailSeries && (
+        <SeriesDetail
+          series={detailSeries}
+          onClose={() => setDetailSeries(null)}
+          onPlayEpisode={(s, b, ep) => {
+            setDetailSeries(null);
+            playEpisode(s, b, ep);
+          }}
+        />
+      )}
+
+      {/* Video player */}
       {play?.kind === "video" && (
         <VideoPlayer
           src={play.src}
           title={play.title}
           caption={play.caption}
+          meta={play.meta}
           onClose={() => setPlay(null)}
         />
       )}
+
+      {/* Novel reader */}
       {play?.kind === "pdf" && (
-        <PdfReader src={play.src} title={play.title} onClose={() => setPlay(null)} />
+        <NovelReader
+          novel={play.novel}
+          onClose={() => setPlay(null)}
+          onSelect={(n) => setPlay({ kind: "pdf", novel: n })}
+        />
       )}
 
       <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
@@ -166,15 +222,15 @@ export default function Home() {
 }
 
 // ── Series card ──────────────────────────────────────────────────────────────
-function SeriesCard({ s }: { s: Series }) {
+function SeriesCard({ s, onClick }: { s: Series; onClick: () => void }) {
   return (
-    <div
-      className="press-aa card-aa relative block w-[260px] overflow-hidden rounded-md sm:w-[300px]"
-      onClick={() => document.getElementById("episodes-row")?.scrollIntoView({ behavior: "smooth" })}
+    <button
+      onClick={onClick}
+      className="press-aa card-aa group relative block w-[260px] overflow-hidden rounded-md text-left sm:w-[300px]"
     >
       <div className="relative h-40 overflow-hidden sm:h-44">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-60"
+          className="absolute inset-0 bg-cover bg-center opacity-60 transition-transform duration-500 group-hover:scale-105"
           style={{ backgroundImage: `url(${s.backgroundImage})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
@@ -185,6 +241,14 @@ function SeriesCard({ s }: { s: Series }) {
           className="absolute right-3 top-3 h-8 w-8 object-contain opacity-80"
           style={{ filter: `drop-shadow(0 0 5px ${s.accent})` }}
         />
+        {/* Chevron overlay on hover (Netflix-style) */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
+            <svg className="h-5 w-5 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
         <div className="absolute bottom-3 left-3 right-3">
           <p className="font-body-aa mb-1 text-[0.55rem] uppercase tracking-[0.2em] text-white/70">
             {s.short} · {s.years}
@@ -199,35 +263,43 @@ function SeriesCard({ s }: { s: Series }) {
           {s.synopsis}
         </p>
       </div>
-    </div>
+    </button>
   );
 }
 
-// ── Episode card ─────────────────────────────────────────────────────────────
-function EpisodeCard({
-  s,
-  b,
-  ep,
+// ── Continue Watching card ───────────────────────────────────────────────────
+function ContinueCard({
+  entry,
   onClick,
 }: {
-  s: Series;
-  b: Book;
-  ep: Episode;
+  entry: {
+    videoUrl: string;
+    title: string;
+    seriesShort: string;
+    bookSublabel: string;
+    episodeTitle: string;
+    episodeN: number;
+    backgroundImage: string;
+    accent: string;
+    currentTime: number;
+    duration: number;
+  };
   onClick: () => void;
 }) {
+  const pct = entry.duration > 0 ? Math.min(100, (entry.currentTime / entry.duration) * 100) : 0;
+  const minsLeft = Math.max(0, Math.round((entry.duration - entry.currentTime) / 60));
   return (
     <button
       onClick={onClick}
-      className="press-aa card-aa group relative block w-[240px] overflow-hidden rounded-md text-left sm:w-[280px]"
+      className="press-aa card-aa group relative block w-[260px] overflow-hidden rounded-md text-left sm:w-[300px]"
     >
-      {/* Thumbnail area — uses series bg as stand-in */}
       <div className="relative h-32 overflow-hidden sm:h-36">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-50 transition-transform duration-500 group-hover:scale-105"
-          style={{ backgroundImage: `url(${s.backgroundImage})` }}
+          className="absolute inset-0 bg-cover bg-center opacity-55 transition-transform duration-500 group-hover:scale-105"
+          style={{ backgroundImage: `url(${entry.backgroundImage})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
-        {/* Play icon overlay */}
+        {/* Play overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
             <svg className="h-5 w-5 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -235,25 +307,21 @@ function EpisodeCard({
             </svg>
           </div>
         </div>
-        {/* Episode number badge */}
-        <span
-          className="absolute left-2 top-2 flex h-6 items-center rounded px-1.5 font-mono text-xs font-bold"
-          style={{ backgroundColor: `${s.accent}cc`, color: "#04070d" }}
-        >
-          {b.sublabel.slice(0, 1)}{ep.n}
+        {/* Progress bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/50">
+          <div className="h-full" style={{ width: `${pct}%`, backgroundColor: entry.accent }} />
+        </div>
+        {/* Time left badge */}
+        <span className="absolute right-2 top-2 rounded bg-black/70 px-1.5 py-0.5 font-body-aa text-[0.55rem] uppercase tracking-wider text-white/90">
+          {minsLeft}m left
         </span>
-        <img
-          src={elementImage(b.element)}
-          alt=""
-          className="absolute right-2 top-2 h-6 w-6 object-contain opacity-70"
-        />
       </div>
       <div className="p-2.5">
         <p className="font-body-aa mb-0.5 text-[0.6rem] uppercase tracking-wider text-muted-foreground">
-          {s.short} · {b.sublabel}
+          {entry.seriesShort} · {entry.bookSublabel} · Ep {entry.episodeN}
         </p>
         <h3 className="font-serif line-clamp-1 text-sm font-semibold text-foreground">
-          {ep.title}
+          {entry.episodeTitle}
         </h3>
       </div>
     </button>
@@ -288,7 +356,10 @@ function CharacterCard({ c }: { c: Character }) {
         {c.description}
       </p>
       {c.quote !== "..." && (
-        <p className="font-body-aa mt-2 border-l-2 pl-2 text-[0.7rem] italic leading-snug text-foreground/70" style={{ borderColor: `${color}55` }}>
+        <p
+          className="font-body-aa mt-2 border-l-2 pl-2 text-[0.7rem] italic leading-snug text-foreground/70"
+          style={{ borderColor: `${color}55` }}
+        >
           {c.quote}
         </p>
       )}
@@ -298,26 +369,29 @@ function CharacterCard({ c }: { c: Character }) {
 
 // ── Novel card ───────────────────────────────────────────────────────────────
 function NovelCard({ n, onClick }: { n: Novel; onClick: () => void }) {
-  const color = ELEMENT_COLOR[
-    TRILOGIES.find((t) => t.name === n.trilogy)?.element ?? "spirit"
-  ];
+  const color = ELEMENT_COLOR[TRILOGIES.find((t) => t.name === n.trilogy)?.element ?? "spirit"];
   return (
     <button
       onClick={onClick}
       className="press-aa card-aa group relative block w-[150px] overflow-hidden rounded-md text-left sm:w-[170px]"
       style={{ borderTopColor: `${color}88`, borderTopWidth: 2 }}
     >
-      <div className="flex h-44 items-center justify-center bg-gradient-to-b from-secondary/40 to-card p-3">
-        <span
-          className="font-display text-3xl font-bold opacity-30"
-          style={{ color }}
-        >
+      <div className="relative flex h-44 items-center justify-center bg-gradient-to-b from-secondary/40 to-card p-3">
+        <span className="font-display text-5xl font-bold opacity-25" style={{ color }}>
           {n.part}
         </span>
+        {/* Play overlay */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur">
+            <svg className="h-4 w-4 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
       </div>
       <div className="p-2.5">
         <p className="font-body-aa mb-0.5 text-[0.55rem] uppercase tracking-wider text-muted-foreground">
-          {n.trilogy}
+          Part {n.part}
         </p>
         <h3 className="font-serif line-clamp-2 text-xs font-semibold leading-tight text-foreground">
           {n.title}
