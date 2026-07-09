@@ -13,17 +13,14 @@ import { ThemeSwitcher } from "@/components/avatar/theme-switcher";
 import { useContinueWatching } from "@/lib/watch-progress";
 import {
   SERIES,
-  CHARACTERS,
   TRILOGIES,
-  TIMELINE,
+  NOVELS,
   ELEMENT_COLOR,
   elementImage,
   type Series,
   type Book,
   type Episode,
-  type Character,
   type Novel,
-  type TimelineEvent,
 } from "@/lib/avatar-data";
 
 type PlayState =
@@ -37,6 +34,11 @@ interface VideoMeta {
   episodeN: number;
   backgroundImage: string;
   accent: string;
+}
+
+/** A series is a "movie" if it has exactly one episode total — play directly. */
+function isMovie(s: Series): boolean {
+  return s.books.reduce((n, b) => n + b.episodes.length, 0) === 1;
 }
 
 export default function Home() {
@@ -81,6 +83,27 @@ export default function Home() {
     });
   };
 
+  const openSeries = (s: Series) => {
+    // Movies play directly instead of opening a detail page
+    if (isMovie(s)) {
+      const b = s.books[0];
+      const ep = b.episodes[0];
+      if (ep) playEpisode(s, b, ep);
+    } else {
+      setDetailSeries(s);
+    }
+  };
+
+  // Find and play an episode by series id + book tag + episode number (for search)
+  const playByCoords = (seriesId: string, bookTag: string, episodeN: number) => {
+    const s = SERIES.find((x) => x.id === seriesId);
+    if (!s) return;
+    const b = s.books.find((x) => x.tag === bookTag);
+    if (!b) return;
+    const ep = b.episodes.find((x) => x.n === episodeN);
+    if (ep) playEpisode(s, b, ep);
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Floating controls (no navbar) */}
@@ -111,7 +134,6 @@ export default function Home() {
                 <ContinueCard
                   entry={e}
                   onClick={() => {
-                    // Find the matching series/book/episode
                     for (const s of SERIES) {
                       for (const b of s.books) {
                         const ep = b.episodes.find((x) => x.video === e.videoUrl);
@@ -121,7 +143,6 @@ export default function Home() {
                         }
                       }
                     }
-                    // Fallback: just open the video directly
                     setPlay({
                       kind: "video",
                       src: e.videoUrl,
@@ -141,41 +162,22 @@ export default function Home() {
             />
           )}
 
-          {/* Series row — click opens Netflix-style detail */}
+          {/* Series row — click opens detail (or plays directly for movies) */}
           <NetflixRow
             title="Series"
             items={SERIES}
             keyExtractor={(s) => s.id}
-            renderItem={(s) => <SeriesCard s={s} onClick={() => setDetailSeries(s)} />}
+            renderItem={(s) => <SeriesCard s={s} onClick={() => openSeries(s)} />}
           />
 
-          {/* Characters row */}
+          {/* Graphic Novels — single consolidated row with all 18 */}
           <NetflixRow
-            title="Characters"
-            items={CHARACTERS}
-            keyExtractor={(c) => c.id}
-            renderItem={(c) => <CharacterCard c={c} />}
-          />
-
-          {/* Graphic Novels — organized by trilogy, each trilogy is a row */}
-          {TRILOGIES.map((trilogy) => (
-            <NetflixRow
-              key={trilogy.name}
-              title={`Graphic Novels · ${trilogy.name}`}
-              items={trilogy.parts}
-              keyExtractor={(n) => n.file}
-              renderItem={(n) => (
-                <NovelCard n={n} onClick={() => setPlay({ kind: "pdf", novel: n })} />
-              )}
-            />
-          ))}
-
-          {/* Timeline row */}
-          <NetflixRow
-            title="Timeline"
-            items={TIMELINE}
-            keyExtractor={(t, i) => `tl-${i}`}
-            renderItem={(t) => <TimelineCard t={t} />}
+            title="Graphic Novels"
+            items={NOVELS}
+            keyExtractor={(n) => n.file}
+            renderItem={(n) => (
+              <NovelCard n={n} onClick={() => setPlay({ kind: "pdf", novel: n })} />
+            )}
           />
         </div>
 
@@ -216,13 +218,19 @@ export default function Home() {
         />
       )}
 
-      <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
+      <SearchCommand
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+        onPlayVideo={(seriesId, bookTag, ep) => playByCoords(seriesId, bookTag, ep)}
+        onPlayNovel={(n) => setPlay({ kind: "pdf", novel: n })}
+      />
     </div>
   );
 }
 
 // ── Series card ──────────────────────────────────────────────────────────────
 function SeriesCard({ s, onClick }: { s: Series; onClick: () => void }) {
+  const movie = isMovie(s);
   return (
     <button
       onClick={onClick}
@@ -241,7 +249,7 @@ function SeriesCard({ s, onClick }: { s: Series; onClick: () => void }) {
           className="absolute right-3 top-3 h-8 w-8 object-contain opacity-80"
           style={{ filter: `drop-shadow(0 0 5px ${s.accent})` }}
         />
-        {/* Chevron overlay on hover (Netflix-style) */}
+        {/* Play overlay on hover — for movies, it's a direct play; for series, it opens detail */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
             <svg className="h-5 w-5 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -299,7 +307,6 @@ function ContinueCard({
           style={{ backgroundImage: `url(${entry.backgroundImage})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
-        {/* Play overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
             <svg className="h-5 w-5 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -307,11 +314,9 @@ function ContinueCard({
             </svg>
           </div>
         </div>
-        {/* Progress bar */}
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/50">
           <div className="h-full" style={{ width: `${pct}%`, backgroundColor: entry.accent }} />
         </div>
-        {/* Time left badge */}
         <span className="absolute right-2 top-2 rounded bg-black/70 px-1.5 py-0.5 font-body-aa text-[0.55rem] uppercase tracking-wider text-white/90">
           {minsLeft}m left
         </span>
@@ -328,59 +333,19 @@ function ContinueCard({
   );
 }
 
-// ── Character card ───────────────────────────────────────────────────────────
-function CharacterCard({ c }: { c: Character }) {
-  const color = ELEMENT_COLOR[c.element];
-  return (
-    <div
-      className="press-aa card-aa relative w-[180px] overflow-hidden rounded-md p-4 sm:w-[200px]"
-      style={{ borderTopColor: `${color}88`, borderTopWidth: 2 }}
-    >
-      <div className="flex items-center gap-3">
-        <div
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border font-display text-lg font-bold"
-          style={{ borderColor: `${color}55`, backgroundColor: `${color}1a`, color }}
-        >
-          {c.name.charAt(0)}
-        </div>
-        <div className="min-w-0">
-          <h3 className="font-serif truncate text-sm font-semibold text-foreground">
-            {c.name}
-          </h3>
-          <p className="font-body-aa truncate text-[0.6rem] uppercase tracking-wider text-muted-foreground">
-            {c.role}
-          </p>
-        </div>
-      </div>
-      <p className="font-body-aa mt-3 line-clamp-3 text-xs leading-relaxed text-muted-foreground">
-        {c.description}
-      </p>
-      {c.quote !== "..." && (
-        <p
-          className="font-body-aa mt-2 border-l-2 pl-2 text-[0.7rem] italic leading-snug text-foreground/70"
-          style={{ borderColor: `${color}55` }}
-        >
-          {c.quote}
-        </p>
-      )}
-    </div>
-  );
-}
-
 // ── Novel card ───────────────────────────────────────────────────────────────
 function NovelCard({ n, onClick }: { n: Novel; onClick: () => void }) {
   const color = ELEMENT_COLOR[TRILOGIES.find((t) => t.name === n.trilogy)?.element ?? "spirit"];
   return (
     <button
       onClick={onClick}
-      className="press-aa card-aa group relative block w-[150px] overflow-hidden rounded-md text-left sm:w-[170px]"
+      className="press-aa card-aa group relative block w-[140px] overflow-hidden rounded-md text-left sm:w-[160px]"
       style={{ borderTopColor: `${color}88`, borderTopWidth: 2 }}
     >
-      <div className="relative flex h-44 items-center justify-center bg-gradient-to-b from-secondary/40 to-card p-3">
+      <div className="relative flex h-40 items-center justify-center bg-gradient-to-b from-secondary/40 to-card p-3">
         <span className="font-display text-5xl font-bold opacity-25" style={{ color }}>
           {n.part}
         </span>
-        {/* Play overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur">
             <svg className="h-4 w-4 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -390,46 +355,14 @@ function NovelCard({ n, onClick }: { n: Novel; onClick: () => void }) {
         </div>
       </div>
       <div className="p-2.5">
-        <p className="font-body-aa mb-0.5 text-[0.55rem] uppercase tracking-wider text-muted-foreground">
-          Part {n.part}
+        <p className="font-body-aa mb-0.5 text-[0.5rem] uppercase tracking-wider" style={{ color }}>
+          {n.trilogy}
         </p>
         <h3 className="font-serif line-clamp-2 text-xs font-semibold leading-tight text-foreground">
           {n.title}
         </h3>
       </div>
     </button>
-  );
-}
-
-// ── Timeline card ────────────────────────────────────────────────────────────
-function TimelineCard({ t }: { t: TimelineEvent }) {
-  const color = ELEMENT_COLOR[t.element];
-  return (
-    <div
-      className="press-aa card-aa relative w-[260px] overflow-hidden rounded-md p-4 sm:w-[300px]"
-      style={{ borderTopColor: `${color}88`, borderTopWidth: 2 }}
-    >
-      <div className="mb-2 flex items-center gap-2">
-        <img
-          src={elementImage(t.element)}
-          alt=""
-          className="h-5 w-5 object-contain"
-          style={{ filter: `drop-shadow(0 0 3px ${color})` }}
-        />
-        <span className="font-mono text-xs font-bold" style={{ color }}>
-          {t.year}
-        </span>
-      </div>
-      <h3 className="font-serif text-sm font-semibold leading-tight text-foreground">
-        {t.title}
-      </h3>
-      <p className="font-body-aa mt-1.5 line-clamp-3 text-xs leading-relaxed text-muted-foreground">
-        {t.detail}
-      </p>
-      <p className="font-body-aa mt-2 text-[0.55rem] uppercase tracking-wider text-muted-foreground">
-        {t.era}
-      </p>
-    </div>
   );
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Search, CornerDownLeft } from "lucide-react";
+import { CornerDownLeft } from "lucide-react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -11,13 +11,14 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import {
-  CHARACTERS,
   SERIES,
-  TIMELINE,
   TRILOGIES,
+  NOVELS,
   ELEMENT_COLOR,
+  elementImage,
   type ElementId,
   type Episode,
+  type Novel,
 } from "@/lib/avatar-data";
 
 interface Result {
@@ -32,18 +33,20 @@ interface Result {
 export function SearchCommand({
   open,
   onOpenChange,
+  onPlayVideo,
+  onPlayNovel,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
+  onPlayVideo?: (seriesId: string, bookTag: string, episodeN: number) => void;
+  onPlayNovel?: (novel: Novel) => void;
 }) {
-  // We can't easily wire video playback from search without lifting state,
-  // so search results scroll to the relevant row. Episodes scroll to the Episodes row.
-  const scrollTo = (id: string) => {
+  const scrollToSeries = () => {
     onOpenChange(false);
     requestAnimationFrame(() => {
       document
-        .querySelectorAll("section")
-        [id === "episodes" ? 2 : 0]?.scrollIntoView({ behavior: "smooth", block: "start" });
+        .querySelectorAll("section")[1]
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   };
 
@@ -56,51 +59,35 @@ export function SearchCommand({
         hint: `${s.short} · ${s.years}`,
         element: s.element,
         group: "Series",
-        action: () => scrollTo("series"),
+        action: () => scrollToSeries(),
       });
       s.books.forEach((b) =>
-        b.episodes.forEach((ep: Episode, i) => {
+        b.episodes.forEach((ep: Episode) => {
           results.push({
-            id: `ep-${b.tag}-${i}`,
+            id: `ep-${b.tag}-${ep.n}`,
             label: ep.title,
             hint: `${s.short} · ${b.sublabel} · Ep ${ep.n}`,
             element: b.element,
             group: "Episodes",
-            action: () => scrollTo("episodes"),
+            action: () => {
+              onOpenChange(false);
+              onPlayVideo?.(s.id, b.tag, ep.n);
+            },
           });
         })
       );
     });
-    CHARACTERS.forEach((c) =>
+    NOVELS.forEach((n: Novel) =>
       results.push({
-        id: `char-${c.id}`,
-        label: c.name,
-        hint: `${c.role} · ${c.affiliation}`,
-        element: c.element,
-        group: "Characters",
-        action: () => scrollTo("characters"),
-      })
-    );
-    TRILOGIES.forEach((t) =>
-      t.parts.forEach((n) =>
-        results.push({
-          id: `novel-${n.file}`,
-          label: n.title,
-          hint: `${n.trilogy} · Part ${n.part}`,
-          element: t.element,
-          group: "Comics",
-          action: () => scrollTo("comics"),
-        })
-      )
-    );
-    TIMELINE.forEach((t, i) =>
-      results.push({
-        id: `tl-${i}`,
-        label: t.title,
-        hint: `${t.year} · ${t.era}`,
-        element: t.element,
-        group: "Timeline",
-        action: () => scrollTo("timeline"),
+        id: `novel-${n.file}`,
+        label: n.title,
+        hint: `${n.trilogy} · Part ${n.part}`,
+        element: TRILOGIES.find((t) => t.name === n.trilogy)?.element ?? "spirit",
+        group: "Graphic Novels",
+        action: () => {
+          onOpenChange(false);
+          onPlayNovel?.(n);
+        },
       })
     );
     return results;
@@ -108,7 +95,7 @@ export function SearchCommand({
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder="Search episodes, characters, comics…" />
+      <CommandInput placeholder="Search episodes, series, graphic novels…" />
       <CommandList className="aa-scroll">
         <CommandEmpty>No results found.</CommandEmpty>
         {Object.entries(
@@ -125,11 +112,8 @@ export function SearchCommand({
               </span>
             }
           >
-            {items.slice(0, 25).map((r) => {
+            {items.slice(0, 30).map((r) => {
               const color = ELEMENT_COLOR[r.element];
-              const imgEl = ["air", "water", "earth", "fire"].includes(r.element)
-                ? r.element
-                : null;
               return (
                 <CommandItem
                   key={r.id}
@@ -141,16 +125,12 @@ export function SearchCommand({
                     className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border"
                     style={{ borderColor: `${color}55` }}
                   >
-                    {imgEl ? (
-                      <img
-                        src={`/images/${imgEl}.png`}
-                        alt=""
-                        className="h-4 w-4 object-contain"
-                        style={{ filter: `drop-shadow(0 0 3px ${color})` }}
-                      />
-                    ) : (
-                      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
-                    )}
+                    <img
+                      src={elementImage(r.element)}
+                      alt=""
+                      className="h-4 w-4 object-contain"
+                      style={{ filter: `drop-shadow(0 0 3px ${color})` }}
+                    />
                   </span>
                   <span className="flex flex-1 flex-col">
                     <span className="font-body-aa text-sm">{r.label}</span>
