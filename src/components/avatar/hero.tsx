@@ -10,7 +10,7 @@ export function Hero() {
       {/* Background — featured series backdrop */}
       <div className="absolute inset-0 -z-10">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-40"
+          className="absolute inset-0 bg-cover bg-center opacity-55"
           style={{ backgroundImage: `url(${featured.backgroundImage})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />

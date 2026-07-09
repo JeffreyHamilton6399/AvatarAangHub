@@ -9,7 +9,6 @@ import { BookReader } from "@/components/avatar/book-reader";
 import { SeriesDetail } from "@/components/avatar/series-detail";
 import { Footer } from "@/components/avatar/footer";
 import { LoadingScreen } from "@/components/avatar/loading-screen";
-import { BackgroundElements } from "@/components/avatar/background-elements";
 import { SearchCommand } from "@/components/avatar/search-command";
 import { ThemeSwitcher } from "@/components/avatar/theme-switcher";
 import { useContinueWatching } from "@/lib/watch-progress";
@@ -106,7 +105,6 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <BackgroundElements />
       <LoadingScreen />
       {/* Floating controls top-right */}
       <div className="pointer-events-none fixed right-4 top-4 z-40 flex gap-2">
