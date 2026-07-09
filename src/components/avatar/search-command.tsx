@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Search, Film, Users, Sparkles, Clock, CornerDownLeft, BookOpen, Gamepad2, ShoppingBag } from "lucide-react";
+import { Search, Film, Users, Clock, CornerDownLeft, BookOpen, Gamepad2, ShoppingBag, Sparkles } from "lucide-react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -20,7 +20,6 @@ import {
   ELEMENT_COLOR,
   type ElementId,
 } from "@/lib/avatar-data";
-import { ElementSymbol } from "./element-symbol";
 
 interface Result {
   id: string;
@@ -92,38 +91,6 @@ const ALL: Result[] = [
     group: "Timeline",
     target: "timeline",
   })),
-  {
-    id: "elements-water",
-    label: "Water",
-    hint: "Winter · North",
-    element: "water" as ElementId,
-    group: "Elements",
-    target: "elements",
-  },
-  {
-    id: "elements-earth",
-    label: "Earth",
-    hint: "Spring · East",
-    element: "earth" as ElementId,
-    group: "Elements",
-    target: "elements",
-  },
-  {
-    id: "elements-fire",
-    label: "Fire",
-    hint: "Summer · South",
-    element: "fire" as ElementId,
-    group: "Elements",
-    target: "elements",
-  },
-  {
-    id: "elements-air",
-    label: "Air",
-    hint: "Autumn · West",
-    element: "air" as ElementId,
-    group: "Elements",
-    target: "elements",
-  },
 ];
 
 const GROUP_ICON: Record<string, React.ElementType> = {
@@ -169,13 +136,14 @@ export function SearchCommand({
             <CommandGroup
               key={group}
               heading={
-                <span className="flex items-center gap-1.5">
-                  <Icon className="h-3.5 w-3.5" /> {group}
+                <span className="font-serif flex items-center gap-1.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                  <Icon className="h-3 w-3" /> {group}
                 </span>
               }
             >
-              {items.slice(0, 40).map((r) => {
+              {items.slice(0, 30).map((r) => {
                 const color = ELEMENT_COLOR[r.element];
+                const imgEl = ["air", "water", "earth", "fire"].includes(r.element) ? r.element : null;
                 return (
                   <CommandItem
                     key={r.id}
@@ -185,19 +153,26 @@ export function SearchCommand({
                   >
                     <span
                       className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border"
-                      style={{ borderColor: `${color}55`, color }}
+                      style={{ borderColor: `${color}55` }}
                     >
-                      <span className="h-4 w-4">
-                        <ElementSymbol element={r.element} strokeWidth={2.2} />
-                      </span>
+                      {imgEl ? (
+                        <img
+                          src={`/images/${imgEl}.png`}
+                          alt=""
+                          className="h-4 w-4 object-contain"
+                          style={{ filter: `drop-shadow(0 0 3px ${color})` }}
+                        />
+                      ) : (
+                        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
+                      )}
                     </span>
                     <span className="flex flex-1 flex-col">
-                      <span className="text-sm">{r.label}</span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="font-body-aa text-sm">{r.label}</span>
+                      <span className="font-body-aa text-xs text-muted-foreground">
                         {r.hint}
                       </span>
                     </span>
-                    <CornerDownLeft className="h-3.5 w-3.5 text-muted-foreground/50" />
+                    <CornerDownLeft className="h-3.5 w-3.5 text-muted-foreground/40" />
                   </CommandItem>
                 );
               })}

@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Film, Calendar } from "lucide-react";
 import { FILM_2026_PREMIERE } from "@/lib/avatar-data";
 
 function useCountdown(target: number) {
@@ -21,10 +20,10 @@ function useCountdown(target: number) {
 function Unit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-primary/30 bg-background/60 font-mono text-2xl font-bold tabular-nums text-foreground backdrop-blur sm:h-20 sm:w-20 sm:text-3xl">
+      <div className="font-display flex h-14 w-14 items-center justify-center rounded-md border border-[rgba(201,168,76,0.3)] bg-background/60 font-mono text-xl font-bold tabular-nums text-foreground backdrop-blur sm:h-16 sm:w-16 sm:text-2xl">
         {String(value).padStart(2, "0")}
       </div>
-      <span className="mt-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+      <span className="font-body-aa mt-2 text-[0.55rem] uppercase tracking-[0.2em] text-muted-foreground">
         {label}
       </span>
     </div>
@@ -35,44 +34,41 @@ export function FilmCountdown() {
   const { days, hours, minutes, seconds, done } = useCountdown(FILM_2026_PREMIERE);
 
   return (
-    <section className="relative overflow-hidden py-16 sm:py-20">
+    <section className="relative overflow-hidden py-12 sm:py-16">
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-25"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-20"
         style={{
           backgroundImage: "url(/images/movie2026bg.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/60 to-background/90" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background/85 via-background/70 to-background/90" />
 
-      <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-        <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card/60 px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-primary backdrop-blur">
-          <Calendar className="h-3.5 w-3.5" />
+      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+        <p className="font-body-aa mb-3 inline-flex items-center gap-2 rounded-full border border-[rgba(201,168,76,0.3)] bg-card/60 px-4 py-1 text-[0.6rem] uppercase tracking-[0.3em] text-gold backdrop-blur">
           In Theatres · Paramount+
         </p>
 
-        <h2 className="flex items-center justify-center gap-2 text-3xl font-bold tracking-tight sm:text-4xl">
-          <Film className="h-7 w-7 text-primary" />
+        <h2 className="font-display text-2xl font-bold tracking-wide sm:text-3xl">
           Aang: The Last Airbender
         </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The first animated Avatar theatrical film in over a decade ·
-          October 9, 2026
+        <p className="font-body-aa mt-2 text-xs italic text-muted-foreground">
+          The first animated Avatar theatrical film in over a decade · October 9, 2026
         </p>
 
         {done ? (
-          <p className="mt-10 text-2xl font-semibold text-primary">
+          <p className="font-display mt-8 text-2xl text-gold">
             Now premiering!
           </p>
         ) : (
-          <div className="mt-10 flex items-center justify-center gap-3 sm:gap-5">
+          <div className="mt-8 flex items-center justify-center gap-2 sm:gap-4">
             <Unit value={days} label="Days" />
-            <span className="font-mono text-2xl text-primary/40 sm:text-3xl">:</span>
+            <span className="font-mono text-xl text-[var(--gold)] opacity-40 sm:text-2xl">:</span>
             <Unit value={hours} label="Hours" />
-            <span className="font-mono text-2xl text-primary/40 sm:text-3xl">:</span>
+            <span className="font-mono text-xl text-[var(--gold)] opacity-40 sm:text-2xl">:</span>
             <Unit value={minutes} label="Mins" />
-            <span className="font-mono text-2xl text-primary/40 sm:text-3xl">:</span>
+            <span className="font-mono text-xl text-[var(--gold)] opacity-40 sm:text-2xl">:</span>
             <Unit value={seconds} label="Secs" />
           </div>
         )}

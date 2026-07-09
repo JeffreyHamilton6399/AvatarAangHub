@@ -5,30 +5,28 @@ import { Menu, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "./theme-switcher";
-import { ElementSymbol } from "./element-symbol";
-import type { ElementId } from "@/lib/avatar-data";
 
 interface NavLink {
   id: string;
   label: string;
-  element: ElementId;
+  symbol: string;
 }
 
 const LINKS: NavLink[] = [
-  { id: "series", label: "Series", element: "air" },
-  { id: "episodes", label: "Episodes", element: "water" },
-  { id: "characters", label: "Characters", element: "earth" },
-  { id: "elements", label: "Elements", element: "fire" },
-  { id: "books", label: "Comics", element: "spirit" },
-  { id: "timeline", label: "Timeline", element: "none" },
-  { id: "games", label: "Games", element: "air" },
-  { id: "about", label: "About", element: "water" },
+  { id: "series", label: "Series", symbol: "/images/air.png" },
+  { id: "episodes", label: "Episodes", symbol: "/images/water.png" },
+  { id: "characters", label: "Characters", symbol: "/images/earth.png" },
+  { id: "elements", label: "Elements", symbol: "/images/fire.png" },
+  { id: "books", label: "Library", symbol: "/images/air.png" },
+  { id: "timeline", label: "Timeline", symbol: "/images/water.png" },
+  { id: "games", label: "More", symbol: "/images/earth.png" },
+  { id: "about", label: "About", symbol: "/images/fire.png" },
 ];
 
 export function Navbar({ onSearch }: { onSearch: () => void }) {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
-  const [active, setActive] = React.useState<string>("");
+  const [active, setActive] = React.useState("");
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -38,7 +36,6 @@ export function Navbar({ onSearch }: { onSearch: () => void }) {
   }, []);
 
   React.useEffect(() => {
-    const ids = LINKS.map((l) => l.id);
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -48,8 +45,8 @@ export function Navbar({ onSearch }: { onSearch: () => void }) {
       },
       { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 1] }
     );
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
+    LINKS.forEach((l) => {
+      const el = document.getElementById(l.id);
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
@@ -65,73 +62,63 @@ export function Navbar({ onSearch }: { onSearch: () => void }) {
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "border-b border-border/60 bg-background/80 backdrop-blur-md"
-          : "bg-transparent"
+          ? "border-b border-border bg-background/85 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        {/* Brand */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="group flex items-center gap-2.5"
+          className="flex items-center gap-3"
           aria-label="AvatarArchive home"
         >
-          <span className="relative flex h-9 w-9 items-center justify-center">
-            <span className="absolute inset-0 rounded-full bg-primary/15 blur-md transition-opacity group-hover:opacity-100" />
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 bg-card text-primary">
-              <span className="h-5 w-5">
-                <ElementSymbol element="air" strokeWidth={2.2} />
-              </span>
-            </span>
+          <span className="flex h-9 w-9 items-center justify-center">
+            <img
+              src="/images/air.png"
+              alt=""
+              className="h-8 w-8 object-contain opacity-90"
+              style={{ filter: "drop-shadow(0 0 6px rgba(245,197,24,0.4))" }}
+            />
           </span>
           <span className="flex flex-col leading-none">
-            <span className="text-sm font-semibold tracking-wide text-foreground">
+            <span className="font-display text-sm tracking-[0.1em] text-foreground">
               AvatarArchive
             </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            <span className="font-body-aa text-[9px] uppercase tracking-[0.25em] text-muted-foreground">
               The Four Nations
             </span>
           </span>
         </button>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+        <nav className="hidden items-center md:flex" aria-label="Primary">
           {LINKS.map((l) => (
             <button
               key={l.id}
               onClick={() => go(l.id)}
               className={cn(
-                "relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+                "press-aa relative px-3.5 py-2 font-serif text-xs uppercase tracking-[0.18em] transition-colors",
                 active === l.id
-                  ? "text-foreground"
+                  ? "text-gold"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
+              {l.label}
               {active === l.id && (
-                <span className="absolute inset-0 rounded-full bg-primary/12" />
+                <span className="absolute inset-x-3 -bottom-0.5 h-px bg-gradient-to-r from-transparent via-gold to-transparent" style={{ background: "linear-gradient(to right, transparent, var(--gold), transparent)" }} />
               )}
-              <span className="relative">{l.label}</span>
             </button>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        {/* Actions */}
+        <div className="flex items-center gap-1.5">
           <Button
-            variant="outline"
-            size="sm"
-            onClick={onSearch}
-            className="hidden gap-2 rounded-full border-border/60 bg-background/40 px-3 backdrop-blur sm:inline-flex"
-          >
-            <Search className="h-4 w-4" />
-            <span className="text-muted-foreground">Search</span>
-            <kbd className="ml-1 rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-              /
-            </kbd>
-          </Button>
-          <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
             onClick={onSearch}
-            className="rounded-full border-border/60 bg-background/40 backdrop-blur sm:hidden"
+            className="rounded-full text-muted-foreground hover:text-foreground"
             aria-label="Search"
           >
             <Search className="h-4 w-4" />
@@ -140,7 +127,7 @@ export function Navbar({ onSearch }: { onSearch: () => void }) {
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full md:hidden"
+            className="rounded-full text-muted-foreground md:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -153,21 +140,22 @@ export function Navbar({ onSearch }: { onSearch: () => void }) {
       {/* Mobile nav */}
       {open && (
         <nav
-          className="border-b border-border/60 bg-background/95 px-4 py-3 backdrop-blur md:hidden"
+          className="border-t border-border bg-background/95 px-4 py-3 backdrop-blur md:hidden"
           aria-label="Mobile"
         >
-          <div className="flex flex-col gap-1">
+          <div className="grid grid-cols-2 gap-1">
             {LINKS.map((l) => (
               <button
                 key={l.id}
                 onClick={() => go(l.id)}
                 className={cn(
-                  "rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors",
+                  "press-aa flex items-center gap-2.5 rounded-md px-3 py-2.5 text-left font-serif text-xs uppercase tracking-[0.15em] transition-colors",
                   active === l.id
-                    ? "bg-primary/12 text-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                    ? "bg-secondary text-gold"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                 )}
               >
+                <img src={l.symbol} alt="" className="h-4 w-4 object-contain opacity-70" />
                 {l.label}
               </button>
             ))}

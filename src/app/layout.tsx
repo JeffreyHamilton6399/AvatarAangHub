@@ -1,47 +1,40 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cinzel, Cinzel_Decorative, Philosopher, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/avatar/theme-provider";
+import { PasswordGate } from "@/components/avatar/password-gate";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
-
+const cinzelDecorative = Cinzel_Decorative({
+  variable: "--font-cinzel-decorative",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+const philosopher = Philosopher({
+  variable: "--font-philosopher",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "AvatarArchive — The Avatar Universe, Fan-Made",
+  title: "AvatarArchive — The Avatar Universe",
   description:
-    "A fan-built archive of the entire Avatar universe — Avatar: The Last Airbender, The Legend of Korra, the films, characters, bending arts, graphic novels, and the full in-universe chronology.",
-  keywords: [
-    "Avatar",
-    "The Last Airbender",
-    "Legend of Korra",
-    "ATLA",
-    "Avatar Archive",
-    "fan site",
-    "bending",
-    "four nations",
-    "graphic novels",
-  ],
+    "The entire Avatar universe — one fan-made media hub. Avatar: The Last Airbender, The Legend of Korra, the films, graphic novels, and the full chronology.",
   authors: [{ name: "Jeffrey Creates" }],
   manifest: "/manifest.json",
   openGraph: {
-    title: "AvatarArchive — The Avatar Universe, Fan-Made",
-    description:
-      "Every series, every Avatar, every bending art — gathered into one fan-built hub.",
+    title: "AvatarArchive — The Avatar Universe",
+    description: "The entire Avatar universe — one fan-made media hub.",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AvatarArchive",
-    description:
-      "The entire Avatar universe — one fan-built media hub.",
   },
 };
 
@@ -53,9 +46,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        className={`${cinzel.variable} ${cinzelDecorative.variable} ${philosopher.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <PasswordGate>{children}</PasswordGate>
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>

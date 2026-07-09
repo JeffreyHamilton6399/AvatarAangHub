@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { Check, Palette } from "lucide-react";
+import { Check, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -23,17 +23,17 @@ export function ThemeSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
-          className="rounded-full border-border/60 bg-background/40 backdrop-blur"
+          className="rounded-full text-muted-foreground hover:text-foreground"
           aria-label="Choose a theme"
         >
-          <Palette className="h-4 w-4" />
+          <Settings className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel className="flex items-center gap-2">
-          <Palette className="h-4 w-4" /> Elemental Themes
+      <DropdownMenuContent align="end" className="w-44">
+        <DropdownMenuLabel className="font-serif text-xs uppercase tracking-widest text-muted-foreground">
+          Themes
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {AA_THEMES.map((t) => (
@@ -44,12 +44,12 @@ export function ThemeSwitcher() {
           >
             <span className="flex items-center gap-2">
               <span
-                className="h-3.5 w-3.5 rounded-full ring-1 ring-border"
+                className="h-3 w-3 rounded-full ring-1 ring-border"
                 style={{ backgroundColor: t.swatch }}
               />
-              <span>{t.name}</span>
+              <span className="font-body-aa text-sm">{t.name}</span>
             </span>
-            {mounted && theme === t.id && <Check className="h-4 w-4" />}
+            {mounted && theme === t.id && <Check className="h-3.5 w-3.5" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

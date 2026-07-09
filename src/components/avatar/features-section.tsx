@@ -1,68 +1,34 @@
-import {
-  Compass,
-  Search,
-  Sparkles,
-  Palette,
-  ScrollText,
-  Users,
-  Film,
-  BookOpen,
-  type LucideIcon,
-} from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { FEATURES } from "@/lib/avatar-data";
+"use client";
 
-const ICONS: Record<string, LucideIcon> = {
-  Compass,
-  Search,
-  Sparkles,
-  Palette,
-  ScrollText,
-  Users,
-  Film,
-  BookOpen,
-};
+import { SectionHeader, SectionDivider } from "./section-header";
+import { FEATURES } from "@/lib/avatar-data";
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="scroll-mt-20 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="mb-10 max-w-2xl">
-          <p className="mb-2 text-xs uppercase tracking-[0.3em] text-primary">
-            What's Inside
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Built for fans, by a fan
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            AvatarArchive is a love letter to the franchise — rebuilt in Next.js
-            with all the original content: real episode titles, the graphic novel
-            library, the full timeline, and every page of the original static site,
-            now in a modern, themeable, responsive app.
-          </p>
-        </div>
+    <section id="features" className="scroll-mt-20 border-y border-border/50 bg-card/20 py-16 sm:py-20">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <SectionHeader
+          eyebrow="What's Inside"
+          title="Built for fans, by a fan"
+          description="AvatarArchive is a love letter to the franchise — every series, every episode, every graphic novel, gathered into one fan-built hub."
+          align="center"
+        />
+        <SectionDivider />
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((f) => {
-            const Icon = ICONS[f.icon] ?? Sparkles;
-            return (
-              <Card
-                key={f.title}
-                className="group relative overflow-hidden rounded-2xl border-border/60 bg-card/50 p-6 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:card-glow"
-              >
-                <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity group-hover:opacity-100" />
-                <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-primary/30 bg-primary/10 text-primary">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <h3 className="text-base font-semibold text-foreground">
+        <div className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+          {FEATURES.map((f) => (
+            <div key={f.title} className="flex gap-3">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--gold)]" />
+              <div>
+                <h3 className="font-serif text-sm font-semibold text-foreground">
                   {f.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="font-body-aa mt-1 text-xs leading-relaxed text-muted-foreground">
                   {f.description}
                 </p>
-              </Card>
-            );
-          })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

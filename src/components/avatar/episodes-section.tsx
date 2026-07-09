@@ -1,49 +1,41 @@
 "use client";
 
 import * as React from "react";
-import { Film, Play, ChevronDown } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { ChevronDown } from "lucide-react";
+import { SectionHeader, SectionDivider } from "./section-header";
 import { cn } from "@/lib/utils";
 import { SERIES, ELEMENT_COLOR, type Series, type Book } from "@/lib/avatar-data";
-import { ElementSymbol } from "./element-symbol";
 
 function EpisodeList({ book, accent }: { book: Book; accent: string }) {
   const [expanded, setExpanded] = React.useState(false);
-  const visible = expanded ? book.episodes : book.episodes.slice(0, 8);
+  const visible = expanded ? book.episodes : book.episodes.slice(0, 10);
   return (
     <div>
-      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+      <ol className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
         {visible.map((ep, i) => (
-          <div
+          <li
             key={ep}
-            className="group flex items-center gap-3 rounded-lg border border-border/40 bg-background/40 px-3 py-2 transition-colors hover:border-border hover:bg-background/70"
+            className="press-aa group flex items-center gap-3 rounded-md border border-border/60 bg-background/40 px-3 py-2 transition-colors hover:border-[rgba(201,168,76,0.3)] hover:bg-background/70"
           >
             <span
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md font-mono text-xs font-bold"
-              style={{
-                backgroundColor: `${accent}1f`,
-                color: accent,
-              }}
+              className="font-mono text-xs font-bold tabular-nums"
+              style={{ color: accent }}
             >
               {String(i + 1).padStart(2, "0")}
             </span>
-            <span className="flex-1 truncate text-sm text-foreground/90">
+            <span className="font-body-aa flex-1 truncate text-sm text-foreground/90">
               {ep}
             </span>
-            <Play className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
-          </div>
+          </li>
         ))}
-      </div>
-      {book.episodes.length > 8 && (
+      </ol>
+      {book.episodes.length > 10 && (
         <button
           onClick={() => setExpanded((v) => !v)}
-          className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+          className="font-body-aa mt-3 inline-flex items-center gap-1.5 text-xs uppercase tracking-wider text-gold transition-opacity hover:opacity-80"
         >
-          {expanded ? "Show less" : `Show all ${book.episodes.length} episodes`}
-          <ChevronDown
-            className={cn("h-3.5 w-3.5 transition-transform", expanded && "rotate-180")}
-          />
+          {expanded ? "Show less" : `Show all ${book.episodes.length}`}
+          <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", expanded && "rotate-180")} />
         </button>
       )}
     </div>
@@ -57,85 +49,65 @@ function SeriesEpisodes({ s }: { s: Series }) {
   const bookColor = ELEMENT_COLOR[book.element];
 
   return (
-    <Card className="overflow-hidden rounded-2xl border-border/60 bg-card/50 backdrop-blur">
-      {/* Series header banner */}
-      <div
-        className="relative h-24 overflow-hidden border-b border-border/60 sm:h-28"
-        style={{
-          background: `linear-gradient(120deg, ${accent}33, transparent 60%), var(--card)`,
-        }}
-      >
+    <div className="card-aa overflow-hidden rounded-lg">
+      {/* Series header */}
+      <div className="relative h-20 overflow-hidden border-b border-border sm:h-24">
         <div
-          className="pointer-events-none absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: `url(${s.backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          className="absolute inset-0 bg-cover bg-center opacity-35"
+          style={{ backgroundImage: `url(${s.backgroundImage})` }}
         />
-        <div className="relative flex h-full items-center justify-between gap-3 px-5">
-          <div className="flex items-center gap-3">
-            <span
-              className="flex h-11 w-11 items-center justify-center rounded-xl border bg-background/60"
-              style={{ borderColor: accent, color: accent }}
-            >
-              <span className="h-6 w-6">
-                <ElementSymbol element={s.element} strokeWidth={2} />
-              </span>
-            </span>
-            <div>
-              <h3 className="text-base font-semibold leading-tight text-foreground">
-                {s.title}
-              </h3>
-              <p className="text-xs text-muted-foreground">
-                {s.years} · {s.books.reduce((n, b) => n + b.episodes.length, 0)} episodes
-              </p>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-card via-card/80 to-transparent" />
+        <div className="relative flex h-full items-center gap-3 px-5">
+          <img
+            src={`/images/${s.element}.png`}
+            alt={s.element}
+            className="h-10 w-10 object-contain opacity-90"
+            style={{ filter: `drop-shadow(0 0 6px ${accent}88)` }}
+          />
+          <div>
+            <h3 className="font-serif text-base font-semibold leading-tight">
+              {s.title}
+            </h3>
+            <p className="font-body-aa text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+              {s.years} · {s.books.reduce((n, b) => n + b.episodes.length, 0)} episodes
+            </p>
           </div>
         </div>
       </div>
 
       <div className="p-5">
-        {/* Book selector pills */}
+        {/* Book selector */}
         <div className="mb-4 flex flex-wrap gap-2">
           {s.books.map((b, i) => (
             <button
               key={b.tag}
               onClick={() => setActiveBook(i)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
+                "press-aa inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-serif text-[0.6rem] uppercase tracking-[0.18em] transition-all",
                 activeBook === i
                   ? "border-transparent text-white"
-                  : "border-border/60 bg-background/40 text-muted-foreground hover:text-foreground"
+                  : "border-border bg-background/40 text-muted-foreground hover:text-foreground"
               )}
-              style={
-                activeBook === i
-                  ? { backgroundColor: ELEMENT_COLOR[b.element] }
-                  : undefined
-              }
+              style={activeBook === i ? { backgroundColor: ELEMENT_COLOR[b.element] } : undefined}
             >
-              <span className="h-3 w-3" style={{ color: activeBook === i ? "white" : ELEMENT_COLOR[b.element] }}>
-                <ElementSymbol element={b.element} strokeWidth={2.4} />
-              </span>
-              {b.label} · {b.sublabel}
+              <img src={`/images/${b.element}.png`} alt="" className="h-3.5 w-3.5 object-contain" />
+              {b.sublabel}
             </button>
           ))}
         </div>
 
-        {/* Active book header */}
-        <div className="mb-3 flex items-center justify-between">
-          <h4 className="flex items-center gap-2 text-sm font-semibold" style={{ color: bookColor }}>
-            <Film className="h-4 w-4" />
+        <div className="mb-3 flex items-baseline justify-between">
+          <h4 className="font-serif text-sm font-semibold" style={{ color: bookColor }}>
             {book.label}: {book.sublabel}
           </h4>
-          <Badge variant="outline" className="rounded-full border-border/60 text-[10px] uppercase tracking-wider">
+          <span className="font-body-aa text-[0.6rem] uppercase tracking-wider text-muted-foreground">
             {book.episodes.length} episodes
-          </Badge>
+          </span>
         </div>
 
         <EpisodeList book={book} accent={accent} />
       </div>
-    </Card>
+    </div>
   );
 }
 
@@ -150,49 +122,42 @@ export function EpisodesSection() {
   return (
     <section
       id="episodes"
-      className="scroll-mt-20 border-y border-border/40 bg-card/30 py-20 sm:py-28"
+      className="scroll-mt-20 border-y border-border/50 bg-card/20 py-16 sm:py-20"
     >
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <div className="mb-8 max-w-2xl">
-          <p className="mb-2 text-xs uppercase tracking-[0.3em] text-primary">
-            The Episodes
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {totalEps} episodes across every Book
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            Browse the complete episode catalog — real titles from every Book of
-            ATLA, Korra, and the films. Pick a series, then a Book, to explore.
-          </p>
-        </div>
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+        <SectionHeader
+          eyebrow="The Episodes"
+          title={`${totalEps} episodes across every Book`}
+          description="Browse the complete episode catalog — real titles from every Book of ATLA, Korra, and the films."
+        />
+        <SectionDivider />
 
-        {/* Series selector */}
-        <div className="mb-6 flex flex-wrap gap-2">
+        <div className="mt-6 flex flex-wrap gap-2">
           {SERIES.map((s) => (
             <button
               key={s.id}
               onClick={() => setActiveSeries(s.id)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all",
+                "press-aa inline-flex items-center gap-2 rounded-full border px-4 py-2 font-serif text-xs uppercase tracking-[0.18em] transition-all",
                 activeSeries === s.id
-                  ? "border-transparent text-white shadow-lg"
-                  : "border-border/60 bg-background/40 text-muted-foreground hover:text-foreground"
+                  ? "border-transparent text-white"
+                  : "border-border bg-background/40 text-muted-foreground hover:text-foreground"
               )}
               style={
                 activeSeries === s.id
-                  ? { backgroundColor: s.accent, boxShadow: `0 8px 30px -8px ${s.accent}55` }
+                  ? { backgroundColor: s.accent }
                   : undefined
               }
             >
-              <span className="h-4 w-4" style={{ color: activeSeries === s.id ? "white" : s.accent }}>
-                <ElementSymbol element={s.element} strokeWidth={2.2} />
-              </span>
+              <img src={`/images/${s.element}.png`} alt="" className="h-4 w-4 object-contain" />
               {s.short}
             </button>
           ))}
         </div>
 
-        <SeriesEpisodes s={current} />
+        <div className="mt-6">
+          <SeriesEpisodes s={current} />
+        </div>
       </div>
     </section>
   );

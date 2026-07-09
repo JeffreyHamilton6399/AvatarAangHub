@@ -1,88 +1,76 @@
 "use client";
 
-import { Heart, Github, Youtube, ExternalLink } from "lucide-react";
+import { Github, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ElementSymbol } from "./element-symbol";
+import { SectionHeader, SectionDivider } from "./section-header";
 
 export function AboutSection() {
   return (
-    <section
-      id="about"
-      className="scroll-mt-20 border-t border-border/40 bg-card/30 py-20 sm:py-28"
-    >
+    <section id="about" className="scroll-mt-20 py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
-          <div className="flex justify-center">
-            <div className="relative h-44 w-44">
-              <div className="aa-spin-slow absolute inset-0 rounded-full border border-dashed border-primary/40" />
-              <div className="absolute inset-4 flex items-center justify-center rounded-full border border-primary/30 bg-card/60 text-primary">
-                <span className="h-16 w-16">
-                  <ElementSymbol element="spirit" strokeWidth={1.6} />
-                </span>
-              </div>
-              <div className="aa-pulse-glow absolute inset-0 rounded-full bg-primary/10 blur-2xl" />
-            </div>
+        <SectionHeader
+          eyebrow="About"
+          title="A fan-made tribute"
+          description="AvatarArchive is an unofficial, fan-built hub celebrating the entire Avatar universe."
+          align="center"
+        />
+        <SectionDivider />
+
+        <div className="mt-8 text-center">
+          {/* Four elements */}
+          <div className="mb-6 flex items-center justify-center gap-[clamp(1rem,4vw,2.5rem)]">
+            {["air", "water", "earth", "fire"].map((el, i) => (
+              <img
+                key={el}
+                src={`/images/${el}.png`}
+                alt={el}
+                className="h-7 w-7 object-contain opacity-75"
+                style={{ animation: `aa-pulse-glow 3s ease-in-out infinite ${i * 0.5}s`, color: `var(--${el})` }}
+              />
+            ))}
           </div>
 
-          <div>
-            <p className="mb-2 text-xs uppercase tracking-[0.3em] text-primary">
-              About
-            </p>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              A fan-made tribute
-            </h2>
-            <p className="mt-4 text-pretty text-sm leading-relaxed text-muted-foreground">
-              AvatarArchive is an unofficial, fan-built hub celebrating the entire
-              Avatar universe — from <strong>Avatar: The Last Airbender</strong>{" "}
-              and <strong>The Legend of Korra</strong> to the films, games, and
-              graphic novels. It is not affiliated with Nickelodeon, Viacom,
-              Paramount, or Netflix. All trademarks belong to their respective
-              owners.
-            </p>
-            <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
-              This Next.js edition reimagines the original vanilla-HTML project as
-              a modern React application — type-safe, responsive, accessible, and
-              ready to deploy on Vercel.
-            </p>
+          <p className="font-body-aa mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            From <strong className="text-foreground">Avatar: The Last Airbender</strong> and{" "}
+            <strong className="text-foreground">The Legend of Korra</strong> to the films, games,
+            and graphic novels. Not affiliated with Nickelodeon, Viacom, Paramount, or Netflix —
+            all trademarks belong to their respective owners.
+          </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild className="gap-2 rounded-full">
-                <a
-                  href="https://github.com/JeffreyHamilton6399/AvatarArchive"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Github className="h-4 w-4" /> View on GitHub
-                </a>
-              </Button>
-              <Button asChild variant="outline" className="gap-2 rounded-full">
-                <a
-                  href="https://www.youtube.com/@Jeffrey_Creates"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Youtube className="h-4 w-4" /> Jeffrey Creates
-                </a>
-              </Button>
-              <Button asChild variant="ghost" className="gap-2 rounded-full">
-                <a
-                  href="https://www.nick.com/shows/avatar-the-last-airbender"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="h-4 w-4" /> Official site
-                </a>
-              </Button>
-            </div>
+          <p className="font-body-aa mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            Built with Next.js, TypeScript, Tailwind CSS, and shadcn/ui. Made by fans, for fans.
+            Iroh would approve.
+          </p>
+
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Button asChild variant="outline" className="gap-2 rounded-full border-border bg-background/40 font-body-aa text-xs">
+              <a
+                href="https://github.com/JeffreyHamilton6399/AvatarArchive"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="h-3.5 w-3.5" /> GitHub
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="gap-2 rounded-full border-border bg-background/40 font-body-aa text-xs">
+              <a
+                href="https://www.youtube.com/@Jeffrey_Creates"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Youtube className="h-3.5 w-3.5" /> Jeffrey Creates
+              </a>
+            </Button>
           </div>
         </div>
 
-        <Card className="mt-10 rounded-2xl border-border/60 bg-background/40 p-5">
-          <p className="flex items-center gap-2 text-center text-xs text-muted-foreground">
-            <Heart className="h-3.5 w-3.5 text-primary" />
-            Built with Next.js 16, TypeScript, Tailwind CSS, and shadcn/ui. Made
-            by fans, for fans. Iroh would approve.
+        <Card className="mt-8 rounded-lg border-border/60 bg-background/40 p-4">
+          <p className="font-body-aa text-center text-[0.65rem] leading-relaxed text-muted-foreground">
+            Avatar: The Last Airbender and The Legend of Korra © Nickelodeon / Viacom / Paramount.
+            AvatarArchive is an unofficial fan project and is not endorsed by or affiliated with the
+            rights holders. All content is fan-created reference material. No copyright infringement
+            intended.
           </p>
         </Card>
       </div>
