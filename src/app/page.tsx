@@ -1,13 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Search } from "lucide-react";
+import { Search, Github, Youtube } from "lucide-react";
 import { Hero } from "@/components/avatar/hero";
 import { NetflixRow } from "@/components/avatar/netflix-row";
 import { VideoPlayer } from "@/components/avatar/video-player";
 import { BookReader } from "@/components/avatar/book-reader";
 import { SeriesDetail } from "@/components/avatar/series-detail";
 import { Footer } from "@/components/avatar/footer";
+import { LoadingScreen } from "@/components/avatar/loading-screen";
 import { SearchCommand } from "@/components/avatar/search-command";
 import { ThemeSwitcher } from "@/components/avatar/theme-switcher";
 import { useContinueWatching } from "@/lib/watch-progress";
@@ -103,6 +104,8 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <LoadingScreen />
+      {/* Floating controls top-right */}
       <div className="pointer-events-none fixed right-4 top-4 z-40 flex gap-2">
         <button
           onClick={() => setSearchOpen(true)}
@@ -114,6 +117,28 @@ export default function Home() {
         <div className="pointer-events-auto">
           <ThemeSwitcher />
         </div>
+      </div>
+
+      {/* Floating social icons bottom-right */}
+      <div className="pointer-events-none fixed bottom-4 right-4 z-40 flex gap-2">
+        <a
+          href="https://github.com/JeffreyHamilton6399/AvatarArchive"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="press-aa pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background/70 text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
+          aria-label="GitHub"
+        >
+          <Github className="h-3.5 w-3.5" />
+        </a>
+        <a
+          href="https://www.youtube.com/@Jeffrey_Creates"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="press-aa pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background/70 text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
+          aria-label="YouTube"
+        >
+          <Youtube className="h-3.5 w-3.5" />
+        </a>
       </div>
 
       <main className="flex-1">
@@ -164,7 +189,6 @@ export default function Home() {
             renderItem={(s) => <SeriesCard s={s} onClick={() => openSeries(s)} />}
           />
 
-          {/* Graphic Novels — one card per trilogy (6 total), opens book reader */}
           <NetflixRow
             title="Graphic Novels"
             items={TRILOGIES}
@@ -178,10 +202,8 @@ export default function Home() {
           />
         </div>
 
-        <ElementsStrip />
+        <Footer />
       </main>
-
-      <Footer />
 
       {detailSeries && (
         <SeriesDetail
@@ -229,7 +251,7 @@ export default function Home() {
   );
 }
 
-// ── Series card ──────────────────────────────────────────────────────────────
+// ── Series card (no element icon in top-right) ───────────────────────────────
 function SeriesCard({ s, onClick }: { s: Series; onClick: () => void }) {
   return (
     <button
@@ -243,12 +265,6 @@ function SeriesCard({ s, onClick }: { s: Series; onClick: () => void }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
         <div className="h-1 w-full" style={{ backgroundColor: s.accent }} />
-        <img
-          src={elementImage(s.element)}
-          alt={s.element}
-          className="absolute right-3 top-3 h-8 w-8 object-contain opacity-80"
-          style={{ filter: `drop-shadow(0 0 5px ${s.accent})` }}
-        />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
             <svg className="h-5 w-5 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -332,95 +348,39 @@ function ContinueCard({
   );
 }
 
-// ── Trilogy card (one per graphic novel trilogy) ─────────────────────────────
+// ── Trilogy card — minimal (just name + description, smaller) ────────────────
 function TrilogyCard({ t, onClick }: { t: Trilogy; onClick: () => void }) {
   const color = ELEMENT_COLOR[t.element];
-  const part1 = t.parts[0];
   return (
     <button
       onClick={onClick}
-      className="press-aa card-aa group relative block w-[200px] overflow-hidden rounded-md text-left sm:w-[230px]"
+      className="press-aa card-aa group relative block w-[160px] overflow-hidden rounded-md text-left sm:w-[180px]"
       style={{ borderTopColor: `${color}88`, borderTopWidth: 2 }}
     >
-      {/* Book-spine style visual */}
-      <div className="relative flex h-52 items-center justify-center bg-gradient-to-b from-secondary/50 to-card p-4">
-        <img
-          src={elementImage(t.element)}
-          alt=""
-          className="absolute right-3 top-3 h-8 w-8 object-contain opacity-50"
-          style={{ filter: `drop-shadow(0 0 6px ${color})` }}
-        />
+      <div className="relative flex h-36 items-center justify-center bg-gradient-to-b from-secondary/40 to-card p-3">
         <div className="text-center">
-          <p className="font-body-aa text-[0.55rem] uppercase tracking-[0.25em]" style={{ color }}>
-            Dark Horse
-          </p>
-          <h3 className="font-display mt-2 text-lg font-bold leading-tight text-foreground">
+          <h3 className="font-display text-base font-bold leading-tight text-foreground">
             {t.name}
           </h3>
-          <div className="mx-auto my-3 h-px w-12" style={{ background: `linear-gradient(to right, transparent, ${color}, transparent)` }} />
-          <div className="flex items-center justify-center gap-1.5">
-            {t.parts.map((p) => (
-              <span
-                key={p.part}
-                className="flex h-7 w-7 items-center justify-center rounded-md font-mono text-xs font-bold"
-                style={{ backgroundColor: `${color}22`, color }}
-              >
-                {p.part}
-              </span>
-            ))}
-          </div>
-          <p className="font-body-aa mt-3 text-[0.55rem] uppercase tracking-wider text-muted-foreground">
-            3-part trilogy
-          </p>
+          <div
+            className="mx-auto mt-2 h-px w-10"
+            style={{ background: `linear-gradient(to right, transparent, ${color}, transparent)` }}
+          />
         </div>
         {/* Play overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
-            <svg className="h-5 w-5 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur">
+            <svg className="h-4 w-4 translate-x-0.5 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
         </div>
       </div>
-      <div className="p-2.5">
-        <p className="font-body-aa line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+      <div className="p-2">
+        <p className="font-body-aa line-clamp-2 text-[0.7rem] leading-relaxed text-muted-foreground">
           {t.description}
         </p>
       </div>
     </button>
-  );
-}
-
-// ── Elements strip ───────────────────────────────────────────────────────────
-import { ELEMENTS } from "@/lib/avatar-data";
-
-function ElementsStrip() {
-  return (
-    <section className="border-t border-border/50 bg-card/20 py-10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
-          {ELEMENTS.map((e) => (
-            <div
-              key={e.id}
-              className="press-aa group flex cursor-default flex-col items-center gap-2"
-              title={`${e.name} — ${e.philosophy}`}
-            >
-              <img
-                src={e.image}
-                alt={e.name}
-                className="h-10 w-10 object-contain opacity-80 transition-all group-hover:opacity-100"
-                style={{ filter: `drop-shadow(0 0 6px ${e.color})` }}
-              />
-              <span
-                className="font-serif text-xs font-semibold uppercase tracking-widest"
-                style={{ color: e.color }}
-              >
-                {e.name}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
