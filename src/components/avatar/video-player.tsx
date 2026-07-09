@@ -1,14 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { X, Download, ExternalLink, Loader2 } from "lucide-react";
+import { X, ExternalLink, Loader2 } from "lucide-react";
 import { saveProgress, getProgress } from "@/lib/watch-progress";
+import { useCaptions, getActiveCue } from "@/lib/captions";
+import { cn } from "@/lib/utils";
 
 interface VideoPlayerProps {
   src: string;
   title: string;
   caption?: string;
-  /** Metadata for saving watch progress */
   meta?: {
     seriesShort: string;
     bookSublabel: string;
@@ -20,12 +21,6 @@ interface VideoPlayerProps {
   onClose: () => void;
 }
 
-/**
- * Video player modal.
- * - Streams MP4s from GitHub Releases (HTTP range-supported)
- * - Saves & restores watch position (localStorage)
- * - Optional SRT caption track
- */
 export function VideoPlayer({
   src,
   title,
@@ -36,7 +31,12 @@ export function VideoPlayer({
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [ccOn, setCcOn] = React.useState(true);
+  const [currentTime, setCurrentTime] = React.useState(0);
   const saveTimerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const { cues, loaded: captionsLoaded } = useCaptions(caption);
+  const activeCue = caption && ccOn ? getActiveCue(cues, currentTime) : null;
 
   // Restore saved position on load
   React.useEffect(() => {
@@ -44,7 +44,7 @@ export function VideoPlayer({
     if (!v) return;
     const saved = getProgress(src);
     const onLoadedMeta = () => {
-      if (saved > 5 && saved < (v.duration - 15)) {
+      if (saved > 5 && saved < v.duration - 15) {
         v.currentTime = saved;
       }
     };
@@ -52,11 +52,10 @@ export function VideoPlayer({
     return () => v.removeEventListener("loadedmetadata", onLoadedMeta);
   }, [src]);
 
-  // Periodically save progress while playing
+  // Periodically save progress
   React.useEffect(() => {
     const v = videoRef.current;
     if (!v || !meta) return;
-
     const save = () => {
       if (v.duration > 0 && v.currentTime > 0) {
         saveProgress({
@@ -74,17 +73,14 @@ export function VideoPlayer({
         });
       }
     };
-
     saveTimerRef.current = setInterval(save, 5000);
-    const onSaveUnload = () => save();
     v.addEventListener("pause", save);
-    window.addEventListener("beforeunload", onSaveUnload);
-
+    window.addEventListener("beforeunload", save);
     return () => {
       if (saveTimerRef.current) clearInterval(saveTimerRef.current);
-      save(); // save once on unmount/close
+      save();
       v.removeEventListener("pause", save);
-      window.removeEventListener("beforeunload", onSaveUnload);
+      window.removeEventListener("beforeunload", save);
     };
   }, [src, title, meta]);
 
@@ -97,6 +93,9 @@ export function VideoPlayer({
       document.body.style.overflow = "";
     };
   }, [onClose]);
+
+  const toggleCc = () => setCcOn((v) => !v);
+  const hasCaptions = caption && captionsLoaded && cues.length > 0;
 
   return (
     <div
@@ -113,15 +112,22 @@ export function VideoPlayer({
             {title}
           </span>
           <div className="flex items-center gap-1.5">
-            <a
-              href={src}
-              download
-              className="press-aa flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-              aria-label="Download video"
-              title="Download"
+            <button
+              onClick={toggleCc}
+              disabled={!hasCaptions}
+              className={cn(
+                "press-aa flex h-8 items-center gap-1.5 rounded-full px-3 font-serif text-[0.6rem] uppercase tracking-widest transition-colors",
+                hasCaptions
+                  ? ccOn
+                    ? "bg-gold text-black"
+                    : "border border-border text-muted-foreground hover:text-foreground"
+                  : "cursor-not-allowed border border-border/30 text-muted-foreground/40"
+              )}
+              aria-label="Toggle captions"
+              title={hasCaptions ? "Toggle captions" : "No captions available"}
             >
-              <Download className="h-3.5 w-3.5" />
-            </a>
+              CC
+            </button>
             <a
               href={src}
               target="_blank"
@@ -142,10 +148,10 @@ export function VideoPlayer({
           </div>
         </div>
 
-        {/* Video */}
+        {/* Video with caption overlay */}
         <div className="relative aspect-video bg-black">
           {loading && !error && (
-            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3 text-muted-foreground">
+            <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 text-muted-foreground">
               <Loader2 className="h-8 w-8 animate-spin text-gold" />
               <p className="font-body-aa text-xs uppercase tracking-widest">
                 Loading stream…
@@ -153,7 +159,7 @@ export function VideoPlayer({
             </div>
           )}
           {error && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center">
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 p-6 text-center">
               <p className="font-body-aa text-sm text-[#f97316]">{error}</p>
               <a
                 href={src}
@@ -176,15 +182,26 @@ export function VideoPlayer({
             onCanPlay={() => setLoading(false)}
             onWaiting={() => setLoading(true)}
             onPlaying={() => setLoading(false)}
+            onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
             onError={() => {
               setLoading(false);
               setError("Unable to stream this video. It may still be processing on GitHub, or your connection is slow. Try opening it directly.");
             }}
-          >
-            {caption && (
-              <track kind="subtitles" src={caption} srcLang="en" label="English" default />
-            )}
-          </video>
+          />
+          {/* Caption overlay — sits above the video, below the native controls */}
+          {activeCue && (
+            <div className="pointer-events-none absolute bottom-16 left-1/2 z-20 w-[85%] max-w-2xl -translate-x-1/2 text-center">
+              <span
+                className="font-body-aa inline-block rounded bg-black/80 px-3 py-1.5 text-base leading-relaxed text-white sm:text-lg"
+                dangerouslySetInnerHTML={{
+                  __html: activeCue.text
+                    .replace(/<i>/g, "<em>")
+                    .replace(/<\/i>/g, "</em>")
+                    .replace(/\n/g, "<br/>"),
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
