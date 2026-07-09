@@ -1,0 +1,373 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ============ Theme tokens ============ */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.145 0.02 270);
+  --foreground: oklch(0.97 0.01 80);
+  --card: oklch(0.19 0.02 270);
+  --card-foreground: oklch(0.97 0.01 80);
+  --popover: oklch(0.19 0.02 270);
+  --popover-foreground: oklch(0.97 0.01 80);
+  --primary: oklch(0.7 0.18 75);
+  --primary-foreground: oklch(0.16 0.02 75);
+  --secondary: oklch(0.25 0.02 270);
+  --secondary-foreground: oklch(0.97 0.01 80);
+  --muted: oklch(0.25 0.02 270);
+  --muted-foreground: oklch(0.72 0.02 270);
+  --accent: oklch(0.3 0.03 270);
+  --accent-foreground: oklch(0.97 0.01 80);
+  --destructive: oklch(0.65 0.22 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.7 0.18 75);
+  --chart-1: oklch(0.7 0.18 75);
+  --chart-2: oklch(0.65 0.16 230);
+  --chart-3: oklch(0.6 0.15 140);
+  --chart-4: oklch(0.62 0.2 25);
+  --chart-5: oklch(0.65 0.16 305);
+  --sidebar: oklch(0.19 0.02 270);
+  --sidebar-foreground: oklch(0.97 0.01 80);
+  --sidebar-primary: oklch(0.7 0.18 75);
+  --sidebar-primary-foreground: oklch(0.16 0.02 75);
+  --sidebar-accent: oklch(0.3 0.03 270);
+  --sidebar-accent-foreground: oklch(0.97 0.01 80);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.7 0.18 75);
+  /* Avatar-archive extras */
+  --aa-glow: rgba(245, 158, 11, 0.35);
+  --aa-accent: #f59e0b;
+  --aa-grain: 0.04;
+}
+
+/* Dark (default / Avatar temple) */
+.dark {
+  --background: oklch(0.13 0.02 270);
+  --foreground: oklch(0.97 0.01 80);
+  --card: oklch(0.18 0.02 270);
+  --card-foreground: oklch(0.97 0.01 80);
+  --popover: oklch(0.18 0.02 270);
+  --popover-foreground: oklch(0.97 0.01 80);
+  --primary: oklch(0.72 0.17 75);
+  --primary-foreground: oklch(0.16 0.02 75);
+  --secondary: oklch(0.24 0.02 270);
+  --secondary-foreground: oklch(0.97 0.01 80);
+  --muted: oklch(0.24 0.02 270);
+  --muted-foreground: oklch(0.7 0.02 270);
+  --accent: oklch(0.3 0.03 270);
+  --accent-foreground: oklch(0.97 0.01 80);
+  --destructive: oklch(0.65 0.22 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.72 0.17 75);
+  --aa-glow: rgba(245, 158, 11, 0.32);
+  --aa-accent: #f59e0b;
+  --aa-grain: 0.05;
+}
+
+/* Parchment (Air Nomad scroll) */
+.parchment {
+  --background: oklch(0.95 0.03 85);
+  --foreground: oklch(0.27 0.04 55);
+  --card: oklch(0.97 0.025 85);
+  --card-foreground: oklch(0.27 0.04 55);
+  --popover: oklch(0.97 0.025 85);
+  --popover-foreground: oklch(0.27 0.04 55);
+  --primary: oklch(0.5 0.12 45);
+  --primary-foreground: oklch(0.97 0.025 85);
+  --secondary: oklch(0.9 0.03 85);
+  --secondary-foreground: oklch(0.3 0.04 55);
+  --muted: oklch(0.9 0.03 85);
+  --muted-foreground: oklch(0.48 0.04 55);
+  --accent: oklch(0.88 0.05 75);
+  --accent-foreground: oklch(0.3 0.05 55);
+  --destructive: oklch(0.6 0.2 25);
+  --border: oklch(0.6 0.04 55 / 22%);
+  --input: oklch(0.6 0.04 55 / 18%);
+  --ring: oklch(0.5 0.12 45);
+  --aa-glow: rgba(180, 120, 40, 0.25);
+  --aa-accent: #b4782a;
+  --aa-grain: 0.08;
+}
+
+/* Water Tribe */
+.water {
+  --background: oklch(0.2 0.06 240);
+  --foreground: oklch(0.96 0.02 220);
+  --card: oklch(0.26 0.06 240);
+  --card-foreground: oklch(0.96 0.02 220);
+  --popover: oklch(0.26 0.06 240);
+  --popover-foreground: oklch(0.96 0.02 220);
+  --primary: oklch(0.75 0.15 220);
+  --primary-foreground: oklch(0.18 0.05 240);
+  --secondary: oklch(0.32 0.05 240);
+  --secondary-foreground: oklch(0.96 0.02 220);
+  --muted: oklch(0.3 0.05 240);
+  --muted-foreground: oklch(0.74 0.04 220);
+  --accent: oklch(0.38 0.06 240);
+  --accent-foreground: oklch(0.96 0.02 220);
+  --destructive: oklch(0.65 0.22 25);
+  --border: oklch(0.7 0.1 220 / 18%);
+  --input: oklch(0.7 0.1 220 / 22%);
+  --ring: oklch(0.75 0.15 220);
+  --aa-glow: rgba(45, 166, 244, 0.4);
+  --aa-accent: #2da6f4;
+  --aa-grain: 0.04;
+}
+
+/* Earth Kingdom */
+.earth {
+  --background: oklch(0.24 0.04 130);
+  --foreground: oklch(0.96 0.02 120);
+  --card: oklch(0.3 0.05 130);
+  --card-foreground: oklch(0.96 0.02 120);
+  --popover: oklch(0.3 0.05 130);
+  --popover-foreground: oklch(0.96 0.02 120);
+  --primary: oklch(0.72 0.17 130);
+  --primary-foreground: oklch(0.18 0.04 130);
+  --secondary: oklch(0.36 0.04 130);
+  --secondary-foreground: oklch(0.96 0.02 120);
+  --muted: oklch(0.34 0.04 130);
+  --muted-foreground: oklch(0.74 0.04 120);
+  --accent: oklch(0.4 0.05 130);
+  --accent-foreground: oklch(0.96 0.02 120);
+  --destructive: oklch(0.65 0.22 25);
+  --border: oklch(0.7 0.1 120 / 18%);
+  --input: oklch(0.7 0.1 120 / 22%);
+  --ring: oklch(0.72 0.17 130);
+  --aa-glow: rgba(124, 179, 66, 0.4);
+  --aa-accent: #7cb342;
+  --aa-grain: 0.05;
+}
+
+/* Fire Nation */
+.fire {
+  --background: oklch(0.18 0.05 25);
+  --foreground: oklch(0.97 0.02 60);
+  --card: oklch(0.25 0.06 25);
+  --card-foreground: oklch(0.97 0.02 60);
+  --popover: oklch(0.25 0.06 25);
+  --popover-foreground: oklch(0.97 0.02 60);
+  --primary: oklch(0.7 0.2 35);
+  --primary-foreground: oklch(0.16 0.04 25);
+  --secondary: oklch(0.32 0.05 25);
+  --secondary-foreground: oklch(0.97 0.02 60);
+  --muted: oklch(0.3 0.05 25);
+  --muted-foreground: oklch(0.75 0.03 60);
+  --accent: oklch(0.38 0.06 25);
+  --accent-foreground: oklch(0.97 0.02 60);
+  --destructive: oklch(0.6 0.22 20);
+  --border: oklch(0.7 0.12 35 / 18%);
+  --input: oklch(0.7 0.12 35 / 22%);
+  --ring: oklch(0.7 0.2 35);
+  --aa-glow: rgba(239, 68, 68, 0.42);
+  --aa-accent: #ef4444;
+  --aa-grain: 0.05;
+}
+
+/* Air Nomads */
+.air {
+  --background: oklch(0.26 0.05 75);
+  --foreground: oklch(0.96 0.02 60);
+  --card: oklch(0.32 0.05 75);
+  --card-foreground: oklch(0.96 0.02 60);
+  --popover: oklch(0.32 0.05 75);
+  --popover-foreground: oklch(0.96 0.02 60);
+  --primary: oklch(0.78 0.15 75);
+  --primary-foreground: oklch(0.2 0.05 75);
+  --secondary: oklch(0.38 0.05 75);
+  --secondary-foreground: oklch(0.96 0.02 60);
+  --muted: oklch(0.36 0.05 75);
+  --muted-foreground: oklch(0.74 0.04 60);
+  --accent: oklch(0.42 0.06 75);
+  --accent-foreground: oklch(0.96 0.02 60);
+  --destructive: oklch(0.65 0.22 25);
+  --border: oklch(0.7 0.1 75 / 20%);
+  --input: oklch(0.7 0.1 75 / 22%);
+  --ring: oklch(0.78 0.15 75);
+  --aa-glow: rgba(245, 158, 11, 0.42);
+  --aa-accent: #f59e0b;
+  --aa-grain: 0.05;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at 18% 12%, var(--aa-glow) 0%, transparent 42%),
+      radial-gradient(circle at 84% 86%, var(--aa-glow) 0%, transparent 46%);
+    background-attachment: fixed;
+    transition: background-color 0.5s ease, color 0.4s ease;
+  }
+}
+
+/* ============ Custom utilities ============ */
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 24px var(--aa-glow);
+  }
+  .ring-glow {
+    box-shadow: 0 0 0 1px var(--aa-accent), 0 0 32px -4px var(--aa-glow);
+  }
+  .card-glow {
+    box-shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border);
+  }
+  .bg-element-air {
+    background-color: #f59e0b;
+  }
+  .bg-element-water {
+    background-color: #2da6f4;
+  }
+  .bg-element-earth {
+    background-color: #7cb342;
+  }
+  .bg-element-fire {
+    background-color: #ef4444;
+  }
+  .bg-element-spirit {
+    background-color: #a855f7;
+  }
+  .bg-element-none {
+    background-color: #94a3b8;
+  }
+  .text-element-air {
+    color: #f59e0b;
+  }
+  .text-element-water {
+    color: #2da6f4;
+  }
+  .text-element-earth {
+    color: #7cb342;
+  }
+  .text-element-fire {
+    color: #ef4444;
+  }
+  .text-element-spirit {
+    color: #a855f7;
+  }
+  .text-element-none {
+    color: #94a3b8;
+  }
+  .border-element-air {
+    border-color: #f59e0b;
+  }
+  .border-element-water {
+    border-color: #2da6f4;
+  }
+  .border-element-earth {
+    border-color: #7cb342;
+  }
+  .border-element-fire {
+    border-color: #ef4444;
+  }
+}
+
+/* Custom scrollbar for long lists */
+.aa-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--aa-accent) transparent;
+}
+.aa-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.aa-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.aa-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--aa-accent) 55%, transparent);
+  border-radius: 999px;
+}
+.aa-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--aa-accent);
+}
+
+/* Subtle entrance animation */
+@keyframes aa-float-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.aa-float-up {
+  animation: aa-float-up 0.6s ease-out both;
+}
+
+@keyframes aa-spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.aa-spin-slow {
+  animation: aa-spin-slow 38s linear infinite;
+}
+
+@keyframes aa-pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.aa-pulse-glow {
+  animation: aa-pulse-glow 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-spin-slow,
+  .aa-pulse-glow,
+  .aa-float-up {
+    animation: none;
+  }
+}
