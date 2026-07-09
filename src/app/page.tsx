@@ -9,6 +9,7 @@ import { BookReader } from "@/components/avatar/book-reader";
 import { SeriesDetail } from "@/components/avatar/series-detail";
 import { Footer } from "@/components/avatar/footer";
 import { LoadingScreen } from "@/components/avatar/loading-screen";
+import { BackgroundElements } from "@/components/avatar/background-elements";
 import { SearchCommand } from "@/components/avatar/search-command";
 import { ThemeSwitcher } from "@/components/avatar/theme-switcher";
 import { useContinueWatching } from "@/lib/watch-progress";
@@ -25,7 +26,7 @@ import {
 } from "@/lib/avatar-data";
 
 type PlayState =
-  | { kind: "video"; src: string; title: string; caption?: string; meta: VideoMeta }
+  | { kind: "video"; src: string; title: string; caption?: string; captionOffset?: number; meta: VideoMeta }
   | { kind: "book"; trilogy: Trilogy; part: number };
 
 interface VideoMeta {
@@ -72,6 +73,7 @@ export default function Home() {
       src: ep.video,
       title: `${s.short} · ${b.sublabel} · Ep ${ep.n}: ${ep.title}`,
       caption: ep.caption,
+      captionOffset: ep.captionOffset,
       meta: {
         seriesShort: s.short,
         bookSublabel: b.sublabel,
@@ -104,6 +106,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <BackgroundElements />
       <LoadingScreen />
       {/* Floating controls top-right */}
       <div className="pointer-events-none fixed right-4 top-4 z-40 flex gap-2">
@@ -221,6 +224,7 @@ export default function Home() {
           src={play.src}
           title={play.title}
           caption={play.caption}
+          captionOffset={play.captionOffset}
           meta={play.meta}
           onClose={() => setPlay(null)}
         />

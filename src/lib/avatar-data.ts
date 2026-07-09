@@ -97,6 +97,7 @@ export interface Episode {
   title: string;
   video?: string; // direct mp4 URL from releases
   caption?: string; // SRT path
+  captionOffset?: number; // seconds to shift captions (for combined episodes)
 }
 
 export interface Book {
@@ -127,11 +128,13 @@ function atlaEpisodes(bookNum: number, titles: string[]): Episode[] {
     const ep = i + 1;
     // Book 2 episodes 12 & 13 are combined into one file: S2E12E13.mp4
     let file: string;
+    let captionOffset: number | undefined;
     if (bookNum === 2 && ep === 12) {
       file = "S2E12E13.mp4";
     } else if (bookNum === 2 && ep === 13) {
-      // Episode 13 shares the combined file — point to same file
+      // Episode 13 shares the combined file — captions need offset by S2E12's duration
       file = "S2E12E13.mp4";
+      captionOffset = 1424; // S2E12 ends at ~23:43
     } else {
       file = `S${bookNum}E${ep}.mp4`;
     }
@@ -140,6 +143,7 @@ function atlaEpisodes(bookNum: number, titles: string[]): Episode[] {
       title,
       video: videoUrl(`atla-season${bookNum}`, file),
       caption: `/captions/atla-season${bookNum}/S${bookNum}E${ep}.srt`,
+      captionOffset,
     };
   });
 }

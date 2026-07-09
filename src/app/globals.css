@@ -357,3 +357,18 @@
 @media (prefers-reduced-motion: reduce) {
   .aa-slide-up, .aa-fade-in, .aa-spin-slow, .aa-pulse-glow { animation: none; }
 }
+
+/* Hide native video download button + extra menu items in Chrome/Safari/Edge */
+video::-internal-media-controls-download-button { display: none !important; }
+video::-webkit-media-controls-enclosure { overflow: hidden; }
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px);
+  margin-left: -15px;
+}
+/* Hide the overflow/three-dots menu in modern browsers */
+video::-webkit-media-controls-overlay-enclosure { display: none !important; }
+video::-media-controls-overflow-button { display: none !important; }
+
+/* Prevent text selection on the video area to discourage dragging */
+video { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
+

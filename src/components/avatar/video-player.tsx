@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { X, Loader2 } from "lucide-react";
+import { X, Loader2, Plus, Minus } from "lucide-react";
 import { saveProgress, getProgress } from "@/lib/watch-progress";
 import { useCaptions, getActiveCue } from "@/lib/captions";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,8 @@ interface VideoPlayerProps {
   src: string;
   title: string;
   caption?: string;
+  /** If true, this is the second half of a combined episode — offset captions. */
+  captionOffset?: number; // seconds to add to SRT timestamps
   meta?: {
     seriesShort: string;
     bookSublabel: string;
@@ -25,6 +27,7 @@ export function VideoPlayer({
   src,
   title,
   caption,
+  captionOffset = 0,
   meta,
   onClose,
 }: VideoPlayerProps) {
@@ -33,12 +36,14 @@ export function VideoPlayer({
   const [error, setError] = React.useState<string | null>(null);
   const [ccOn, setCcOn] = React.useState(true);
   const [currentTime, setCurrentTime] = React.useState(0);
-  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [offset, setOffset] = React.useState(captionOffset); // user-adjustable
   const saveTimerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
   const rafRef = React.useRef<number | null>(null);
 
   const { cues, loaded: captionsLoaded } = useCaptions(caption);
-  const activeCue = caption && ccOn ? getActiveCue(cues, currentTime) : null;
+  // Apply offset to the lookup time
+  const lookupTime = currentTime - offset;
+  const activeCue = caption && ccOn ? getActiveCue(cues, lookupTime) : null;
 
   // Restore saved position on load
   React.useEffect(() => {
@@ -86,20 +91,15 @@ export function VideoPlayer({
     };
   }, [src, title, meta]);
 
-  // Use requestAnimationFrame for smooth, accurate caption sync while playing
+  // RAF loop for smooth caption sync
   React.useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-
     const tick = () => {
-      // Always update so captions sync even when paused/seeking
       setCurrentTime(v.currentTime);
       rafRef.current = requestAnimationFrame(tick);
     };
-
-    // Start RAF loop
     rafRef.current = requestAnimationFrame(tick);
-
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
@@ -118,6 +118,11 @@ export function VideoPlayer({
   const toggleCc = () => setCcOn((v) => !v);
   const hasCaptions = caption && captionsLoaded && cues.length > 0;
 
+  // Disable right-click context menu on the video
+  const onContextMenu = (e: React.MouseEvent) => e.preventDefault();
+
+  const adjustOffset = (delta: number) => setOffset((o) => o + delta);
+
   return (
     <div
       className="fixed inset-0 z-[80] flex items-center justify-center bg-black/92 p-2 backdrop-blur sm:p-6"
@@ -127,12 +132,36 @@ export function VideoPlayer({
       aria-label={`Playing ${title}`}
     >
       <div className="aa-slide-up relative flex w-full max-w-5xl flex-col overflow-hidden rounded-lg border border-border bg-black shadow-2xl">
-        {/* Top bar — minimal: just title + CC toggle + close */}
+        {/* Top bar — CC toggle + offset controls + close */}
         <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-card px-4 py-2.5">
           <span className="font-serif truncate text-sm font-semibold text-foreground">
             {title}
           </span>
           <div className="flex items-center gap-1.5">
+            {/* Caption sync controls — only when captions available */}
+            {hasCaptions && ccOn && (
+              <div className="mr-1 flex items-center gap-0.5 rounded-full border border-border/60 bg-background/40 py-0.5 pl-1 pr-2">
+                <button
+                  onClick={() => adjustOffset(-0.5)}
+                  className="press-aa flex h-6 w-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  aria-label="Captions earlier (-0.5s)"
+                  title="Captions earlier"
+                >
+                  <Minus className="h-3 w-3" />
+                </button>
+                <span className="font-mono text-[0.6rem] tabular-nums text-muted-foreground" style={{ minWidth: "3ch", textAlign: "center" }}>
+                  {offset >= 0 ? "+" : ""}{offset.toFixed(1)}s
+                </span>
+                <button
+                  onClick={() => adjustOffset(0.5)}
+                  className="press-aa flex h-6 w-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  aria-label="Captions later (+0.5s)"
+                  title="Captions later"
+                >
+                  <Plus className="h-3 w-3" />
+                </button>
+              </div>
+            )}
             <button
               onClick={toggleCc}
               disabled={!hasCaptions}
@@ -160,7 +189,10 @@ export function VideoPlayer({
         </div>
 
         {/* Video with caption overlay */}
-        <div className="relative aspect-video bg-black">
+        <div
+          className="relative aspect-video bg-black"
+          onContextMenu={onContextMenu}
+        >
           {loading && !error && (
             <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 text-muted-foreground">
               <Loader2 className="h-8 w-8 animate-spin text-gold" />
@@ -180,18 +212,20 @@ export function VideoPlayer({
             controls
             autoPlay
             playsInline
+            controlsList="nodownload noremoteplayback noplaybackrate"
+            disablePictureInPicture
+            onContextMenu={onContextMenu}
             className="h-full w-full"
             onLoadStart={() => setLoading(true)}
             onCanPlay={() => setLoading(false)}
             onWaiting={() => setLoading(true)}
-            onPlaying={() => { setLoading(false); setIsPlaying(true); }}
-            onPause={() => setIsPlaying(false)}
+            onPlaying={() => setLoading(false)}
             onError={() => {
               setLoading(false);
               setError("Unable to stream this video. It may still be processing on GitHub, or your connection is slow.");
             }}
           />
-          {/* Caption overlay — sits above the video, below the native controls */}
+          {/* Caption overlay */}
           {activeCue && (
             <div className="pointer-events-none absolute bottom-16 left-1/2 z-20 w-[85%] max-w-2xl -translate-x-1/2 text-center">
               <span
@@ -200,6 +234,8 @@ export function VideoPlayer({
                   __html: activeCue.text
                     .replace(/<i>/g, "<em>")
                     .replace(/<\/i>/g, "</em>")
+                    .replace(/<font[^>]*>/g, "")
+                    .replace(/<\/font>/g, "")
                     .replace(/\n/g, "<br/>"),
                 }}
               />
