@@ -140,11 +140,11 @@ export function Hero() {
           className="aa-float-up mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.2em] text-muted-foreground"
           style={{ animationDelay: "240ms" }}
         >
-          <span>ATLA · 61 Episodes</span>
+          <span>113+ Episodes</span>
           <span className="h-1 w-1 rounded-full bg-primary/60" />
-          <span>Korra · 52 Episodes</span>
+          <span>18 Graphic Novels</span>
           <span className="h-1 w-1 rounded-full bg-primary/60" />
-          <span>113+ Entries</span>
+          <span>15 Characters</span>
           <span className="h-1 w-1 rounded-full bg-primary/60" />
           <span>10,000+ Years of Lore</span>
         </div>

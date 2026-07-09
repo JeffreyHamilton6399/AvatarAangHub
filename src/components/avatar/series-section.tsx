@@ -67,28 +67,28 @@ function SeriesCard({ s, onSelect }: { s: Series; onSelect: (s: Series) => void 
             <Calendar className="h-3.5 w-3.5" /> {s.years}
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <Layers className="h-3.5 w-3.5" /> {s.seasons.length}{" "}
-            {s.episodes > 1 ? "Books / Seasons" : "Release"}
+            <Layers className="h-3.5 w-3.5" /> {s.books.length}{" "}
+            {s.books.length > 1 ? "Books" : "Release"}
           </span>
           {s.episodes > 1 && (
             <span className="inline-flex items-center gap-1.5">
-              <Film className="h-3.5 w-3.5" /> {s.episodes} episodes
+              <Film className="h-3.5 w-3.5" /> {s.books.reduce((n, b) => n + b.episodes.length, 0)} episodes
             </span>
           )}
         </div>
 
         <div className="flex w-full flex-wrap gap-1.5 pt-1">
-          {s.seasons.slice(0, 3).map((season) => (
+          {s.books.slice(0, 3).map((book) => (
             <span
-              key={season}
+              key={book.tag}
               className="rounded-md bg-secondary/70 px-2 py-1 text-[11px] text-secondary-foreground"
             >
-              {season}
+              {book.label}: {book.sublabel}
             </span>
           ))}
-          {s.seasons.length > 3 && (
+          {s.books.length > 3 && (
             <span className="rounded-md bg-secondary/70 px-2 py-1 text-[11px] text-secondary-foreground">
-              +{s.seasons.length - 3}
+              +{s.books.length - 3}
             </span>
           )}
         </div>
@@ -175,11 +175,11 @@ function SeriesDetail({
               <Calendar className="h-4 w-4" /> {s.years}
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <Layers className="h-4 w-4" /> {s.seasons.length} books
+              <Layers className="h-4 w-4" /> {s.books.length} books
             </span>
             {s.episodes > 1 && (
               <span className="inline-flex items-center gap-1.5">
-                <Film className="h-4 w-4" /> {s.episodes} episodes
+                <Film className="h-4 w-4" /> {s.books.reduce((n, b) => n + b.episodes.length, 0)} episodes
               </span>
             )}
           </div>
@@ -193,9 +193,9 @@ function SeriesDetail({
               Books & Seasons
             </h4>
             <div className="flex flex-col gap-2">
-              {s.seasons.map((season, i) => (
+              {s.books.map((book, i) => (
                 <div
-                  key={season}
+                  key={book.tag}
                   className="flex items-center gap-3 rounded-xl border border-border/50 bg-background/40 px-4 py-3"
                 >
                   <span
@@ -207,7 +207,7 @@ function SeriesDetail({
                   >
                     {i + 1}
                   </span>
-                  <span className="text-sm text-foreground">{season}</span>
+                  <span className="text-sm text-foreground">{book.label}: {book.sublabel} · {book.episodes.length} episodes</span>
                 </div>
               ))}
             </div>

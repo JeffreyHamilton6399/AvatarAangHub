@@ -63,3 +63,4 @@ server.log
 /local-*
 /prompt
 /test
+tool-results/

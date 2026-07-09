@@ -16,11 +16,13 @@ interface NavLink {
 
 const LINKS: NavLink[] = [
   { id: "series", label: "Series", element: "air" },
-  { id: "characters", label: "Characters", element: "water" },
-  { id: "elements", label: "Elements", element: "earth" },
-  { id: "timeline", label: "Timeline", element: "fire" },
-  { id: "features", label: "Features", element: "spirit" },
-  { id: "about", label: "About", element: "none" },
+  { id: "episodes", label: "Episodes", element: "water" },
+  { id: "characters", label: "Characters", element: "earth" },
+  { id: "elements", label: "Elements", element: "fire" },
+  { id: "books", label: "Comics", element: "spirit" },
+  { id: "timeline", label: "Timeline", element: "none" },
+  { id: "games", label: "Games", element: "air" },
+  { id: "about", label: "About", element: "water" },
 ];
 
 export function Navbar({ onSearch }: { onSearch: () => void }) {

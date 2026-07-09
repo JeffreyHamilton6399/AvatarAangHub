@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AvatarArchive — The Avatar Universe, Fan-Made",
   description:
-    "A fan-built archive of the entire Avatar universe — Avatar: The Last Airbender, The Legend of Korra, the films, characters, bending arts, and the full in-universe chronology.",
+    "A fan-built archive of the entire Avatar universe — Avatar: The Last Airbender, The Legend of Korra, the films, characters, bending arts, graphic novels, and the full in-universe chronology.",
   keywords: [
     "Avatar",
     "The Last Airbender",
@@ -27,8 +27,10 @@ export const metadata: Metadata = {
     "fan site",
     "bending",
     "four nations",
+    "graphic novels",
   ],
   authors: [{ name: "Jeffrey Creates" }],
+  manifest: "/manifest.json",
   openGraph: {
     title: "AvatarArchive — The Avatar Universe, Fan-Made",
     description:

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Search, Film, Users, Sparkles, Clock, CornerDownLeft } from "lucide-react";
+import { Search, Film, Users, Sparkles, Clock, CornerDownLeft, BookOpen, Gamepad2, ShoppingBag } from "lucide-react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -14,6 +14,9 @@ import {
   CHARACTERS,
   SERIES,
   TIMELINE,
+  NOVELS,
+  GAMES,
+  STORES,
   ELEMENT_COLOR,
   type ElementId,
 } from "@/lib/avatar-data";
@@ -37,6 +40,18 @@ const ALL: Result[] = [
     group: "Series",
     target: "series",
   })),
+  ...SERIES.flatMap((s) =>
+    s.books.flatMap((b) =>
+      b.episodes.map((ep, i) => ({
+        id: `ep-${b.tag}-${i}`,
+        label: ep,
+        hint: `${s.short} · ${b.label}: ${b.sublabel} · Ep ${i + 1}`,
+        element: b.element,
+        group: "Episodes",
+        target: "episodes",
+      }))
+    )
+  ),
   ...CHARACTERS.map((c) => ({
     id: `char-${c.id}`,
     label: c.name,
@@ -44,6 +59,30 @@ const ALL: Result[] = [
     element: c.element,
     group: "Characters",
     target: "characters",
+  })),
+  ...NOVELS.map((n) => ({
+    id: `novel-${n.file}`,
+    label: n.title,
+    hint: `${n.trilogy} · Part ${n.part}`,
+    element: "spirit" as ElementId,
+    group: "Comics",
+    target: "books",
+  })),
+  ...GAMES.map((g) => ({
+    id: `game-${g.title}`,
+    label: g.title,
+    hint: g.platform,
+    element: g.element,
+    group: "Games",
+    target: "games",
+  })),
+  ...STORES.map((st, i) => ({
+    id: `store-${i}`,
+    label: st.name,
+    hint: `${st.label} · ${st.tag}`,
+    element: st.element,
+    group: "Stores",
+    target: "games",
   })),
   ...TIMELINE.map((t, i) => ({
     id: `tl-${i}`,
@@ -89,9 +128,13 @@ const ALL: Result[] = [
 
 const GROUP_ICON: Record<string, React.ElementType> = {
   Series: Film,
+  Episodes: Film,
   Characters: Users,
   Timeline: Clock,
   Elements: Sparkles,
+  Comics: BookOpen,
+  Games: Gamepad2,
+  Stores: ShoppingBag,
 };
 
 export function SearchCommand({
@@ -112,7 +155,7 @@ export function SearchCommand({
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder="Search series, characters, elements, timeline…" />
+      <CommandInput placeholder="Search episodes, characters, comics, games…" />
       <CommandList className="aa-scroll">
         <CommandEmpty>No results found.</CommandEmpty>
         {Object.entries(
@@ -131,7 +174,7 @@ export function SearchCommand({
                 </span>
               }
             >
-              {items.map((r) => {
+              {items.slice(0, 40).map((r) => {
                 const color = ELEMENT_COLOR[r.element];
                 return (
                   <CommandItem

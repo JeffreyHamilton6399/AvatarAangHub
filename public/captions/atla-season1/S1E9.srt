@@ -1,0 +1,1079 @@
+1
+00:00:00,649 --> 00:00:03,021
+<i>Water.</i>
+
+2
+00:00:03,022 --> 00:00:04,895
+<i>Earth.</i>
+
+3
+00:00:04,896 --> 00:00:07,004
+<i>Fire.</i>
+
+4
+00:00:07,005 --> 00:00:08,296
+<i>Air.</i>
+
+5
+00:00:09,362 --> 00:00:13,496
+<i>Long ago, the four nations lived together in harmony.</i>
+
+6
+00:00:13,497 --> 00:00:17,575
+<i>Then, everything changed when the Fire Nation attacked.</i>
+
+7
+00:00:17,776 --> 00:00:21,888
+<i>Only the Avatar, master of all four elements, could stop them.</i>
+
+8
+00:00:21,889 --> 00:00:25,048
+<i>But when the world needed him most, he vanished.</i>
+
+9
+00:00:25,389 --> 00:00:29,210
+<i>A hundred years passed, and my brother and I discovered the new Avatar...</i>
+
+10
+00:00:29,211 --> 00:00:31,050
+<i>...an airbender named Aang.</i>
+
+11
+00:00:31,151 --> 00:00:33,256
+<i>And although his airbending skills are great.</i>
+
+12
+00:00:33,257 --> 00:00:36,989
+<i>He has a lot to learn before he's ready to save anyone.</i>
+
+13
+00:00:36,990 --> 00:00:40,612
+<i>But I believe Aang can save the world.</i>
+
+14
+00:00:47,333 --> 00:00:50,398
+Book One: Water
+Chapter Nine: The Waterbending Scroll
+
+15
+00:01:01,926 --> 00:01:06,838
+Would you sit down? If we hit a bump you'll go flying off! What's bugging you anyway?
+
+16
+00:01:06,938 --> 00:01:08,617
+It's what Avatar Roku said.
+
+17
+00:01:08,710 --> 00:01:11,986
+I'm supposed to master all four elements before that comet arrives.
+
+18
+00:01:12,052 --> 00:01:12,906
+Well, let's see,...
+
+19
+00:01:12,976 --> 00:01:16,773
+...you've pretty much mastered airbending and that only took you 112 years...
+
+20
+00:01:16,870 --> 00:01:19,961
+...I'm sure you can master three more elements by next summer.
+
+21
+00:01:20,059 --> 00:01:24,021
+I haven't even started waterbending and we're still weeks away from the North Pole!
+
+22
+00:01:24,116 --> 00:01:25,679
+What am I gonna do!?
+
+23
+00:01:25,758 --> 00:01:28,412
+Calm down. It's going to be okay.
+
+24
+00:01:28,511 --> 00:01:31,675
+If you want, I can try and teach you some of the stuff I know.
+
+25
+00:01:31,772 --> 00:01:33,508
+You'd do that?
+
+26
+00:01:33,616 --> 00:01:36,682
+We'll need to find a good source of water first.
+
+27
+00:01:36,771 --> 00:01:41,736
+Maybe we can find a puddle for you to splash in.
+
+28
+00:01:41,823 --> 00:01:44,529
+Nice puddle.
+
+29
+00:01:53,506 --> 00:01:55,922
+Yehhh! Don't start without me, boy!
+
+30
+00:01:56,028 --> 00:01:57,687
+Remember the reason we're here.
+
+31
+00:01:57,784 --> 00:02:00,708
+Oh right, time to practice waterbending.
+
+32
+00:02:00,799 --> 00:02:02,962
+Great. So what am I supposed to do?
+
+33
+00:02:03,072 --> 00:02:07,114
+You could... clean the gunk out of Appa's toes?
+
+34
+00:02:07,227 --> 00:02:09,327
+So, while you guys are playing in the water,...
+
+35
+00:02:09,426 --> 00:02:13,019
+...I'm supposed to be hard at work picking the mud out of a giant bison's feet?
+
+36
+00:02:13,118 --> 00:02:15,721
+Mud and bugs!
+
+37
+00:02:16,251 --> 00:02:17,763
+Okay.
+
+38
+00:02:28,961 --> 00:02:32,721
+Someone's changing our course!
+
+39
+00:02:32,911 --> 00:02:36,107
+What's the meaning of this mutiny? No one told you to change course!
+
+40
+00:02:36,204 --> 00:02:43,346
+Actually, someone did. I assure you it is a matter of utmost importance, Prince Zuko.
+
+41
+00:02:43,450 --> 00:02:45,270
+Is it something to do with the Avatar?
+
+42
+00:02:45,384 --> 00:02:51,747
+Even more urgent. It seems... I've lost my lotus tile.
+
+43
+00:02:51,866 --> 00:02:53,002
+Lotus tile?
+
+44
+00:02:53,097 --> 00:02:58,278
+For my Pai Sho game. Most people think the lotus tile insignificant,...
+
+45
+00:02:58,383 --> 00:03:03,685
+...but it is essential for the unusual strategy that I employ.
+
+46
+00:03:03,798 --> 00:03:06,742
+You've changed our course for a stupid lotus tile?
+
+47
+00:03:06,835 --> 00:03:10,906
+See, you, like most people, underestimate its value.
+
+48
+00:03:10,999 --> 00:03:14,590
+Just give me ten minutes to check the merchants at this port of call.
+
+49
+00:03:14,674 --> 00:03:23,199
+Hopefully they'll have the lotus tile in stock and I can get on with my life!
+
+50
+00:03:23,297 --> 00:03:29,434
+I'm lucky to have such an understanding nephew.
+
+51
+00:03:29,637 --> 00:03:34,567
+Yeh, don't get too happy. You gotta do me next.
+
+52
+00:03:34,670 --> 00:03:38,440
+This is a pretty basic move, but it still took me months to perfect,...
+
+53
+00:03:38,534 --> 00:03:42,323
+...so don't be frustrated if you don't get it right away.
+
+54
+00:03:42,418 --> 00:03:45,185
+Just push and pull the water like this...
+
+55
+00:03:45,279 --> 00:03:48,583
+The key is getting the wrist movement right.
+
+56
+00:03:48,671 --> 00:03:51,811
+Like this?
+
+57
+00:03:52,331 --> 00:03:56,394
+That's almost right, if you keep practicing, I'm sure eventually...
+
+58
+00:03:56,471 --> 00:03:58,191
+Hey, I'm bending it already!
+
+59
+00:03:58,290 --> 00:04:01,177
+Wow, I can't believe you got that so quickly.
+
+60
+00:04:01,255 --> 00:04:03,434
+It took me two months to learn that move.
+
+61
+00:04:03,539 --> 00:04:08,283
+Well, you had to figure it out on your own. I'm lucky enough to have a great teacher.
+
+62
+00:04:08,369 --> 00:04:09,529
+Thanks.
+
+63
+00:04:09,620 --> 00:04:10,820
+So, what's next?
+
+64
+00:04:10,914 --> 00:04:17,455
+This is a more difficult move. I call it "streaming the water."
+
+65
+00:04:17,825 --> 00:04:23,706
+It's harder than it looks so don't be disappointed if...
+
+66
+00:04:31,078 --> 00:04:34,967
+Nice work, though the over-the-head flare was unnecessary.
+
+67
+00:04:35,070 --> 00:04:39,000
+Sorry. Well, don't stop now, keep'em coming!
+
+68
+00:04:39,117 --> 00:04:42,248
+Well, I kinda know this one other move, but it's pretty hard.
+
+69
+00:04:42,347 --> 00:04:50,974
+I haven't even totally figured it out yet. The idea is to create a big, powerful wave...
+
+70
+00:04:53,415 --> 00:04:57,179
+So, like this?
+
+71
+00:05:00,143 --> 00:05:02,481
+Aang!
+
+72
+00:05:09,061 --> 00:05:12,105
+Looks like I got the hang of that move! What else ya got?
+
+73
+00:05:12,217 --> 00:05:14,174
+That's enough practicing for today.
+
+74
+00:05:14,283 --> 00:05:18,132
+Yeh, I'll say! You just practiced our supplies down the river!
+
+75
+00:05:18,229 --> 00:05:23,035
+Uhhh... sorry. I'm sure we can find somewhere to replace all this stuff.
+
+76
+00:05:23,135 --> 00:05:28,773
+Ugh, it was hard enough when you were just an airbender.
+
+77
+00:05:47,252 --> 00:05:51,050
+We've got exactly three copper pieces left from the money that King Bumi gave us.
+
+78
+00:05:51,127 --> 00:05:52,438
+Let's spend it wisely.
+
+79
+00:05:52,534 --> 00:05:59,121
+Uhh, make that two copper pieces, Sokka. I couldn't say no to this whistle!
+
+80
+00:06:00,659 --> 00:06:03,863
+It doesn't even work.
+
+81
+00:06:04,511 --> 00:06:07,667
+See, even Momo thinks it's a piece of junk.
+
+82
+00:06:07,777 --> 00:06:13,673
+No offense, Aang, but I'll hold the money from now on.
+
+83
+00:06:15,938 --> 00:06:19,595
+Earth Nation! Fire Nation! Water Nation!
+
+84
+00:06:19,709 --> 00:06:23,947
+So long as bargains are your inclination, you're welcome here!
+
+85
+00:06:24,056 --> 00:06:27,190
+Don't be shy, come one by!
+
+86
+00:06:27,288 --> 00:06:32,800
+Oh! You there! I can see by your clothing that you're world traveling types.
+
+87
+00:06:32,900 --> 00:06:36,604
+Perhaps I can interest you in some exotic curios?
+
+88
+00:06:36,706 --> 00:06:40,943
+Sure! What are curios?
+
+89
+00:06:41,299 --> 00:06:45,969
+I'm not entirely sure, but we got 'em!
+
+90
+00:07:00,285 --> 00:07:04,663
+I've never seen such a fine specimen of lemur.
+
+91
+00:07:04,744 --> 00:07:12,376
+That beast would fetch me a hefty sum if you'd be, interested in bartering.
+
+92
+00:07:12,553 --> 00:07:14,983
+Momo's not for sale.
+
+93
+00:07:23,383 --> 00:07:29,190
+Look at this, Aang! It's a waterbending scroll. Check out these crazy moves!
+
+94
+00:07:29,289 --> 00:07:32,264
+Where did you get a waterbending scroll?
+
+95
+00:07:32,365 --> 00:07:40,551
+Let's just say I got it up north at a most reasonable price. Free!
+
+96
+00:07:41,034 --> 00:07:47,065
+Waaait a minute "sea-loving traders" with suspiciously acquired merchandise...
+
+97
+00:07:47,168 --> 00:07:51,776
+...and pet reptile birds... You guys are pirates!
+
+98
+00:07:51,863 --> 00:07:56,645
+We prefer to think of ourselves as high risk traders.
+
+99
+00:07:56,726 --> 00:07:59,661
+So, how much for the, uh, "traded" scroll?
+
+100
+00:07:59,751 --> 00:08:03,296
+I've already got a buyer, a nobleman in the Earth Kingdom.
+
+101
+00:08:03,379 --> 00:08:08,821
+Unless, of course, you kids have 200 gold pieces on ya right now?
+
+102
+00:08:08,907 --> 00:08:14,552
+I know how to deal with these guys, Katara, pirates love to haggle.
+
+103
+00:08:14,631 --> 00:08:22,543
+Watch and learn. What say to the price of... one copper piece!
+
+104
+00:08:23,736 --> 00:08:29,244
+The price is 200 gold pieces. I don't haggle on items this rare.
+
+105
+00:08:29,330 --> 00:08:32,163
+Okay... two copper pieces!
+
+106
+00:08:32,261 --> 00:08:34,999
+It's not as amusing the second time, boy.
+
+107
+00:08:35,100 --> 00:08:38,801
+Aang, can we get out of here, I feel like we're getting weird looks.
+
+108
+00:08:38,892 --> 00:08:42,128
+Aye, we be castin' off now!
+
+109
+00:08:42,227 --> 00:08:43,917
+What was that all about, Katara.
+
+110
+00:08:44,016 --> 00:08:47,273
+Yeh, I was just starting to browse through their boomerang collection.
+
+111
+00:08:47,367 --> 00:08:50,083
+I'll just feel a lot better once we get away from here.
+
+112
+00:08:50,175 --> 00:08:52,659
+Hey you, get back here!
+
+113
+00:08:52,749 --> 00:09:00,928
+Well, well, look who's come to their senses. Told ya the haggling would pay off.
+
+114
+00:09:07,596 --> 00:09:09,026
+There they are!
+
+115
+00:09:09,031 --> 00:09:10,063
+Get 'em!
+
+116
+00:09:10,142 --> 00:09:13,982
+Nobody's goin' nowhere!
+
+117
+00:09:15,132 --> 00:09:18,436
+I... I don't think these pirates are here to trade with us!
+
+118
+00:09:18,529 --> 00:09:21,140
+Get back here!
+
+119
+00:09:23,054 --> 00:09:26,743
+This way! Let's cut 'em off!
+
+120
+00:09:46,724 --> 00:09:52,109
+My cabbages! This place is worse than Omashu!
+
+121
+00:10:01,457 --> 00:10:05,898
+I hope that lemur of yours has nine lives!
+
+122
+00:10:06,607 --> 00:10:11,309
+Now, who gets to take the steel of my blade first?
+
+123
+00:10:11,415 --> 00:10:13,088
+No thanks!
+
+124
+00:10:16,374 --> 00:10:17,498
+Hold on tight!
+
+125
+00:10:17,585 --> 00:10:21,231
+Aang, I thought we were running away from the pirates!
+
+126
+00:10:21,291 --> 00:10:23,859
+Just hang on!
+
+127
+00:10:30,373 --> 00:10:33,729
+I used to kinda look up to pirates, but those guys are terrible.
+
+128
+00:10:33,817 --> 00:10:37,224
+I know, that's why I took... this!
+
+129
+00:10:37,315 --> 00:10:38,277
+No way.
+
+130
+00:10:38,368 --> 00:10:39,644
+Isn't it great?
+
+131
+00:10:39,741 --> 00:10:43,740
+No wonder they were trying to hack us up. You stole their waterbending scroll.
+
+132
+00:10:43,817 --> 00:10:48,351
+I prefer to think of it as "high-risk trading."
+
+133
+00:10:48,413 --> 00:10:49,673
+Good one, Katara.
+
+134
+00:10:49,754 --> 00:10:54,510
+Sokka, where do you think they got it? They stole it from a waterbender.
+
+135
+00:10:54,594 --> 00:10:55,713
+It doesn't matter.
+
+136
+00:10:55,790 --> 00:11:00,404
+You put all of our lives in danger just so you could learn some stupid, fancy splashes!
+
+137
+00:11:00,473 --> 00:11:03,187
+These are real waterbending forms.
+
+138
+00:11:03,264 --> 00:11:07,895
+You know how crucial it is for Aang to learn waterbending.
+
+139
+00:11:07,978 --> 00:11:09,094
+Whatever.
+
+140
+00:11:09,175 --> 00:11:15,596
+Well, what's done is done. We have it. We might as well learn from it.
+
+141
+00:11:21,762 --> 00:11:28,551
+I've checked all the shops on this pier. Not a lotus tile in the entire marketplace.
+
+142
+00:11:28,642 --> 00:11:32,136
+It's good to know this trip was a complete waste of time for everyone!
+
+143
+00:11:32,239 --> 00:11:33,969
+Quite the contrary.
+
+144
+00:11:34,071 --> 00:11:39,207
+I always say the only thing better than finding something you were looking for,...
+
+145
+00:11:39,298 --> 00:11:45,515
+...is finding something you weren't looking for at a great bargain!
+
+146
+00:11:45,600 --> 00:11:47,431
+You bought a sumki horn?
+
+147
+00:11:47,519 --> 00:11:53,505
+For music night on the ship. Now, if we only had some woodwinds.
+
+148
+00:11:53,979 --> 00:11:56,842
+This place looks promising!
+
+149
+00:11:56,939 --> 00:12:02,086
+Ooo! That is handsome! Wouldn't it look magnificent in the galley?
+
+150
+00:12:02,175 --> 00:12:06,244
+We lost the Water Tribe girl and the little bald monk she was traveling with.
+
+151
+00:12:06,336 --> 00:12:10,918
+This monk, did he have an arrow on his head?
+
+152
+00:12:11,010 --> 00:12:13,735
+I just want to try this one move first and then it's all yours.
+
+153
+00:12:13,944 --> 00:12:17,465
+Here, hold on and open for me.
+
+154
+00:12:18,827 --> 00:12:23,853
+"The single water whip"... looks doable.
+
+155
+00:12:29,127 --> 00:12:30,707
+What's so funny?
+
+156
+00:12:30,809 --> 00:12:32,602
+I'm sorry, but you deserve that.
+
+157
+00:12:32,682 --> 00:12:35,640
+You've been duped. She's only interested in teaching herself.
+
+158
+00:12:35,719 --> 00:12:40,852
+Aang will get his turn once I figure out the water whip!
+
+159
+00:12:43,770 --> 00:12:45,867
+Why can't I get this stupid move!
+
+160
+00:12:45,942 --> 00:12:48,167
+You'll get it.
+
+161
+00:12:49,496 --> 00:12:52,553
+You just gotta shift your weight through the stances...
+
+162
+00:12:52,634 --> 00:12:54,665
+There. See, the key to bending is...
+
+163
+00:12:54,751 --> 00:12:56,892
+Will you please shut your air hole!
+
+164
+00:12:56,960 --> 00:13:00,483
+Believe it or not, your infinite wisdom gets a little old sometimes.
+
+165
+00:13:00,570 --> 00:13:06,445
+Why don't we just throw the scroll away since you're so naturally gifted!
+
+166
+00:13:06,515 --> 00:13:08,026
+What?
+
+167
+00:13:10,484 --> 00:13:16,524
+Omigosh, Aang, I'm so sorry. I don't know what came over me.
+
+168
+00:13:16,615 --> 00:13:21,338
+But, you know what, it won't happen again. Here, this is yours.
+
+169
+00:13:21,420 --> 00:13:23,804
+I don't want to have anything to do with it anymore.
+
+170
+00:13:23,910 --> 00:13:25,201
+It's okay, Katara.
+
+171
+00:13:25,280 --> 00:13:27,939
+What about Momo? He's the real victim here.
+
+172
+00:13:28,036 --> 00:13:29,371
+I'm sorry Momo.
+
+173
+00:13:29,486 --> 00:13:31,483
+And... what about me? There was that time you...
+
+174
+00:13:31,562 --> 00:13:35,281
+No more apologies!
+
+175
+00:13:44,431 --> 00:13:46,540
+Shouldn't we stop to search the woods?
+
+176
+00:13:46,641 --> 00:13:50,885
+We don't need to stop. They stole a waterbending scroll, right?
+
+177
+00:13:50,956 --> 00:13:54,878
+Then they'll be on the water.
+
+178
+00:14:13,176 --> 00:14:18,549
+Shh! Momo, go back to sleep.
+
+179
+00:14:31,851 --> 00:14:37,359
+Shoot! Come on water, work with me here!
+
+180
+00:14:39,745 --> 00:14:46,363
+Okay, Katara, shift your weight through the stances... ugh!
+
+181
+00:14:51,624 --> 00:14:54,711
+No, let go of me!
+
+182
+00:14:55,586 --> 00:14:59,036
+I'll save you from the pirates.
+
+183
+00:15:05,050 --> 00:15:07,786
+Tell me where he is and I won't hurt you or your brother.
+
+184
+00:15:07,858 --> 00:15:10,824
+Go jump in the river!
+
+185
+00:15:10,962 --> 00:15:15,229
+Try to understand, I need to capture to restore something I've lost.
+
+186
+00:15:15,317 --> 00:15:21,807
+My honor. Perhaps in exchange I can restore something you've lost.
+
+187
+00:15:22,007 --> 00:15:25,791
+My mother's necklace! How did you get that?
+
+188
+00:15:25,883 --> 00:15:30,564
+I didn't steal it, if that's what you're wondering. Tell me where he is.
+
+189
+00:15:30,660 --> 00:15:31,401
+No!
+
+190
+00:15:31,505 --> 00:15:36,416
+Enough of this necklace garbage. You promised the scroll!
+
+191
+00:15:36,516 --> 00:15:39,945
+I wonder how much money this is worth?
+
+192
+00:15:40,044 --> 00:15:42,237
+A lot, apparently.
+
+193
+00:15:42,313 --> 00:15:47,594
+Now you help me find what I want, you'll get this back and everyone goes home happy.
+
+194
+00:15:47,679 --> 00:15:49,865
+Search the woods for the boy and meet back here.
+
+195
+00:15:49,938 --> 00:15:52,221
+Fine.
+
+196
+00:15:56,302 --> 00:16:00,731
+Huh? Where did she go? I don't believe it.
+
+197
+00:16:00,806 --> 00:16:01,731
+What's wrong?
+
+198
+00:16:01,826 --> 00:16:04,526
+She took the scroll! She's obsessed with that thing.
+
+199
+00:16:04,610 --> 00:16:09,768
+It's just a matter of time before she gets us all in deep...
+
+200
+00:16:21,200 --> 00:16:22,666
+I got him, come on!
+
+201
+00:16:22,766 --> 00:16:28,033
+Oh, what? I'm not good enough to kidnap?
+
+202
+00:16:30,788 --> 00:16:32,849
+Nice work.
+
+203
+00:16:38,002 --> 00:16:40,016
+Aang, this is all my fault.
+
+204
+00:16:40,094 --> 00:16:41,550
+No, Katara it isn't.
+
+205
+00:16:41,644 --> 00:16:44,246
+Yeh, it kind of is.
+
+206
+00:16:44,351 --> 00:16:45,864
+Give me the boy.
+
+207
+00:16:45,962 --> 00:16:48,406
+You give us the scroll.
+
+208
+00:16:48,490 --> 00:16:52,471
+You're really gonna hand over the Avatar for a stupid piece of parchment!?
+
+209
+00:16:52,554 --> 00:16:55,798
+Don't listen to him! He's trying to turn us against each other.
+
+210
+00:16:55,901 --> 00:16:58,426
+Your friend is the Avatar?
+
+211
+00:16:58,519 --> 00:17:03,190
+Sure is, and I'll bet he'll fetch a lot more on the black market then that fancy scroll.
+
+212
+00:17:03,296 --> 00:17:05,942
+Shut your mouth, you water tribe peasant!
+
+213
+00:17:06,045 --> 00:17:09,363
+Yeh, Sokka, you really should shut your mouth...
+
+214
+00:17:09,455 --> 00:17:11,987
+I'm just sayin', it's bad business sense.
+
+215
+00:17:12,097 --> 00:17:15,003
+Just imagine how much the Fire Lord would pay for the Avatar.
+
+216
+00:17:15,090 --> 00:17:17,518
+You guys would be set for life!
+
+217
+00:17:17,623 --> 00:17:22,690
+Keep the scroll! We can buy a hundred with the reward we will get for the kid.
+
+218
+00:17:22,798 --> 00:17:27,712
+You'll regret breaking a deal with me!
+
+219
+00:17:47,315 --> 00:17:52,101
+Thanks, Momo. I owe you a bushel of apples.
+
+220
+00:18:31,687 --> 00:18:34,066
+Aang, are you there?
+
+221
+00:18:34,147 --> 00:18:36,319
+I'm over here, follow my voice!
+
+222
+00:18:36,406 --> 00:18:38,093
+Where? I can't find you!
+
+223
+00:18:38,187 --> 00:18:40,771
+I'm right here!
+
+224
+00:18:43,886 --> 00:18:47,975
+Uhh, never mind! I'll find you!
+
+225
+00:18:48,035 --> 00:18:50,569
+Run!
+
+226
+00:18:51,244 --> 00:18:52,962
+Katara! You're okay!
+
+227
+00:18:53,053 --> 00:18:58,063
+Help me get this boat back in the water so we can get out of here!
+
+228
+00:18:59,985 --> 00:19:02,475
+We need a team of rhinos to budge this ship.
+
+229
+00:19:02,592 --> 00:19:07,471
+A team of rhinos... or two waterbenders?
+
+230
+00:19:16,830 --> 00:19:19,459
+Everybody in!
+
+231
+00:19:21,165 --> 00:19:26,016
+Are you so busy fighting you cannot see your own ship has set sail?
+
+232
+00:19:26,106 --> 00:19:28,327
+We have no time for your proverbs, Uncle!
+
+233
+00:19:28,393 --> 00:19:31,203
+It's no proverb.
+
+234
+00:19:31,268 --> 00:19:34,643
+Bleeding hog-monkeys!
+
+235
+00:19:39,618 --> 00:19:41,986
+Hey! That's my boat!
+
+236
+00:19:42,082 --> 00:19:44,392
+Maybe it should be a proverb.
+
+237
+00:19:44,474 --> 00:19:46,955
+Come on, Uncle!
+
+238
+00:19:48,672 --> 00:19:51,262
+Sokka! Can't you make it go any faster?
+
+239
+00:19:51,352 --> 00:19:56,820
+I don't know how. This thing wasn't made by the water tribe.
+
+240
+00:20:11,995 --> 00:20:13,879
+Hey, you did the water whip!
+
+241
+00:20:13,952 --> 00:20:15,752
+I couldn't have done it without your help!
+
+242
+00:20:15,823 --> 00:20:21,370
+Will you two quit congratulating each other and help me out!
+
+243
+00:20:35,459 --> 00:20:38,378
+That's good!
+
+244
+00:20:46,465 --> 00:20:49,004
+Aang, look!
+
+245
+00:20:50,575 --> 00:20:53,094
+Oh, no!
+
+246
+00:21:01,606 --> 00:21:07,180
+Have you lost your mind!? This is no time for flute practice!
+
+247
+00:21:07,247 --> 00:21:13,312
+We can stop the boat! Aang, together, push and pull the water!
+
+248
+00:21:19,061 --> 00:21:22,428
+It's working! It's slowing down!
+
+249
+00:21:27,964 --> 00:21:29,427
+We're doing it!
+
+250
+00:21:29,532 --> 00:21:33,068
+But we have another problem!
+
+251
+00:21:53,038 --> 00:21:57,075
+I knew a bison whistle would come in handy. Thanks, Appa.
+
+252
+00:21:57,165 --> 00:22:00,324
+Yeh, we owe ya one.
+
+253
+00:22:02,192 --> 00:22:04,577
+My boat!
+
+254
+00:22:08,099 --> 00:22:13,182
+Hehe, Prince Zuko, you're really going to get a kick out of this.
+
+255
+00:22:13,282 --> 00:22:19,368
+The lotus tile was in my sleeve the whole time!
+
+256
+00:22:26,128 --> 00:22:29,556
+Aang, I still owe you an apology.
+
+257
+00:22:29,637 --> 00:22:32,860
+You were just so good at waterbending without really trying.
+
+258
+00:22:32,939 --> 00:22:37,655
+I got so competitive that I put us all in danger. I'm sorry.
+
+259
+00:22:37,741 --> 00:22:39,296
+That's okay, Katara.
+
+260
+00:22:39,378 --> 00:22:42,429
+Besides, who needs that stupid scroll anyway.
+
+261
+00:22:42,529 --> 00:22:44,828
+Is that really how you feel?
+
+262
+00:22:44,923 --> 00:22:45,878
+The scroll!
+
+263
+00:22:45,978 --> 00:22:47,893
+First, what did you learn?
+
+264
+00:22:47,980 --> 00:22:51,004
+Stealing is wrong.
+
+265
+00:22:51,080 --> 00:22:54,226
+Unless it's from pirates!
+
+266
+00:22:54,261 --> 00:22:56,341
+Good one, Katara.
+
+267
+00:22:57,410 --> 00:22:59,068
+Subtitle by rendy1287 [at gmail dot com]
+
+268
+00:22:59,292 --> 00:23:01,094
+Thanks to Acastus for The Transcript.
+http://www.avatarspiritmedia.net/
+
+
+
+0
+00:00:0,500 --> 00:00:2,00
+<font color="#ffff00" size=14>www.tvsubtitles.net</font>

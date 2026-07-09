@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Compass,
   Search,
@@ -7,6 +5,8 @@ import {
   Palette,
   ScrollText,
   Users,
+  Film,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -19,6 +19,8 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
   ScrollText,
   Users,
+  Film,
+  BookOpen,
 };
 
 export function FeaturesSection() {
@@ -34,11 +36,13 @@ export function FeaturesSection() {
           </h2>
           <p className="mt-3 text-muted-foreground">
             AvatarArchive is a love letter to the franchise — rebuilt in Next.js
-            with React Server Components, shadcn/ui, and a custom theme engine.
+            with all the original content: real episode titles, the graphic novel
+            library, the full timeline, and every page of the original static site,
+            now in a modern, themeable, responsive app.
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((f) => {
             const Icon = ICONS[f.icon] ?? Sparkles;
             return (
