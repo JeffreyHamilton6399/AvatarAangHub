@@ -31,8 +31,7 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
     }
   }, [checked, authed]);
 
-  const submit = (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const tryAuth = React.useCallback(() => {
     if (input.trim() === PASSWORD) {
       setError(false);
       localStorage.setItem(STORAGE_KEY, "1");
@@ -46,7 +45,7 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
       setInput("");
       setTimeout(() => inputRef.current?.focus(), 50);
     }
-  };
+  }, [input]);
 
   // Authed: render children (gate may animate out over them)
   if (authed && !leaving) return <>{children}</>;
@@ -127,9 +126,8 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
         {/* Divider */}
         <div className="aa-fade-in h-px w-16" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.5), transparent)", animationDelay: "0.16s" }} />
 
-        {/* Form */}
-        <form
-          onSubmit={submit}
+        {/* Input group — NO form element to prevent mobile navigation/404 */}
+        <div
           className="aa-slide-up flex w-[min(340px,88vw)] flex-col items-center gap-4"
           style={{
             animationDelay: "0.2s",
@@ -153,11 +151,19 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
                 setInput(e.target.value);
                 setError(false);
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  tryAuth();
+                }
+              }}
               placeholder="••••••••••"
               autoComplete="current-password"
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck={false}
+              enterKeyHint="go"
+              inputMode="text"
               className="w-full rounded-full border bg-[rgba(10,17,28,0.85)] px-5 py-3 pr-12 text-center font-body-aa text-base text-[#f0f4ff] outline-none transition-all placeholder:text-[#2d3f56]"
               style={{
                 borderColor: error ? "rgba(249,115,22,0.6)" : "rgba(77,184,255,0.25)",
@@ -176,7 +182,8 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
           </div>
 
           <button
-            type="submit"
+            type="button"
+            onClick={tryAuth}
             className="press-aa w-full rounded-full bg-gradient-to-br from-[#4db8ff] to-[#1a8fcc] px-6 py-3 font-serif text-[0.55rem] uppercase tracking-[0.35em] text-[#04070d] shadow-[0_4px_18px_rgba(77,184,255,0.35)] transition-all hover:shadow-[0_6px_24px_rgba(77,184,255,0.5)]"
           >
             Enter the Avatar World
@@ -188,7 +195,7 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
           >
             Incorrect password — try again
           </div>
-        </form>
+        </div>
 
         <div className="absolute bottom-6 flex items-center gap-2 font-body-aa text-[0.4rem] uppercase tracking-[0.3em] text-[#2d3f56]">
           <Lock className="h-3 w-3" />
