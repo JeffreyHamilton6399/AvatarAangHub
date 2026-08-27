@@ -113,3 +113,15 @@ src/
 Built by **[Jeffrey Creates](https://www.youtube.com/@Jeffrey_Creates)**.
 
 Avatar: The Last Airbender and The Legend of Korra © Nickelodeon / Viacom / Paramount. This is a non-commercial fan project — no copyright infringement is intended. Iroh would approve.
+
+---
+
+## License
+
+The application code in `src/` is MIT licensed.
+
+The media under `public/` is not mine to license. Episode captions, graphic
+novel scans, artwork and screenshots are the property of Nickelodeon, Paramount
+and their respective rights holders, and are included here for a
+non-commercial fan project. If you own any of it and want it removed, open an
+issue.

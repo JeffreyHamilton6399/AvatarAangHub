@@ -136,7 +136,7 @@ export function BookReader({
           if (!ctx) return;
           canvas.width = finalViewport.width;
           canvas.height = finalViewport.height;
-          const task = page.render({ canvasContext: ctx, viewport: finalViewport });
+          const task = page.render({ canvas, canvasContext: ctx, viewport: finalViewport });
           renderTaskRef.current[side] = task;
           await task.promise;
         } else {
@@ -144,7 +144,7 @@ export function BookReader({
           if (!ctx) return;
           canvas.width = viewport.width;
           canvas.height = viewport.height;
-          const task = page.render({ canvasContext: ctx, viewport });
+          const task = page.render({ canvas, canvasContext: ctx, viewport });
           renderTaskRef.current[side] = task;
           await task.promise;
         }
